@@ -9,8 +9,9 @@ public class WalletForm extends JFrame {
     public JToolBar toolbar;
     private JPanel panel;
     private JButton addressButton;
-    public JList list1;
+    public JList<TransactionElement> list1;
     public TransactionListModel transactionListModel;
+    public DefaultListModel<TransactionElement> transactionListModel2;
 
     public WalletForm() {
         setContentPane(panel);
@@ -28,6 +29,17 @@ public class WalletForm extends JFrame {
 
     private void createUIComponents() {
         transactionListModel = new TransactionListModel();
-        list1 = new JList(transactionListModel);
+        transactionListModel2 = new DefaultListModel<>();
+        transactionListModel2.addElement(new TransactionElement(1));
+        transactionListModel2.addElement(new TransactionElement(2));
+
+        list1 = new JList<>();
+        list1.setModel(transactionListModel2);
+        list1.setCellRenderer(new TransactionCell());
+//        TransactionElement els[] = {
+//                new TransactionElement(1),
+//                new TransactionElement(2)
+//        };
+//        list1 = new JList<>(els);
     }
 }
