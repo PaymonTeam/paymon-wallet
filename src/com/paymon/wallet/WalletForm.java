@@ -4,11 +4,9 @@ import javax.swing.*;
 import java.util.Vector;
 
 public class WalletForm extends JFrame {
-
-
     public JToolBar toolbar;
     private JPanel panel;
-    private JButton addressButton;
+    public JButton addressButton;
     public JList<TransactionElement> list1;
     public TransactionListModel transactionListModel;
     public DefaultListModel<TransactionElement> transactionListModel2;

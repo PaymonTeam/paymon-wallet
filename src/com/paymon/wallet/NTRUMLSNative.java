@@ -1,6 +1,14 @@
 package com.paymon.wallet;
 
+
+import org.jetbrains.annotations.Nullable;
+
 public class NTRUMLSNative {
+    @Nullable
+    public static byte[] publicKeyFromPrivate(@Nullable byte[] privateKey) {
+        return NTRUMLSNative.generateKeyPairFromFg(NTRUMLSNative.unpackFgFromPrivateKey(privateKey)).publicKey;
+    }
+
     public static class KeyPair {
         byte[] privateKey;
         byte[] publicKey;
