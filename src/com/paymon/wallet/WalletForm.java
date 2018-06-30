@@ -15,7 +15,7 @@ public class WalletForm extends JFrame {
 
     public WalletForm() {
         setContentPane(panel);
-        setVisible(true);
+       // setVisible(true);
         setTitle("PaymonCoin GUI");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {

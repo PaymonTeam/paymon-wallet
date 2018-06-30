@@ -60,8 +60,8 @@ fun initListeners() {
         }
 
         override fun mousePressed(e: MouseEvent?) {
-            authForm.dispose()
-            walletForm.isVisible = true
+            //authForm.dispose()
+            //walletForm.isVisible = true
         }
     })
 
