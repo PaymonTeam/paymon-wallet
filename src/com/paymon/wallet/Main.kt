@@ -52,11 +52,11 @@ fun initListeners() {
         }
     })
 
-    walletForm.list1.addListSelectionListener {
+    /*walletForm.list1.addListSelectionListener {
         if (!it.valueIsAdjusting) {
             println("clicked")
         }
-    }
+    }*/
 
 //    walletForm.transactionListModel.addElement(TransactionElement(1))
 //    walletForm.transactionListModel.addElement(TransactionElement(2))
@@ -64,15 +64,6 @@ fun initListeners() {
 //    walletForm.transactionListModel.addElement(TransactionElement(4))
 //    walletForm.list1.add(TransactionElement(1))
 //    walletForm.list1.cellRenderer = TransactionCell()
-
-    walletForm.toolbar.isFloatable = false
-    walletForm.toolbar.addSeparator()
-    var button = JButton("File")
-    walletForm.toolbar.add(button)
-    walletForm.toolbar.addSeparator()
-    var button2 = JButton("Options")
-    walletForm.toolbar.add(button2)
-    walletForm.toolbar.addSeparator()
 
     updateAddress()
 }
