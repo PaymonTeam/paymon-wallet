@@ -2,6 +2,7 @@ package com.paymon.wallet.net
 
 import com.google.gson.*
 import com.paymon.wallet.*
+import com.paymon.wallet.utils.SerializedBuffer
 import java.lang.reflect.Type
 import java.util.*
 import org.bouncycastle.util.encoders.Hex
@@ -12,15 +13,11 @@ import kotlin.collections.ArrayList
 import java.net.URI
 import kotlin.concurrent.thread
 
-//import kotlin.coroutines.experimental.*
-//import kotlinx.coroutines.experimental.*
-
 class API {
     var privateKey: PrivateKey? = null
     var publicKey: PublicKey? = null
     var address: Address? = null
     var neighbors = ArrayList<Neighbor>()
-//    var dispatchQueue = newSingleThreadContext("")
     var lock = Object()
 
     class Neighbor(uri: URI) {
@@ -154,7 +151,7 @@ class API {
     fun getTransactionToApprove() : TransactionsToApprove? {
         if (neighbors.isEmpty()) return null
 
-        val obj = GetTransactionsToApprove(1, 5, HASH_NULL)
+        val obj = GetTransactionsToApprove(1, 5, HASH_NULL.clone())
         val json = API.gson.toJsonTree(obj)
         json.asJsonObject.addProperty("method", "getTransactionsToApprove")
         val resp = sendRequest(json, neighbors[0])
@@ -231,7 +228,30 @@ class API {
         return null
     }
 
-    fun getTransaction(hash: Hash) : TransactionObject? {
+    fun getTransactions(hashes: LinkedList<Hash>) : LinkedList<TransactionObject>? {
+        if (neighbors.isEmpty()) return null
+
+        val obj = GetTransactionsData(hashes)
+        val json = API.gson.toJsonTree(obj)
+        json.asJsonObject.addProperty("method", "getTransactionsData")
+        val resp = sendRequest(json, neighbors[0])
+
+        if (resp != null) {
+            val txs = LinkedList<TransactionObject>()
+            val respObj = API.gson.fromJson(resp, TransactionsData::class.java)
+            if (respObj != null) {
+                for (txBase64 in respObj.transactions) {
+                    val bytes = Base64.getDecoder().decode(txBase64)
+                    val buffer = SerializedBuffer(bytes.size)
+                    buffer.writeBytes(bytes)
+                    buffer.position(0)
+                    val tx = TransactionObject()
+                    tx.readParams(buffer, true)
+                    txs.add(tx)
+                }
+            }
+            return txs
+        }
         return null
     }
 
@@ -338,3 +358,6 @@ class Tips(val hashes: LinkedList<Hash>)
 
 class FindTransactions(val addresses: LinkedList<Address>, val tags: LinkedList<Hash>, val approvees: LinkedList<Hash>)
 class FoundedTransactions(val hashes: LinkedList<Hash>)
+
+class GetTransactionsData(val hashes: LinkedList<Hash>)
+class TransactionsData(val transactions: LinkedList<String>)

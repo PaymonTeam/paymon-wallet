@@ -58,13 +58,6 @@ fun initListeners() {
         }
     }
 
-//    walletForm.transactionListModel.addElement(TransactionElement(1))
-//    walletForm.transactionListModel.addElement(TransactionElement(2))
-//    walletForm.transactionListModel.addElement(TransactionElement(3))
-//    walletForm.transactionListModel.addElement(TransactionElement(4))
-//    walletForm.list1.add(TransactionElement(1))
-//    walletForm.list1.cellRenderer = TransactionCell()
-
     walletForm.toolbar.isFloatable = false
     walletForm.toolbar.addSeparator()
     var button = JButton("File")
@@ -87,8 +80,13 @@ fun updateThread() {
         if (addr != null) {
             val balance = api.getBalanceRequest(addr)
             println("Current balance: $balance")
-            val txs = api.getAddressTransactionHashes(addr)
-            println("Txs: ${txs.toString()}")
+            val txHashes = api.getAddressTransactionHashes(addr)
+            if (txHashes != null) {
+//                for (hash in txHashes) {
+//                    println("request hash=${String(Hex.encode(hash))}")
+//                }
+                val txs = api.getTransactions(txHashes)
+            }
         }
 
         Thread.sleep(10000)

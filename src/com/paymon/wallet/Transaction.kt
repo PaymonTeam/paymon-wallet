@@ -1,5 +1,7 @@
 package com.paymon.wallet
 
+import com.paymon.wallet.net.Serializable
+import com.paymon.wallet.utils.SerializableData
 import org.bouncycastle.jcajce.provider.digest.SHA3
 import org.bouncycastle.util.encoders.Hex
 import java.nio.ByteBuffer
@@ -44,6 +46,10 @@ class Address {
 
     override fun toString(): String {
         return "P" + String(Hex.encode(inner)).toUpperCase()
+    }
+
+    fun clone() : Address {
+        return Address(inner.clone())
     }
 }
 
@@ -99,16 +105,16 @@ class Transaction(val obj: TransactionObject) {
     }
 }
 
-class TransactionObject {
-    var address = ADDRESS_NULL
+class TransactionObject : Serializable() {
+    var address = ADDRESS_NULL.clone()
     var attachment_timestamp = 0L
     var attachment_timestamp_lower_bound = 0L
     var attachment_timestamp_upper_bound = 0L
-    var branch_transaction = HASH_NULL
-    var trunk_transaction = HASH_NULL
-    var hash = HASH_NULL
+    var branch_transaction = HASH_NULL.clone()
+    var trunk_transaction = HASH_NULL.clone()
+    var hash = HASH_NULL.clone()
     var nonce = 0L
-    var tag = HASH_NULL
+    var tag = HASH_NULL.clone()
     var timestamp = 0L
     var value = 0L
     var data_type = TransactionType.HashOnly
@@ -116,5 +122,57 @@ class TransactionObject {
     var signature_pubkey = ByteArray(0)
     var snapshot = 0
     var solid = false
-    var height = 0
+    var height = 0L
+
+    override fun serializeToStream(stream: SerializableData) {
+        stream.writeInt32(svuid)
+        stream.writeBytes(hash)
+        stream.writeBytes(address.inner)
+        stream.writeInt64(attachment_timestamp)
+        stream.writeInt64(attachment_timestamp_lower_bound)
+        stream.writeInt64(attachment_timestamp_upper_bound)
+        stream.writeBytes(branch_transaction)
+        stream.writeBytes(trunk_transaction)
+        stream.writeInt64(nonce)
+        stream.writeBytes(tag)
+        stream.writeInt64(timestamp)
+        stream.writeInt32(value.toInt())
+        val b = when (data_type) {
+            TransactionType.HashOnly -> 0
+            TransactionType.Full -> 1
+        }
+        stream.writeByte(b)
+        stream.writeByteArray(signature)
+        stream.writeByteArray(signature_pubkey)
+        stream.writeInt32(snapshot)
+        stream.writeBool(solid)
+        stream.writeInt64(height)
+    }
+
+    override fun readParams(stream: SerializableData, exception: Boolean) {
+        stream.readBytes(hash)
+        stream.readBytes(address.inner)
+        attachment_timestamp = stream.readInt64()
+        attachment_timestamp_lower_bound = stream.readInt64()
+        attachment_timestamp_upper_bound = stream.readInt64()
+        stream.readBytes(branch_transaction)
+        stream.readBytes(trunk_transaction)
+        nonce = stream.readInt32().toLong()
+        stream.readBytes(tag)
+        timestamp = stream.readInt64()
+        value = stream.readInt64()
+        data_type = when (stream.readByte()) {
+            0.toByte() -> TransactionType.HashOnly
+            else -> TransactionType.Full
+        }
+        signature = stream.readByteArray()
+        signature_pubkey = stream.readByteArray()
+        snapshot = stream.readInt32()
+        solid = stream.readBool()
+        height = stream.readInt64()
+    }
+
+    companion object {
+        var svuid = 342631123
+    }
 }
