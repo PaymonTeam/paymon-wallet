@@ -2,47 +2,63 @@ package com.paymon.wallet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class LoadExistWallet extends JFrame {
     private JPanel panel;
-    private boolean oButtonIsClicked = false;
     private JButton loadButton;
+    private JPanel formPanel;
+    private JPanel titlePanel;
+    private JPanel loadButtonPanel;
     private JPanel passFieldPanel;
     private JButton oButton;
     private JPasswordField password;
+    private JPanel fileExplorerPanel;
     private ImagePanel imgPanel;
 
     public LoadExistWallet() {
-        setContentPane(panel);
+        SetBackgroundImage();
+        panel.setLayout(new GridBagLayout());
         setTitle("Wallet Load");
+        GridBagConstraints c =  new GridBagConstraints();
+        c.anchor = GridBagConstraints.NORTH;
+        c.fill   = GridBagConstraints.NONE;
+        c.gridheight = 1;
+        c.gridwidth  = GridBagConstraints.REMAINDER;
+        c.gridx = GridBagConstraints.RELATIVE;
+        c.gridy = GridBagConstraints.RELATIVE;
+        c.insets = new Insets(10, 0, 0, 0);
+        c.ipadx = 0;
+        c.ipady = 0;
+        c.weightx = 0.0;
+        c.weighty = 0.0;
+        panel.add(titlePanel, c);
+        c.weightx = 1.0;
+        fileExplorerPanel = new JPanel();
+        panel.add(fileExplorerPanel, c);
+        c.weightx = 2.0;
+        panel.add(loadButtonPanel,c);
+        add(panel);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        if (!oButtonIsClicked){
-            Image oButtonImage = new ImageIcon(this.getClass().getResource("/oButton.png")).getImage();
-            oButton.setIcon(new ImageIcon(oButtonImage));
-        }else{
-            Image oButtonImage = new ImageIcon(this.getClass().getResource("/oButtonClicked.png")).getImage();
-            oButton.setIcon(new ImageIcon(oButtonImage));
-        }
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SetBackgroundImage();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setSize(imgPanel.getWidth(), imgPanel.getHeight());
+        if(panel != null) {
+            setSize(panel.getWidth(), panel.getHeight());
+        }
+        JFilePicker filePicker = new JFilePicker("Pick a file", "Browse...");
+        filePicker.setMode(JFilePicker.MODE_OPEN);
+        filePicker.addFileTypeFilter(".json", "JSON Files");
+        panel.add(filePicker);
         setDefaultLookAndFeelDecorated(false);
-        //pack();
+        pack();
     }
 
     public void SetBackgroundImage() {
-        imgPanel = new ImagePanel(new ImageIcon(this.getClass().getResource("/paymon_1.png")).getImage());
-        Container c = this.getContentPane();
-        if (imgPanel != null) {
-            c.add(imgPanel);
-        } else {
-            System.out.println("incorrect background image, check the path for this image and if it exists.");
-        }
+        panel = new ImagePanel(new ImageIcon(this.getClass().getResource("/background.png")).getImage());
     }
 
 }

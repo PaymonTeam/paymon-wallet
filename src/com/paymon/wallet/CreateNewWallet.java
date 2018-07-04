@@ -18,8 +18,8 @@ public class CreateNewWallet extends JFrame {
     private JPanel messagePanel;
     private JButton loadWalletButton;
     private JLabel createNewWalletLabel;
-    private JLabel enterPassworLable;
-    private ImagePanel imgPanel;
+    private JLabel enterPasswordLabel;
+    private JPanel imgPanel;
 
     public CreateNewWallet() {
         setContentPane(panel);
@@ -31,8 +31,12 @@ public class CreateNewWallet extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        incorrectPassMessage.setForeground(Color.red);
-        setSize(imgPanel.getWidth(), imgPanel.getHeight());
+        incorrectPassMessage.setForeground(Color.RED);
+        createNewWalletLabel.setForeground(Color.WHITE);
+        enterPasswordLabel.setForeground(Color.WHITE);
+        if(imgPanel != null) {
+            setSize(imgPanel.getWidth(), imgPanel.getHeight());
+        }
         visibleSetter();
         oButtonHandler();
 
@@ -55,16 +59,17 @@ public class CreateNewWallet extends JFrame {
         loadWalletButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //TODO handle load of exist wallet
             }
         });
     }
 
     private void SetBackgroundImage() {
-        imgPanel = new ImagePanel(new ImageIcon(this.getClass().getResource("/paymon.png")).getImage());
-        Container c = this.getContentPane();
+        imgPanel = new ImagePanel(new ImageIcon(this.getClass().getResource("/background.png")).getImage());
+       // setIconImage(Toolkit.getDefaultToolkit().getImage(this.getClass().getClassLoader().getResource("/panel_icon.png")));
+
         if (imgPanel != null) {
-            c.add(imgPanel);
+            getContentPane().add(imgPanel);
         } else {
             System.out.println("incorrect background image, check the path for this image and if it exists.");
         }
@@ -100,6 +105,7 @@ public class CreateNewWallet extends JFrame {
             incorrectPassMessage.setVisible(false);
         }
     }
+
 }
 
 

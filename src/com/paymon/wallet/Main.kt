@@ -9,6 +9,7 @@ import org.bouncycastle.util.encoders.Hex
 
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
+var loadForm = LoadExistWallet()
 var running = true
 val HASH_SIZE = 20
 val ADDRESS_SIZE = HASH_SIZE + 1
@@ -33,6 +34,8 @@ fun main(args: Array<String>) {
 }
 
 fun initListeners() {
+    authForm.dispose()
+    walletForm.dispose()
     authForm.createNewWalletButton.addMouseListener(object : MouseListener {
         override fun mouseReleased(e: MouseEvent?) {
         }
