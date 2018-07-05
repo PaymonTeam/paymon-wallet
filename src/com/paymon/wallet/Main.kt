@@ -9,7 +9,6 @@ import org.bouncycastle.util.encoders.Hex
 
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
-var loadForm = LoadExistWallet()
 var running = true
 val HASH_SIZE = 20
 val ADDRESS_SIZE = HASH_SIZE + 1
@@ -34,8 +33,6 @@ fun main(args: Array<String>) {
 }
 
 fun initListeners() {
-    authForm.dispose()
-    walletForm.dispose()
     authForm.createNewWalletButton.addMouseListener(object : MouseListener {
         override fun mouseReleased(e: MouseEvent?) {
         }
@@ -50,23 +47,25 @@ fun initListeners() {
         }
 
         override fun mousePressed(e: MouseEvent?) {
-            //authForm.dispose()
-            //walletForm.isVisible = true
+            authForm.dispose()
+            walletForm.isVisible = true
         }
     })
 
-    /*walletForm.list1.addListSelectionListener {
+    walletForm.list1.addListSelectionListener {
         if (!it.valueIsAdjusting) {
             println("clicked")
         }
-    }*/
+    }
 
-//    walletForm.transactionListModel.addElement(TransactionElement(1))
-//    walletForm.transactionListModel.addElement(TransactionElement(2))
-//    walletForm.transactionListModel.addElement(TransactionElement(3))
-//    walletForm.transactionListModel.addElement(TransactionElement(4))
-//    walletForm.list1.add(TransactionElement(1))
-//    walletForm.list1.cellRenderer = TransactionCell()
+    walletForm.toolbar.isFloatable = false
+    walletForm.toolbar.addSeparator()
+    var button = JButton("File")
+    walletForm.toolbar.add(button)
+    walletForm.toolbar.addSeparator()
+    var button2 = JButton("Options")
+    walletForm.toolbar.add(button2)
+    walletForm.toolbar.addSeparator()
 
     updateAddress()
 }
@@ -81,8 +80,13 @@ fun updateThread() {
         if (addr != null) {
             val balance = api.getBalanceRequest(addr)
             println("Current balance: $balance")
-            val txs = api.getAddressTransactionHashes(addr)
-            println("Txs: ${txs.toString()}")
+            val txHashes = api.getAddressTransactionHashes(addr)
+            if (txHashes != null) {
+//                for (hash in txHashes) {
+//                    println("request hash=${String(Hex.encode(hash))}")
+//                }
+                val txs = api.getTransactions(txHashes)
+            }
         }
 
         Thread.sleep(10000)
