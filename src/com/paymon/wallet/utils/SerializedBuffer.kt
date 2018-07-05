@@ -159,7 +159,7 @@ class SerializedBuffer : SerializableData {
 
     }
 
-    override fun writeString(s: String) {
+    override fun writeString(s: String?) {
         try {
             if (s != null) {
                 writeByteArray(s.toByteArray(charset("UTF-8")))
@@ -507,13 +507,6 @@ class SerializedBuffer : SerializableData {
         return 0.0
     }
 
-    fun reuse() {
-        if (address != 0) {
-            reused = true
-            native_reuse(address)
-        }
-    }
-
     companion object {
 
         private val addressWrapper = object : ThreadLocal<SerializedBuffer>() {
@@ -521,30 +514,5 @@ class SerializedBuffer : SerializableData {
                 return SerializedBuffer(0, true)
             }
         }
-
-        fun wrap(address: Int): SerializedBuffer {
-            val result = addressWrapper.get()
-            if (address != 0) {
-                if (!result.reused) {
-                    //                println("forgot to reuse?");
-                }
-                result.address = address
-                result.reused = false
-                result.buffer = native_getJavaByteBuffer(address)
-                result.buffer.limit(native_limit(address))
-                val position = native_position(address)
-                if (position <= result.buffer.limit()) {
-                    result.buffer.position(position)
-                }
-                result.buffer.order(ByteOrder.LITTLE_ENDIAN)
-            }
-            return result
-        }
-
-        external fun native_getFreeBuffer(length: Int): Int
-        external fun native_getJavaByteBuffer(address: Int): ByteBuffer
-        external fun native_limit(address: Int): Int
-        external fun native_position(address: Int): Int
-        external fun native_reuse(address: Int)
     }
 }
