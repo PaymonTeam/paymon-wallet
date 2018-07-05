@@ -16,7 +16,7 @@ interface SerializableData {
 
     fun writeByte(b: Byte)
 
-    fun writeString(s: String)
+    fun writeString(s: String?)
 
     fun writeByteArray(b: ByteArray, offset: Int, count: Int)
 

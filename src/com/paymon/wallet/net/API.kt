@@ -3,6 +3,7 @@ package com.paymon.wallet.net
 import com.google.gson.*
 import com.paymon.wallet.*
 import com.paymon.wallet.utils.SerializedBuffer
+import com.paymon.wallet.utils.WalletAccount
 import java.lang.reflect.Type
 import java.util.*
 import org.bouncycastle.util.encoders.Hex
@@ -14,9 +15,7 @@ import java.net.URI
 import kotlin.concurrent.thread
 
 class API {
-    var privateKey: PrivateKey? = null
-    var publicKey: PublicKey? = null
-    var address: Address? = null
+    var account: WalletAccount? = null
     var neighbors = ArrayList<Neighbor>()
     var lock = Object()
 
@@ -162,7 +161,7 @@ class API {
     }
 
     fun createTransaction(to: Address, amount: Long, trunk: Hash, branch: Hash) : Transaction? {
-        if (neighbors.isEmpty() || privateKey == null || publicKey == null) {
+        if (neighbors.isEmpty() || account == null) {
             return null
         }
 
@@ -179,8 +178,8 @@ class API {
         transaction.obj.nonce = transaction.findNonce(mwm)
         transaction.obj.hash = transaction.calculateHash()
         synchronized(lock) {
-            transaction.obj.signature = transaction.calculateSignature(privateKey!!, publicKey!!)
-            transaction.obj.signature_pubkey = publicKey!!.clone()
+            transaction.obj.signature = transaction.calculateSignature(account!!.privateKey, account!!.publicKey)
+            transaction.obj.signature_pubkey = account!!.publicKey.clone()
         }
 
         return transaction
