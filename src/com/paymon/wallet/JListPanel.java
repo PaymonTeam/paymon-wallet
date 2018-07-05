@@ -13,7 +13,7 @@ public class JListPanel extends JPanel {
     public JListPanel(List<TransactionInfoInWalletForm> txList){
         this.txList = txList;
     }
-    private JList<TransactionInfoInWalletForm> createListBooks() {
+    private JList<TransactionInfoInWalletForm> createList() {
         // create List model
         DefaultListModel<TransactionInfoInWalletForm> model = new DefaultListModel<>();
         // add item to model
@@ -30,7 +30,7 @@ public class JListPanel extends JPanel {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         // create list book and set to scrollpane and add to panel
-        panel.add(new JScrollPane(this.txJList = createListBooks()),
+        panel.add(new JScrollPane(this.txJList = createList()),
                 BorderLayout.CENTER);
         return panel;
     }

@@ -22,8 +22,13 @@ public class TransactionInfoInWalletForm {
         this.amount = amount;
         this.date = date;
     }
+    public TransactionInfoInWalletForm(String hash) {
+        super();
+        this.hash = hash;
+    }
 
-    public String getHash() {
+
+        public String getHash() {
         return hash;
     }
 

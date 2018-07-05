@@ -43,7 +43,7 @@ fun main(args: Array<String>) {
 }
 
 fun initListeners() {
-    authForm.createNewWalletButton.addMouseListener(object : MouseListener {
+    /*authForm.createNewWalletButton.addMouseListener(object : MouseListener {
         override fun mouseReleased(e: MouseEvent?) {
         }
 
@@ -60,23 +60,15 @@ fun initListeners() {
             authForm.dispose()
             walletForm.isVisible = true
         }
-    })
-
-    walletForm.list1.addListSelectionListener {
-        if (!it.valueIsAdjusting) {
-            println("clicked")
+    })*/
+    val addr = api.account?.address
+    if(addr != null) {
+        walletForm.setAddress(addr.toString())
+        val balance = api.getBalanceRequest(addr)
+        if (balance != null) {
+            walletForm.setBalance(balance.toInt())
         }
     }
-
-    walletForm.toolbar.isFloatable = false
-    walletForm.toolbar.addSeparator()
-    var button = JButton("File")
-    walletForm.toolbar.add(button)
-    walletForm.toolbar.addSeparator()
-    var button2 = JButton("Options")
-    walletForm.toolbar.add(button2)
-    walletForm.toolbar.addSeparator()
-
     updateAddress()
 }
 
@@ -96,7 +88,16 @@ fun updateThread() {
 //                    println("request hash=${String(Hex.encode(hash))}")
 //                }
                 val txs = api.getTransactions(txHashes)
+                if(txs != null) {
+                    for (i in 0..txs.size) {
+                        walletForm.addToList(txs[i].hash.toString(),
+                                addr.toString(),
+                                txs[i].address.toString(),
+                                txs[i].value.toInt())
+                    }
+                }
             }
+
         }
 
         Thread.sleep(10000)
