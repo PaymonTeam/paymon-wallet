@@ -21,24 +21,30 @@ public class CreateNewWallet extends JFrame {
     private JLabel enterPasswordLabel;
     private JPanel imgPanel;
 
+    private Handler handler;
+
     public CreateNewWallet() {
+        handler = new Handler();
         setContentPane(panel);
-        setTitle("Wallet Creator");
+        setTitle("Paymon Wallet");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SetBackgroundImage();
+            //SetBackgroundImage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         incorrectPassMessage.setForeground(Color.RED);
         createNewWalletLabel.setForeground(Color.WHITE);
         enterPasswordLabel.setForeground(Color.WHITE);
+        setSize(500,500);
+        panel.setBackground(new Color(51,181,229));
         if(imgPanel != null) {
             setSize(imgPanel.getWidth(), imgPanel.getHeight());
         }
         visibleSetter();
-        oButtonHandler();
+
+        handler.oButtonHandler(oButtonIsClicked, oButton, password);
 
         setDefaultLookAndFeelDecorated(false);
 
@@ -53,7 +59,7 @@ public class CreateNewWallet extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 oButtonIsClicked = !oButtonIsClicked;
-                oButtonHandler();
+                handler.oButtonHandler(oButtonIsClicked, oButton, password);
             }
         });
         loadWalletButton.addActionListener(new ActionListener() {
@@ -74,17 +80,7 @@ public class CreateNewWallet extends JFrame {
             System.out.println("incorrect background image, check the path for this image and if it exists.");
         }
     }
-    private void oButtonHandler(){
-        if (!oButtonIsClicked){
-            Image oButtonImage = new ImageIcon(this.getClass().getResource("/oButton.png")).getImage();
-            oButton.setIcon(new ImageIcon(oButtonImage));
-            password.setEchoChar((char)0);
-        }else{
-            Image oButtonImage = new ImageIcon(this.getClass().getResource("/oButtonClicked.png")).getImage();
-            oButton.setIcon(new ImageIcon(oButtonImage));
-            password.setEchoChar('*');
-        }
-    }
+
     private void visibleSetter(){
         messagePanel.setVisible(false);
         incorrectPassMessage.setVisible(false);

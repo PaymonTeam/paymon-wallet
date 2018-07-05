@@ -5,7 +5,9 @@
     <constraints>
       <xy x="36" y="102" width="481" height="270"/>
     </constraints>
-    <properties/>
+    <properties>
+      <foreground color="-13388315"/>
+    </properties>
     <border type="none">
       <title-color color="-16777216"/>
     </border>
@@ -98,7 +100,7 @@
             </constraints>
             <properties>
               <background color="-13388315"/>
-              <text value="Load Exists Wallet"/>
+              <text value="Load Existing Wallet"/>
             </properties>
           </component>
           <component id="547d3" class="javax.swing.JButton" binding="createNewWalletButton">
