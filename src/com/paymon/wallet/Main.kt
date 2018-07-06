@@ -16,6 +16,7 @@ import kotlin.system.exitProcess
 
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
+var loadForm = LoadExistWallet()
 var running = true
 val HASH_SIZE = 20
 val ADDRESS_SIZE = HASH_SIZE + 1
@@ -64,6 +65,7 @@ fun initListeners() {
     val addr = api.account?.address
     if(addr != null) {
         walletForm.setAddress(addr.toString())
+        walletForm.pack()
         val balance = api.getBalanceRequest(addr)
         if (balance != null) {
             walletForm.setBalance(balance.toInt())

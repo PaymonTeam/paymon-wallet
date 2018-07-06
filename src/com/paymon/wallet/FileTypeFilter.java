@@ -24,4 +24,7 @@ public class FileTypeFilter extends FileFilter {
     public String getDescription() {
         return description + String.format(" (*%s)", extension);
     }
+    public String getExtension(){
+        return extension;
+    }
 }

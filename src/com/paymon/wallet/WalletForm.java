@@ -11,20 +11,29 @@ public class WalletForm extends JFrame {
     public JToolBar toolbar;
     private JPanel panel;
     public JButton addressButton;
+    private JPanel toolbarPanel;
     public JButton balanceButton;
     private JPanel textPanel;
-    private JLabel text1;
-    private JLabel text2;
     private JPanel JLPanel;
-    private JButton refreshButton;
+    private JPanel newTxPanel;
+    private JButton createNewTransactionButton;
+    private JButton refreshTransactionListButton;
+    private JPanel refreshPanel;
+    private JPanel mainPanel;
     public ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
 
     public WalletForm() {
         initComponents();
-        refreshButton.addActionListener(new ActionListener() {
+        refreshTransactionListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateJListPanel();
+            }
+        });
+        createNewTransactionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
         setVisible(true);
@@ -41,8 +50,8 @@ public class WalletForm extends JFrame {
 
     private void initJListPanel() {
         JListPanel JLPan = new JListPanel(list);
-        JLPanel = JLPan.createPanel();
-        panel.add(JLPanel, 2);
+        JLPanel.removeAll();
+        JLPanel.add(JLPan.createPanel(),BorderLayout.CENTER);
     }
     private void setList(ArrayList<TransactionInfoInWalletForm> list){
         this.list = list;
@@ -50,14 +59,12 @@ public class WalletForm extends JFrame {
 
     public void updateJListPanel(){
         JListPanel JLPan = new JListPanel(list);
-        panel.remove(JLPanel);
         JLPanel.removeAll();
         JLPanel.repaint();
         JLPanel.revalidate();
-        JLPanel = JLPan.createPanel();
+        JLPanel.add(JLPan.createPanel(), BorderLayout.CENTER);
         JLPanel.repaint();
         JLPanel.revalidate();
-        panel.add(JLPanel, 2);
         panel.repaint();
         panel.revalidate();
 
@@ -70,29 +77,12 @@ public class WalletForm extends JFrame {
     }
     private void initComponents(){
         setTitle("PaymonCoin Wallet");
-        panel.setLayout(new GridLayout(5,1,20,20));
         initToolbar();
-        initTextPanel();
         initJListPanel();
-        initRefreshButton();
         add(panel);
     }
-    private void initTextPanel(){
-        text1 = new JLabel("Your wallet address");
-        text2 = new JLabel("Your balance");
-        addressButton = new JButton("Address");
-        balanceButton = new JButton("Balance");
-        textPanel = new JPanel();
-        textPanel.setLayout(new GridLayout(2,2,10,10));
-        textPanel.add(text1);
-        textPanel.add(addressButton);
-        textPanel.add(text2);
-        textPanel.add(balanceButton);
 
-        panel.add(textPanel,1);
-    }
     private void initToolbar(){
-        toolbar = new JToolBar();
         toolbar.setFloatable(false);
         toolbar.addSeparator();
         JButton fileToolbarButton = new JButton("File");
@@ -101,12 +91,6 @@ public class WalletForm extends JFrame {
         JButton optionsToolbarButton = new JButton("Options");
         toolbar.add(optionsToolbarButton);
         toolbar.addSeparator();
-
-        panel.add(toolbar,0);
-    }
-    private void initRefreshButton(){
-        refreshButton = new JButton("Refresh");
-        panel.add(refreshButton,3);
     }
     public void addToList(String hash, String sender, String recipient, int amount){
         list.add(new TransactionInfoInWalletForm(hash,sender,recipient,amount, Calendar.getInstance().getTime()));

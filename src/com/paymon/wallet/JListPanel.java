@@ -27,11 +27,16 @@ public class JListPanel extends JPanel {
         return list;
     }
     public JPanel createPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        JPanel panel = new JPanel(new GridBagLayout());
+       //panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         // create list book and set to scrollpane and add to panel
         panel.add(new JScrollPane(this.txJList = createList()),
-                BorderLayout.CENTER);
+                gbc);
         return panel;
     }
 }

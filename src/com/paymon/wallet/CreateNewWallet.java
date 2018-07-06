@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 
 public class CreateNewWallet extends JFrame {
+    private JFrame frame = this;
     private JButton oButton;
     private boolean oButtonIsClicked = true;
     private JPanel panel;
@@ -24,6 +25,7 @@ public class CreateNewWallet extends JFrame {
     private Handler handler;
 
     public CreateNewWallet() {
+        setContentPane(panel);
         handler = new Handler();
         setContentPane(panel);
         setTitle("Paymon Wallet");
@@ -37,7 +39,6 @@ public class CreateNewWallet extends JFrame {
         incorrectPassMessage.setForeground(Color.RED);
         createNewWalletLabel.setForeground(Color.WHITE);
         enterPasswordLabel.setForeground(Color.WHITE);
-        setSize(500,500);
         panel.setBackground(new Color(51,181,229));
         if(imgPanel != null) {
             setSize(imgPanel.getWidth(), imgPanel.getHeight());
@@ -51,7 +52,7 @@ public class CreateNewWallet extends JFrame {
         createNewWalletButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                passFieldHandler();
+                handler.passFieldHandler(password, messagePanel, incorrectPassMessage, frame);
             }
 
         });
@@ -90,17 +91,6 @@ public class CreateNewWallet extends JFrame {
         setVisible(true);
     }
 
-    private void passFieldHandler(){
-        //FIX getText()
-        int len = password.getText().trim().length();
-        if (len < 9) {
-            messagePanel.setVisible(true);
-            incorrectPassMessage.setVisible(true);
-        }else {
-            messagePanel.setVisible(false);
-            incorrectPassMessage.setVisible(false);
-        }
-    }
 
 }
 
