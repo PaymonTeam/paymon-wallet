@@ -1,12 +1,6 @@
 package com.paymon.wallet;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 public class TransactionInfoInWalletForm {
     private String hash;

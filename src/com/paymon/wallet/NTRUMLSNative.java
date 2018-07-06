@@ -26,6 +26,6 @@ public class NTRUMLSNative {
     native public static boolean verify(byte[] msg, byte[] signature, byte[] pk);
 
     static {
-        System.loadLibrary("libntrumls");
+        System.loadLibrary("ntrumls");
     }
 }

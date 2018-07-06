@@ -89,6 +89,7 @@ fun updateThread() {
 //                }
                 val txs = api.getTransactions(txHashes)
                 if(txs != null) {
+                    walletForm.list.clear();
                     for (i in 0..txs.size) {
                         walletForm.addToList(txs[i].hash.toString(),
                                 addr.toString(),

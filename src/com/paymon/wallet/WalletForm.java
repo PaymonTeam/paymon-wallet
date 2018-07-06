@@ -17,19 +17,13 @@ public class WalletForm extends JFrame {
     private JLabel text2;
     private JPanel JLPanel;
     private JButton refreshButton;
-    private ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
-    int n = 1;
+    public ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
+
     public WalletForm() {
         initComponents();
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TransactionInfoInWalletForm tx1 = new TransactionInfoInWalletForm("hash1", "sender1", "recipient1", 10, Calendar.getInstance().getTime());
-                ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
-                for (int i = 0; i < n; i++) {
-                    list.add(tx1);
-                }
-                n++;
                 updateJListPanel();
             }
         });
