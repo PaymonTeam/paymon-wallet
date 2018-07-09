@@ -2,6 +2,7 @@ package com.paymon.wallet;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -13,8 +14,8 @@ public class JFilePicker extends JPanel {
     private String buttonLabel;
 
     private JLabel label;
-    private JTextField textField;
-    private JButton button;
+    public JTextField textField;
+    public JButton button;
 
     private JFileChooser fileChooser;
 
@@ -29,7 +30,6 @@ public class JFilePicker extends JPanel {
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-        // creates the GUI
         label = new JLabel(textFieldLabel);
 
         textField = new JTextField(20);
@@ -60,7 +60,9 @@ public class JFilePicker extends JPanel {
             }
         }
     }
-
+    public void setSelectedFile(File f){
+        fileChooser.setSelectedFile(f);
+    }
     public void addFileTypeFilter(String extension, String description) {
         FileTypeFilter filter = new FileTypeFilter(extension, description);
         fileChooser.addChoosableFileFilter(filter);
@@ -74,5 +76,8 @@ public class JFilePicker extends JPanel {
         return textField.getText();
     }
 
+    public File getSelectedFile(){
+        return fileChooser.getSelectedFile();
+    }
 
 }

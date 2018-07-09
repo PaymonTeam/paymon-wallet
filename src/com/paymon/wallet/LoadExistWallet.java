@@ -45,12 +45,6 @@ public class LoadExistWallet extends JFrame {
                 handler.oButtonHandler(oButtonIsClicked, oButton, password);
             }
         });
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadButtonHandler();
-            }
-        });
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
@@ -111,6 +105,7 @@ public class LoadExistWallet extends JFrame {
         enterPasswordLabel.setForeground(Color.WHITE);
 
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
+
     }
 
     public boolean loadButtonHandler(){
@@ -118,7 +113,7 @@ public class LoadExistWallet extends JFrame {
         boolean fileExplorerIsOk;
         passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
 
-        if(handler.fileIsCorrect(filePicker.getSelectedFilePath(),"log")){
+        if(handler.fileIsCorrect(filePicker.getSelectedFilePath(),"json")){
             File f = new File(filePicker.getSelectedFilePath());
             if(f.exists() && !f.isDirectory()) {
                 System.out.println("Selected .json file: " + filePicker.getSelectedFilePath());
@@ -136,6 +131,12 @@ public class LoadExistWallet extends JFrame {
             fileExplorerIsOk =  false;
         }
         return passIsOk && fileExplorerIsOk;
+    }
+    public String getPassword(){
+        return password.getPassword().toString();
+    }
+    public String getPath(){
+        return filePicker.getSelectedFilePath();
     }
 
 }

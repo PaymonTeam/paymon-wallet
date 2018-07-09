@@ -31,7 +31,7 @@ public class PKSave extends JFrame{
 
         PKPanel.setOpaque(false);
 
-        navigationPanel.setOpaque(false);
+//        navigationPanel.setOpaque(false);
 
         titleLabel.setForeground(Color.WHITE);
 

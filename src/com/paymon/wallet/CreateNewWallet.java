@@ -78,6 +78,9 @@ public class CreateNewWallet extends JFrame {
     public boolean createButtonHandler(){
         return handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
     }
+    public String getPassword(){
+        return password.getPassword().toString();
+    }
 
 
 }

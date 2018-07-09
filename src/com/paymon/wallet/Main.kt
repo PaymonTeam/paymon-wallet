@@ -11,10 +11,13 @@ import kotlin.concurrent.thread
 import org.bouncycastle.util.encoders.Hex
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
+import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.system.exitProcess
+
+
 
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
@@ -56,6 +59,12 @@ fun initListeners() {
             if(authForm.createButtonHandler()) {
                 authForm.contentPane = jsonSave.contentPane
                 authForm.repaintMainPanel()
+                val file = createBackup(authForm.password)
+                if(file != null) {
+                    jsonSave.setFile(file)
+                }else{
+                    println("Backup file is null")
+                }
             }
         }
     })
@@ -68,6 +77,7 @@ fun initListeners() {
     loadForm.loadButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             if (loadForm.loadButtonHandler()){
+                api.account = restoreFromBackup(loadForm.getPassword(), loadForm.getPath())
                 loadForm.dispose()
                 walletForm.isVisible = true
             }
@@ -102,8 +112,10 @@ fun initListeners() {
     jsonSave.nextButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             if(jsonSave.checkBoxHandler()) {
+                jsonSave.writeFile()
                 authForm.contentPane = pkSave.contentPane
                 authForm.repaintMainPanel()
+                pkSave.privateKeyTextField.text = getPrivateKey().toString()
             }
         }
     })
@@ -173,4 +185,30 @@ fun buckupTest() {
     }
     val bu = JsonParser().parse(String(Files.readAllBytes(Paths.get("backup.json"))))
     restoreFromBackup(bu, "123456789")
+}
+fun createBackup(password: String): File?{
+    val backup = api.account?.createBackup(password)
+    val file: File
+    try{
+        val path = Paths.get("backup.json")
+        Files.write(path, backup.toString().toByteArray())
+        file = path.toFile()
+        return file
+    } catch (e: IOException) {
+        println("Failed to create backup")
+        return null
+    }
+}
+fun getPrivateKey(): ByteArray{
+    val key = api.account?.privateKey
+    if (key != null){
+        return key
+    }else{
+        println("Failed to get key")
+    }
+    return "Empty key".toByteArray()
+}
+fun restoreFromBackup(password: String, path: String): WalletAccount?{
+    val bu = JsonParser().parse(String(Files.readAllBytes(Paths.get(path))))
+    return restoreFromBackup(bu, password)
 }
