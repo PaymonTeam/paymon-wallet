@@ -20,6 +20,8 @@ var authForm = CreateNewWallet()
 var walletForm = WalletForm()
 var loadForm = LoadExistWallet()
 var tx = TransactionForm()
+var jsonSave = JsonFileSave()
+var pkSave = PKSave()
 var running = true
 val HASH_SIZE = 20
 val ADDRESS_SIZE = HASH_SIZE + 1
@@ -51,7 +53,10 @@ fun main(args: Array<String>) {
 fun initListeners() {
     authForm.createNewWalletButton.addActionListener(object : ActionListener{
         override fun actionPerformed(e: ActionEvent?) {
-
+            if(authForm.createButtonHandler()) {
+                authForm.contentPane = jsonSave.contentPane
+                authForm.repaintMainPanel()
+            }
         }
     })
     authForm.loadWalletButton.addActionListener(object : ActionListener{
@@ -88,7 +93,39 @@ fun initListeners() {
             walletForm.repaintMainPanel()
         }
     })
-
+    jsonSave.backButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            authForm.contentPane = authForm.panel
+            authForm.repaintMainPanel()
+        }
+    })
+    jsonSave.nextButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            if(jsonSave.checkBoxHandler()) {
+                authForm.contentPane = pkSave.contentPane
+                authForm.repaintMainPanel()
+            }
+        }
+    })
+    pkSave.backButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            authForm.contentPane = jsonSave.contentPane
+            authForm.repaintMainPanel()
+        }
+    })
+    pkSave.finishButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            authForm.contentPane = authForm.panel
+            authForm.repaintMainPanel()
+        }
+    })
+    pkSave.copyButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            if(pkSave.privateKeyTextField.text != null) {
+                pkSave.setClipboard(pkSave.privateKeyTextField.text)
+            }
+        }
+    })
 
 
     //updateAddress()
@@ -128,12 +165,12 @@ fun updateThread() {
 }
 
 fun buckupTest() {
-    val backup = api.account?.createBackup("12345678")
+    val backup = api.account?.createBackup("123456789")
     try {
         Files.write(Paths.get("backup.json"), backup.toString().toByteArray())
     } catch (e: IOException) {
         println("Failed to create backup")
     }
     val bu = JsonParser().parse(String(Files.readAllBytes(Paths.get("backup.json"))))
-    restoreFromBackup(bu, "12345678")
+    restoreFromBackup(bu, "123456789")
 }

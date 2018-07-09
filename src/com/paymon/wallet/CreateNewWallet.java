@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class CreateNewWallet extends JFrame {
 
-    private JPanel panel;
+    public JPanel panel;
     private JPanel firstPanel;
     private JPanel passFieldPanel;
     private JPanel buttPanel;
@@ -43,13 +43,6 @@ public class CreateNewWallet extends JFrame {
 
         setDefaultLookAndFeelDecorated(false);
 
-        createNewWalletButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
-            }
-
-        });
         oButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,6 +70,13 @@ public class CreateNewWallet extends JFrame {
         enterPasswordLabel.setForeground(Color.WHITE);
         panel.setBackground(new Color(51,181,229));
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
+    }
+    public void repaintMainPanel(){
+        getContentPane().repaint();
+        getContentPane().revalidate();
+    }
+    public boolean createButtonHandler(){
+        return handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
     }
 
 
