@@ -11,7 +11,7 @@ import org.bouncycastle.crypto.params.ParametersWithIV
 import org.bouncycastle.util.encoders.Hex
 import javax.crypto.KeyGenerator
 
-val BACKUP_VERSION = 1
+const val BACKUP_VERSION = 1
 
 class WalletAccount(sk: PrivateKey) {
     var privateKey = sk
@@ -105,6 +105,7 @@ fun restoreFromBackup(json: JsonElement, password: String) : WalletAccount? {
         println("Invalid 'iv' param")
         return null
     }
+
     if (!cryptoObj.get("ciphertext").isJsonPrimitive || !cryptoObj.getAsJsonPrimitive("ciphertext").isString) {
         println("Invalid ciphertext param")
         return null
