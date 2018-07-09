@@ -9,34 +9,42 @@ import java.util.Calendar;
 
 public class WalletForm extends JFrame {
     public JToolBar toolbar;
-    private JPanel panel;
-    public JButton addressButton;
+
+    public JPanel panel;
     private JPanel toolbarPanel;
-    public JButton balanceButton;
     private JPanel textPanel;
     private JPanel JLPanel;
     private JPanel newTxPanel;
-    private JButton createNewTransactionButton;
-    private JButton refreshTransactionListButton;
     private JPanel refreshPanel;
     private JPanel mainPanel;
+
+    public JButton balanceButton;
+    public JButton addressButton;
+    public JButton createNewTransactionButton;
+    public JButton refreshTransactionListButton;
+
+    private JLabel addrLabel;
+    private JLabel balanceLabel;
+
     public ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
 
     public WalletForm() {
         initComponents();
+        visibleSetter();
+
         refreshTransactionListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateJListPanel();
             }
         });
+
         createNewTransactionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
             }
         });
-        setVisible(true);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
@@ -45,7 +53,6 @@ public class WalletForm extends JFrame {
             e.printStackTrace();
         }
         setDefaultLookAndFeelDecorated(false);
-        pack();
     }
 
     private void initJListPanel() {
@@ -53,6 +60,7 @@ public class WalletForm extends JFrame {
         JLPanel.removeAll();
         JLPanel.add(JLPan.createPanel(),BorderLayout.CENTER);
     }
+
     private void setList(ArrayList<TransactionInfoInWalletForm> list){
         this.list = list;
     }
@@ -69,17 +77,43 @@ public class WalletForm extends JFrame {
         panel.revalidate();
 
     }
+
+    //TODO change by using public access
     public void setAddress(String address){
         addressButton.setText(address);
     }
+
     public void setBalance(int balance){
         balanceButton.setText(Integer.toString(balance));
     }
+
     private void initComponents(){
         setTitle("PaymonCoin Wallet");
+        setSize(480, 480);
+        setContentPane(panel);
         initToolbar();
         initJListPanel();
-        add(panel);
+    }
+    public void visibleSetter(){
+        JLPanel.setOpaque(false);
+
+        toolbarPanel.setOpaque(false);
+
+        refreshPanel.setOpaque(false);
+
+        newTxPanel.setOpaque(false);
+
+        textPanel.setOpaque(false);
+
+        addrLabel.setForeground(Color.WHITE);
+
+        balanceLabel.setForeground(Color.WHITE);
+
+        panel.setBackground(new Color(51, 181, 229));
+
+        mainPanel.setBackground(new Color(51, 181, 229));
+
+        //setVisible(true);
     }
 
     private void initToolbar(){
@@ -92,7 +126,12 @@ public class WalletForm extends JFrame {
         toolbar.add(optionsToolbarButton);
         toolbar.addSeparator();
     }
+
     public void addToList(String hash, String sender, String recipient, int amount){
         list.add(new TransactionInfoInWalletForm(hash,sender,recipient,amount, Calendar.getInstance().getTime()));
+    }
+    public void repaintMainPanel(){
+        getContentPane().repaint();
+        getContentPane().revalidate();
     }
 }

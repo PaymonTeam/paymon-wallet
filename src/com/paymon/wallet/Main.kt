@@ -9,6 +9,8 @@ import java.awt.event.MouseListener
 import javax.swing.JButton
 import kotlin.concurrent.thread
 import org.bouncycastle.util.encoders.Hex
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -17,6 +19,7 @@ import kotlin.system.exitProcess
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
 var loadForm = LoadExistWallet()
+var tx = TransactionForm()
 var running = true
 val HASH_SIZE = 20
 val ADDRESS_SIZE = HASH_SIZE + 1
@@ -32,6 +35,8 @@ fun main(args: Array<String>) {
         exitProcess(-1)
     }
 
+
+
     initListeners()
 
     api.sendCoins(Address("PE138221B1A9CBEFCEAF03E17934A7373D6289F0536"), 100) {
@@ -44,34 +49,49 @@ fun main(args: Array<String>) {
 }
 
 fun initListeners() {
-    /*authForm.createNewWalletButton.addMouseListener(object : MouseListener {
-        override fun mouseReleased(e: MouseEvent?) {
-        }
+    authForm.createNewWalletButton.addActionListener(object : ActionListener{
+        override fun actionPerformed(e: ActionEvent?) {
 
-        override fun mouseEntered(e: MouseEvent?) {
         }
-
-        override fun mouseClicked(e: MouseEvent?) {
-        }
-
-        override fun mouseExited(e: MouseEvent?) {
-        }
-
-        override fun mousePressed(e: MouseEvent?) {
+    })
+    authForm.loadWalletButton.addActionListener(object : ActionListener{
+        override fun actionPerformed(e: ActionEvent?) {
             authForm.dispose()
-            walletForm.isVisible = true
+            loadForm.isVisible = true
         }
-    })*/
-    val addr = api.account?.address
-    if(addr != null) {
-        walletForm.setAddress(addr.toString())
-        walletForm.pack()
-        val balance = api.getBalanceRequest(addr)
-        if (balance != null) {
-            walletForm.setBalance(balance.toInt())
+    })
+    loadForm.loadButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            if (loadForm.loadButtonHandler()){
+                loadForm.dispose()
+                walletForm.isVisible = true
+            }
         }
-    }
-    updateAddress()
+
+    })
+    loadForm.backButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            loadForm.dispose()
+            authForm.isVisible = true
+        }
+
+    })
+    walletForm.createNewTransactionButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            walletForm.contentPane = tx.contentPane
+            walletForm.repaintMainPanel()
+        }
+    })
+    tx.backToWalletPageButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+           walletForm.contentPane = walletForm.panel
+            walletForm.repaintMainPanel()
+        }
+    })
+
+
+
+    //updateAddress()
 }
 
 fun updateAddress() {

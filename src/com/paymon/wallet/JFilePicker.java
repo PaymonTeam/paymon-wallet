@@ -1,5 +1,5 @@
 package com.paymon.wallet;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,7 +25,6 @@ public class JFilePicker extends JPanel {
     public JFilePicker(String textFieldLabel, String buttonLabel) {
         this.textFieldLabel = textFieldLabel;
         this.buttonLabel = buttonLabel;
-
         fileChooser = new JFileChooser();
 
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -33,7 +32,7 @@ public class JFilePicker extends JPanel {
         // creates the GUI
         label = new JLabel(textFieldLabel);
 
-        textField = new JTextField(30);
+        textField = new JTextField(20);
         button = new JButton(buttonLabel);
 
         button.addActionListener(new ActionListener() {
@@ -43,6 +42,7 @@ public class JFilePicker extends JPanel {
             }
         });
 
+        label.setForeground(Color.WHITE);
         add(label);
         add(textField);
         add(button);
@@ -74,7 +74,5 @@ public class JFilePicker extends JPanel {
         return textField.getText();
     }
 
-    public JFileChooser getFileChooser() {
-        return this.fileChooser;
-    }
+
 }

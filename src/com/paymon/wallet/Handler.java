@@ -16,17 +16,15 @@ public class Handler {
         }
     }
 
-    public void passFieldHandler(JPasswordField passwordField, JPanel messagePanel, JLabel incorrectPassMessage, JFrame frame) {
+    public boolean passFieldHandler(JPasswordField passwordField, JLabel incorrectPassMessage, Color color) {
         //FIX getText()
         int len = passwordField.getText().trim().length();
         if (len < 9) {
-            messagePanel.setVisible(true);
-            incorrectPassMessage.setVisible(true);
-            frame.pack();
+            incorrectPassMessage.setForeground(Color.RED);
+            return false;
         } else {
-            messagePanel.setVisible(false);
-            incorrectPassMessage.setVisible(false);
-            frame.pack();
+            incorrectPassMessage.setForeground(color);
+            return true;
         }
     }
 
@@ -35,20 +33,22 @@ public class Handler {
             return false;
         }
         String[] modules = path.split("/");
-        for (String module : modules) {
+       /* for (String module : modules) {
             for (char c : module.toCharArray()) {
                 if ((c >= 'А' && c <= 'я') || c == 'Ё' || c == 'ё' || c == 'і' || c == 'І' || c == 'ї' || c == 'Ї') {
                     return false;
                 }
             }
-        }
+        }*/
         String[] fileModules = modules[modules.length - 1].split("\\.");
         if (fileModules.length != 0) {
             if (fileModules[fileModules.length - 1].equals(fileFormat)) {
                 return true;
+            }else{
+                return false;
             }
+        }else{
+            return false;
         }
-
-        return false;
     }
 }

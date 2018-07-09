@@ -7,45 +7,37 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 public class LoadExistWallet extends JFrame {
-    private JFrame frame = this;
     private JPanel panel;
-    private JPanel passFieldPanel;
-    private JPasswordField passwordField;
-    private JButton oButton;
-    private JPasswordField password;
-    private JPanel firstPanel;
-    private JLabel LoadWalletLabel;
-    private JLabel enterPasswordLabel;
-    private JPanel buttPanel;
-    private boolean oButtonIsClicked = true;
-    private JLabel passwordLable;;
-    private JButton loadButton;
     private JPanel fileExplorerPanel;
     private JPanel messagePanel;
-    private JLabel incorrectPassMessage;
-    private JPanel mainPanel;
+    private JPanel buttPanel;
     private JPanel messageFileExplorerPanel;
+    private JPanel firstPanel;
+    private JPanel passFieldPanel;
+
+    private JButton oButton;
+    public JButton loadButton;
+
+    private JPasswordField password;
+
+    private JLabel passwordLable;
+    private JLabel incorrectPassMessage;
     private JLabel fileExplorerMessageLabel;
-    private ImagePanel imgPanel;
+    private JLabel enterPasswordLabel;
+    private JLabel loadWalletLabel;
+    public JButton backButton;
+
+    private JFilePicker filePicker;
 
     private Handler handler;
 
+    private boolean oButtonIsClicked = true;
+
     public LoadExistWallet() {
-        handler = new Handler();
-        setContentPane(panel);
-        setTitle("Wallet Load");
-        setBackground(new Color(51,181,229));
-        JFilePicker filePicker = new JFilePicker("Pick a file", "Browse...");
-        filePicker.setMode(JFilePicker.MODE_OPEN);
-        filePicker.addFileTypeFilter(".json", "JSON Files");
-        fileExplorerPanel.add(filePicker, BorderLayout.CENTER);
 
+        initComponents();
+        visibleSetter();
 
-        incorrectPassMessage.setForeground(Color.RED);
-        fileExplorerMessageLabel.setForeground(Color.RED);
-        messagePanel.setVisible(false);
-        fileExplorerMessageLabel.setVisible(false);
-        handler.oButtonHandler(oButtonIsClicked, oButton, password);
         oButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,28 +48,10 @@ public class LoadExistWallet extends JFrame {
         loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handler.passFieldHandler(password, messagePanel, incorrectPassMessage, frame);
-                if(handler.fileIsCorrect(filePicker.getSelectedFilePath(),"json")){
-                    File f = new File(filePicker.getSelectedFilePath());
-                    if(f.exists() && !f.isDirectory()) {
-                        System.out.println("Selected .json file: " + filePicker.getSelectedFilePath());
-                        fileExplorerMessageLabel.setVisible(false);
-                        pack();
-                    }else{
-                        fileExplorerMessageLabel.setText("File in selected path does not exist");
-                        fileExplorerMessageLabel.setVisible(true);
-                        pack();
-                    }
-                }else{
-                    System.out.println("Wrong file selected");
-                    fileExplorerMessageLabel.setText("Wrong file type selected");
-                    fileExplorerMessageLabel.setVisible(true);
-                    pack();
-                }
+                loadButtonHandler();
             }
         });
 
-        setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -85,9 +59,84 @@ public class LoadExistWallet extends JFrame {
             e.printStackTrace();
         }
         setDefaultLookAndFeelDecorated(false);
-        pack();
+        //pack();
     }
 
+    private void visibleSetter(){
+        messagePanel.setVisible(true);
+        messagePanel.setOpaque(false);
+
+        messageFileExplorerPanel.setVisible(true);
+        messageFileExplorerPanel.setOpaque(false);
+
+        incorrectPassMessage.setVisible(true);
+
+        fileExplorerMessageLabel.setVisible(true);
+
+        fileExplorerPanel.setOpaque(false);
+
+        firstPanel.setOpaque(false);
+
+        passFieldPanel.setOpaque(false);
+
+        buttPanel.setOpaque(false);
+
+        fileExplorerPanel.setOpaque(false);
+
+        //setVisible(true);
+    }
+
+    private void initComponents(){
+        handler = new Handler();
+        setContentPane(panel);
+        setTitle("Wallet Load");
+        setSize(480, 480);
+
+
+        filePicker = new JFilePicker("Pick a file", "Browse...");
+        filePicker.setMode(JFilePicker.MODE_OPEN);
+        filePicker.addFileTypeFilter(".json", "JSON Files");
+        filePicker.setOpaque(true);
+        filePicker.setBackground(new Color(51,181,229));
+        fileExplorerPanel.add(filePicker, BorderLayout.CENTER);
+
+        incorrectPassMessage.setForeground(new Color(51,181,229));
+
+        fileExplorerMessageLabel.setForeground(new Color(51,181,229));
+
+        panel.setBackground(new Color(51,181,229));
+
+        loadWalletLabel.setForeground(Color.WHITE);
+
+        enterPasswordLabel.setForeground(Color.WHITE);
+
+        handler.oButtonHandler(oButtonIsClicked, oButton, password);
+    }
+
+    public boolean loadButtonHandler(){
+        boolean passIsOk;
+        boolean fileExplorerIsOk;
+        passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
+
+        if(handler.fileIsCorrect(filePicker.getSelectedFilePath(),"log")){
+            File f = new File(filePicker.getSelectedFilePath());
+            if(f.exists() && !f.isDirectory()) {
+                System.out.println("Selected .json file: " + filePicker.getSelectedFilePath());
+                fileExplorerMessageLabel.setForeground(new Color(51,181,229));
+                fileExplorerIsOk =  true;
+            }else{
+                fileExplorerMessageLabel.setText("File in selected path does not exist");
+                fileExplorerMessageLabel.setForeground(Color.RED);
+                fileExplorerIsOk =  false;
+            }
+        }else{
+            System.out.println("Wrong file selected");
+            fileExplorerMessageLabel.setText("Wrong file type selected");
+            fileExplorerMessageLabel.setForeground(Color.RED);
+            fileExplorerIsOk =  false;
+        }
+        return passIsOk && fileExplorerIsOk;
+    }
 
 }
 
