@@ -28,7 +28,7 @@ class API {
     }
 
     init {
-        val hosts = arrayOf("tcp://127.0.0.1:80")
+        val hosts = arrayOf("tcp://127.0.0.1:79")
         Arrays.stream(hosts).distinct()
                 .filter{s -> !s.isEmpty()}
                 .map{s -> Optional.of(URI(s))}
@@ -102,8 +102,8 @@ class API {
             resp = l
             if (!l.isEmpty()) {
                 if (resp.startsWith("HTTP")) {
-                    val retCode = resp.split(' ', ignoreCase = true, limit = 3)[1]
-                    if (retCode != "200") {
+                    val retCode = resp.split(' ', ignoreCase = true, limit = 2)[1]
+                    if (!retCode.startsWith("200")) {
                         println("Error code: $retCode")
                         return null
                     }
@@ -193,6 +193,7 @@ class API {
         val obj = BroadcastTransaction(transaction.obj)
         val json = API.gson.toJsonTree(obj)
         json.asJsonObject.addProperty("method", "broadcastTransaction")
+        println("Sending tx ${String(Hex.encode(transaction.obj.hash))}")
         val resp = sendRequest(json, neighbors[0])
         return resp != null
     }
