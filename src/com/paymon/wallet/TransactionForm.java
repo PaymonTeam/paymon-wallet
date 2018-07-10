@@ -1,6 +1,10 @@
 package com.paymon.wallet;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 
 public class TransactionForm extends JFrame {
@@ -18,7 +22,7 @@ public class TransactionForm extends JFrame {
 
     private JTextField recipientAddress;
 
-    private JFormattedTextField amount;
+    private JTextField amount;
 
     private JLabel newTransactionLabel;
     private JLabel addrLabel;
@@ -64,5 +68,34 @@ public class TransactionForm extends JFrame {
         setTitle("New Transaction");
         //setSize(480, 480);
         setContentPane(panel);
+        PlainDocument doc = (PlainDocument) amount.getDocument();
+        doc.setDocumentFilter(new DigitFilter());
+    }
+    public void setAddress(String address) {
+        addressButton.setText(address);
+    }
+
+    public void setBalance(int balance) {
+        balanceButton.setText(Integer.toString(balance));
+    }
+
+}
+class DigitFilter extends DocumentFilter {
+    private static final String DIGITS = "\\d+";
+
+    @Override
+
+    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+
+        if (string.matches(DIGITS)) {
+            super.insertString(fb, offset, string, attr);
+        }
+    }
+
+    @Override
+    public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attrs) throws BadLocationException {
+        if (string.matches(DIGITS)) {
+            super.replace(fb, offset, length, string, attrs);
+        }
     }
 }

@@ -25,6 +25,7 @@ public class WalletForm extends JFrame {
 
     private JLabel addrLabel;
     private JLabel balanceLabel;
+    private JLabel exceptionLabel;
 
     public ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
 
@@ -135,5 +136,15 @@ public class WalletForm extends JFrame {
     public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
+    }
+    public void showExceptionMessage(boolean flag, String message){
+        if(message != null){
+            exceptionLabel.setText(message);
+        }
+        if(flag){
+            exceptionLabel.setForeground(Color.RED);
+        }else{
+            exceptionLabel.setForeground(panel.getForeground());
+        }
     }
 }
