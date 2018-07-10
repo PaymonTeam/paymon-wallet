@@ -94,6 +94,9 @@ public class WalletForm extends JFrame {
         setContentPane(panel);
         initToolbar();
         initJListPanel();
+        JLPanel.setSize(getSize().width - 20,getSize().height -
+                (toolbarPanel.getHeight() + textPanel.getHeight() + newTxPanel.getHeight() + refreshPanel.getHeight() + exceptionLabel.getHeight()));
+        repaintMainPanel();
     }
 
     public void visibleSetter() {
@@ -114,6 +117,9 @@ public class WalletForm extends JFrame {
         panel.setBackground(new Color(51, 181, 229));
 
         mainPanel.setBackground(new Color(51, 181, 229));
+
+        exceptionLabel.setVisible(true);
+        exceptionLabel.setForeground(new Color(51, 181, 229));
 
         //setVisible(true);
     }

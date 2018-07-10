@@ -111,6 +111,8 @@ public class LoadExistWallet extends JFrame {
 
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
 
+        passFieldPanel.setSize(fileExplorerPanel.getSize());
+
     }
 
     public boolean loadButtonHandler() {
