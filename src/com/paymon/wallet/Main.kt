@@ -96,6 +96,7 @@ fun initListeners() {
         override fun actionPerformed(e: ActionEvent?) {
            walletForm.contentPane = walletForm.panel
             walletForm.repaintMainPanel()
+            walletForm.setSize(480, 480);
         }
     })
     jsonSave.backButton.addActionListener(object : ActionListener {
