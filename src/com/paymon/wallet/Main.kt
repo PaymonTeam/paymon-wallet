@@ -224,16 +224,17 @@ fun createBackup(password: String, path_name: String): File?{
     }else{
         pathJson = path_name.plus(".json")
     }
+    api.account = WalletAccount(NTRUMLSNative.generateKeyPair().privateKey)
     val backup = api.account?.createBackup(password)
     val file: File
-    return try{
+    return try {
         val path = Paths.get(pathJson)
         Files.write(path, backup.toString().toByteArray())
         file = path.toFile()
-        return file
+        file
     } catch (e: IOException) {
         println("Failed to create backup")
-        return null
+        null
     }
 }
 fun getPrivateKey(): ByteArray{
