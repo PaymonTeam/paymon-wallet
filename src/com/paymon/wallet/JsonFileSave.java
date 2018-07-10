@@ -79,9 +79,8 @@ public class JsonFileSave extends JFrame {
     public void setFile(File f) {
         json = f;
     }
-
-    public File getFile() {
-        return json;
+    public String  getFilePath(){
+        return filePicker.getSelectedFilePath();
     }
 
     public void writeFile() throws IOException {
