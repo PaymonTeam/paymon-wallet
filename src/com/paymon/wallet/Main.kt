@@ -21,8 +21,8 @@ var tx = TransactionForm()
 var jsonSave = JsonFileSave()
 var pkSave = PKSave()
 var running = true
-val HASH_SIZE = 20
-val ADDRESS_SIZE = HASH_SIZE + 1
+const val HASH_SIZE = 20
+const val ADDRESS_SIZE = HASH_SIZE + 1
 val ADDRESS_NULL = Address(ByteArray(ADDRESS_SIZE))
 val HASH_NULL = ByteArray(HASH_SIZE)
 val api = API()
@@ -37,9 +37,9 @@ fun main(args: Array<String>) {
 
     initListeners()
 
-    api.sendCoins(Address("PE138221B1A9CBEFCEAF03E17934A7373D6289F0536"), 100) {
-        println("Result $it")
-    }
+//    api.sendCoins(Address("PE138221B1A9CBEFCEAF03E17934A7373D6289F0536"), 100) {
+//        println("Result $it")
+//    }
 
     thread {
         updateThread()
@@ -52,7 +52,6 @@ fun initListeners() {
             if (authForm.createButtonHandler()) {
                 authForm.contentPane = jsonSave.contentPane
                 authForm.repaintMainPanel()
-                println("pass_save=${authForm.password}=${String(Hex.encode(authForm.password.toByteArray()))}")
                 val file = createBackup(authForm.password)
                 if (file != null) {
                     jsonSave.file = file
@@ -74,7 +73,6 @@ fun initListeners() {
     loadForm.loadButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             if (loadForm.loadButtonHandler()) {
-                println("pass_open=${loadForm.password}=${String(Hex.encode(loadForm.password.toByteArray()))}")
                 api.account = restoreFromBackup(loadForm.password, loadForm.path)
                 loadForm.dispose()
                 walletForm.isVisible = true
@@ -163,12 +161,11 @@ fun updateThread() {
 //                }
                 val txs = api.getTransactions(txHashes)
                 if (txs != null) {
-                    walletForm.list.clear();
-                    for (i in 0..txs.size) {
-                        walletForm.addToList(txs[i].hash.toString(),
-                                addr.toString(),
-                                txs[i].address.toString(),
-                                txs[i].value.toInt())
+                    walletForm.list.clear()
+                    for (tx in txs) {
+                        println("val=${tx.value}")
+                        walletForm.addToList(String(Hex.encode(tx.hash)), addr.toString(), tx.address.toString(), tx
+                                .value.toInt())
                     }
                 }
             }

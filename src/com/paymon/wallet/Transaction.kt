@@ -157,10 +157,10 @@ class TransactionObject : Serializable() {
         attachment_timestamp_upper_bound = stream.readInt64()
         stream.readBytes(branch_transaction)
         stream.readBytes(trunk_transaction)
-        nonce = stream.readInt32().toLong()
+        nonce = stream.readInt64()
         stream.readBytes(tag)
         timestamp = stream.readInt64()
-        value = stream.readInt64()
+        value = stream.readInt32().toLong()
         data_type = when (stream.readByte()) {
             0.toByte() -> TransactionType.HashOnly
             else -> TransactionType.Full
