@@ -73,10 +73,10 @@ fun initListeners() {
                 println("pass_open=${loadForm.password}=${String(Hex.encode(loadForm.password.toByteArray()))}")
                 api.account = restoreFromBackup(loadForm.password, loadForm.path)
                 updateAddress()
-                updateBalance()
+                //updateBalance()
                 loadForm.dispose()
                 walletForm.isVisible = true
-
+                walletForm.setSize(500, 670)
             }
         }
 
@@ -91,7 +91,7 @@ fun initListeners() {
     walletForm.createNewTransactionButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             updateAddress()
-            updateBalance()
+            //updateBalance()
             walletForm.contentPane = tx.contentPane
             walletForm.repaintMainPanel()
             walletForm.pack()
@@ -101,7 +101,7 @@ fun initListeners() {
         override fun actionPerformed(e: ActionEvent?) {
            walletForm.contentPane = walletForm.panel
             walletForm.repaintMainPanel()
-            walletForm.setSize(480, 480);
+            walletForm.setSize(500, 670)
         }
     })
     jsonSave.backButton.addActionListener(object : ActionListener {
