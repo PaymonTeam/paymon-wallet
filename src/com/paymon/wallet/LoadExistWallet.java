@@ -133,7 +133,7 @@ public class LoadExistWallet extends JFrame {
         return passIsOk && fileExplorerIsOk;
     }
     public String getPassword(){
-        return password.getPassword().toString();
+        return new String(password.getPassword());
     }
     public String getPath(){
         return filePicker.getSelectedFilePath();

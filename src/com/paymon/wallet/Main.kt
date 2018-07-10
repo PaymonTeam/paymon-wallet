@@ -158,12 +158,12 @@ fun updateThread() {
 //                }
                 val txs = api.getTransactions(txHashes)
                 if(txs != null) {
-                    walletForm.list.clear();
-                    for (i in 0..txs.size) {
-                        walletForm.addToList(txs[i].hash.toString(),
+                    walletForm.list.clear()
+                    for (i in txs) {
+                        walletForm.addToList(i.hash.toString(),
                                 addr.toString(),
-                                txs[i].address.toString(),
-                                txs[i].value.toInt())
+                                i.address.toString(),
+                                i.value.toInt())
                     }
                 }
             }
@@ -185,19 +185,22 @@ fun buckupTest() {
     restoreFromBackup(bu, "123456789")
 }
 fun createBackup(password: String, path_name: String): File?{
-    val splitted = password.split("\\.")
+    val splitted = path_name.split("\\.")
+    val pathJson: String
     //TODO
     if(splitted.size > 1) {
         if (splitted[splitted.size - 1] != "json"){
-
+            pathJson = path_name.plus(".json")
+        }else{
+            pathJson = path_name
         }
     }else{
-
+        pathJson = path_name.plus(".json")
     }
     val backup = api.account?.createBackup(password)
     val file: File
     try{
-        val path = Paths.get(path_name)
+        val path = Paths.get(pathJson)
         Files.write(path, backup.toString().toByteArray())
         file = path.toFile()
         return file
