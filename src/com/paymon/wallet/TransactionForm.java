@@ -29,6 +29,9 @@ public class TransactionForm extends JFrame {
     private JLabel balanceLabel;
     private JLabel recipientLabel;
     private JLabel amoutLabel;
+    private JLabel exceptionLabel;
+    private JLabel addressException;
+    private JLabel amountException;
 
     TransactionForm() {
         initComponents();
@@ -61,6 +64,20 @@ public class TransactionForm extends JFrame {
 
         balanceLabel.setForeground(Color.WHITE);
 
+        exceptionLabel.setVisible(true);
+
+        exceptionLabel.setForeground(new Color(51, 181, 229));
+
+        addressException.setVisible(true);
+
+        addressException.setForeground(new Color(51, 181, 229));
+
+        amountException.setVisible(true);
+
+        amountException.setForeground(new Color(51, 181, 229));
+
+
+
     }
 
     private void initComponents() {
@@ -71,6 +88,7 @@ public class TransactionForm extends JFrame {
         PlainDocument doc = (PlainDocument) amount.getDocument();
         doc.setDocumentFilter(new DigitFilter());
     }
+
     public void setAddress(String address) {
         addressButton.setText(address);
     }
@@ -82,34 +100,74 @@ public class TransactionForm extends JFrame {
     public boolean txHandler(){
         boolean amountIsOk;
         boolean addressIsOk;
-        if (amount.getText() == null) {
+        if (amount.getText().equals("")) {
             amountIsOk = false;
+            showAmountExceptionMessage(true, "Amount field must not be empty");
         }else{
-            if(Integer.parseInt(amount.getText()) <= 0){
+            if (Integer.parseInt(amount.getText()) <= 0){
                 amountIsOk = false;
+                showAmountExceptionMessage(true, "The amount must be greater than zero");
             }else{
                 amountIsOk = true;
+                showAmountExceptionMessage(false, "");
             }
         }
-        if (recipientAddress.getText() == null) {
+        if (recipientAddress.getText().equals("")) {
             addressIsOk = false;
+            showAddressExceptionMessage(true, "Address field must not be empty");
         }else{
             if (recipientAddress.getText().length() != 21){
                 addressIsOk = false;
+                showAddressExceptionMessage(true, "Incorrect address format");
+
             }else{
                 addressIsOk = true;
+                showAddressExceptionMessage(false, "");
             }
         }
         return amountIsOk && addressIsOk;
     }
+
     public String getRecipientAddress(){
         return recipientAddress.getText();
     }
+
     public int getAmount(){
-        if(amount.getText() != null) {
+        if (amount.getText() != null) {
             return Integer.parseInt(amount.getText());
         }else{
             return -1;
+        }
+    }
+
+    public void showExceptionMessage(boolean flag, String message){
+        if(message != null){
+            exceptionLabel.setText(message);
+        }
+        if(flag){
+            exceptionLabel.setForeground(Color.RED);
+        }else{
+            exceptionLabel.setForeground(panel.getForeground());
+        }
+    }
+    private void showAmountExceptionMessage(boolean flag, String message){
+        if(message != null){
+            amountException.setText(message);
+        }
+        if(flag){
+            amountException.setForeground(Color.RED);
+        }else{
+            amountException.setForeground(panel.getForeground());
+        }
+    }
+    private void showAddressExceptionMessage(boolean flag, String message){
+        if(message != null){
+            addressException.setText(message);
+        }
+        if(flag){
+            addressException.setForeground(Color.RED);
+        }else{
+            addressException.setForeground(panel.getForeground());
         }
     }
 
