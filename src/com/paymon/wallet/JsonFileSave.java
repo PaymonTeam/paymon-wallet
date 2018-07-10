@@ -34,6 +34,15 @@ public class JsonFileSave extends JFrame {
         setContentPane(panel);
         setSize(480, 480);
         setFileExplorer();
+
+        titleLabel.setForeground(Color.WHITE);
+
+        agreeCheckBox.setForeground(Color.WHITE);
+
+        massageLabel.setForeground(new Color(51, 181, 229));
+
+        panel.setBackground(new Color(51, 181, 229));
+
     }
 
     private void visibleSetter() {
@@ -44,16 +53,8 @@ public class JsonFileSave extends JFrame {
 
         checkBoxPanel.setOpaque(false);
 
-//        navigationPanel.setOpaque(false);
-
-        titleLabel.setForeground(Color.WHITE);
-
-        agreeCheckBox.setForeground(Color.WHITE);
-
-        massageLabel.setForeground(new Color(51, 181, 229));
         massageLabel.setVisible(true);
 
-        panel.setBackground(new Color(51, 181, 229));
     }
 
     public boolean checkBoxHandler() {
@@ -79,7 +80,12 @@ public class JsonFileSave extends JFrame {
     public void setFile(File f) {
         json = f;
     }
-    public String  getFilePath(){
+
+    public File getFile() {
+        return json;
+    }
+
+    public String getFilePath(){
         return filePicker.getSelectedFilePath();
     }
 

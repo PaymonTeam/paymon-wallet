@@ -88,12 +88,14 @@ fun initListeners() {
         override fun actionPerformed(e: ActionEvent?) {
             walletForm.contentPane = tx.contentPane
             walletForm.repaintMainPanel()
+            walletForm.pack()
         }
     })
     tx.backToWalletPageButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
            walletForm.contentPane = walletForm.panel
             walletForm.repaintMainPanel()
+            walletForm.setSize(480, 480);
         }
     })
     jsonSave.backButton.addActionListener(object : ActionListener {
@@ -199,7 +201,7 @@ fun createBackup(password: String, path_name: String): File?{
     }
     val backup = api.account?.createBackup(password)
     val file: File
-    try{
+    return try{
         val path = Paths.get(pathJson)
         Files.write(path, backup.toString().toByteArray())
         file = path.toFile()
