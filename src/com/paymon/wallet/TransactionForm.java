@@ -62,7 +62,7 @@ public class TransactionForm extends JFrame {
     private void initComponents() {
 
         setTitle("New Transaction");
-        setSize(480, 480);
+        //setSize(480, 480);
         setContentPane(panel);
     }
 }

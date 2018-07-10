@@ -26,6 +26,7 @@ public class LoadExistWallet extends JFrame {
     private JLabel enterPasswordLabel;
     private JLabel loadWalletLabel;
     public JButton backButton;
+    private JLabel exceptionLabel;
 
     private JFilePicker filePicker;
 
@@ -63,6 +64,8 @@ public class LoadExistWallet extends JFrame {
         messageFileExplorerPanel.setVisible(true);
         messageFileExplorerPanel.setOpaque(false);
 
+        exceptionLabel.setVisible(true);
+
         incorrectPassMessage.setVisible(true);
 
         fileExplorerMessageLabel.setVisible(true);
@@ -86,6 +89,7 @@ public class LoadExistWallet extends JFrame {
         setTitle("Wallet Load");
         setSize(480, 480);
 
+        panel.setBackground(new Color(51, 181, 229));
 
         filePicker = new JFilePicker("Pick a file", "Browse...");
         filePicker.setMode(JFilePicker.MODE_OPEN);
@@ -98,7 +102,8 @@ public class LoadExistWallet extends JFrame {
 
         fileExplorerMessageLabel.setForeground(new Color(51, 181, 229));
 
-        panel.setBackground(new Color(51, 181, 229));
+        exceptionLabel.setForeground(new Color(51, 181, 229));
+
 
         loadWalletLabel.setForeground(Color.WHITE);
 
@@ -141,6 +146,16 @@ public class LoadExistWallet extends JFrame {
         return filePicker.getSelectedFilePath();
     }
 
+    public void showExceptionMessage(boolean flag, String message){
+        if(message != null){
+            exceptionLabel.setText(message);
+        }
+        if(flag){
+            exceptionLabel.setForeground(Color.RED);
+        }else{
+            exceptionLabel.setForeground(panel.getForeground());
+        }
+    }
 }
 
 

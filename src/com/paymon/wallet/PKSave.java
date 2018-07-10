@@ -22,7 +22,7 @@ public class PKSave extends JFrame {
 
     private void initComponents() {
         setContentPane(panel);
-        setSize(480, 480);
+        //setSize(480, 480);
     }
 
     private void visibleSetter() {
