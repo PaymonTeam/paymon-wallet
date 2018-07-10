@@ -31,13 +31,13 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
                                                   TransactionInfoInWalletForm tx, int index, boolean isSelected, boolean cellHasFocus) {
         int amount = tx.getAmount();
         lbAmount.setText(Integer.toString(amount));
-        if(amount > 0){
+        if (amount > 0) {
             lbAmount.setForeground(Color.GREEN);
         }
-        if(amount < 0){
+        if (amount < 0) {
             lbAmount.setForeground(Color.RED);
         }
-        if(amount == 0){
+        if (amount == 0) {
             lbAmount.setForeground(Color.BLUE);
         }
         lbHash.setText(tx.getHash());

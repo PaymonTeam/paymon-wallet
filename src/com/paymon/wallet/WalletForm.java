@@ -58,14 +58,14 @@ public class WalletForm extends JFrame {
     private void initJListPanel() {
         JListPanel JLPan = new JListPanel(list);
         JLPanel.removeAll();
-        JLPanel.add(JLPan.createPanel(),BorderLayout.CENTER);
+        JLPanel.add(JLPan.createPanel(), BorderLayout.CENTER);
     }
 
-    private void setList(ArrayList<TransactionInfoInWalletForm> list){
+    private void setList(ArrayList<TransactionInfoInWalletForm> list) {
         this.list = list;
     }
 
-    public void updateJListPanel(){
+    public void updateJListPanel() {
         JListPanel JLPan = new JListPanel(list);
         JLPanel.removeAll();
         JLPanel.repaint();
@@ -79,22 +79,23 @@ public class WalletForm extends JFrame {
     }
 
     //TODO change by using public access
-    public void setAddress(String address){
+    public void setAddress(String address) {
         addressButton.setText(address);
     }
 
-    public void setBalance(int balance){
+    public void setBalance(int balance) {
         balanceButton.setText(Integer.toString(balance));
     }
 
-    private void initComponents(){
+    private void initComponents() {
         setTitle("PaymonCoin Wallet");
         setSize(480, 480);
         setContentPane(panel);
         initToolbar();
         initJListPanel();
     }
-    public void visibleSetter(){
+
+    public void visibleSetter() {
         JLPanel.setOpaque(false);
 
         toolbarPanel.setOpaque(false);
@@ -116,7 +117,7 @@ public class WalletForm extends JFrame {
         //setVisible(true);
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         toolbar.setFloatable(false);
         toolbar.addSeparator();
         JButton fileToolbarButton = new JButton("File");
@@ -127,10 +128,11 @@ public class WalletForm extends JFrame {
         toolbar.addSeparator();
     }
 
-    public void addToList(String hash, String sender, String recipient, int amount){
-        list.add(new TransactionInfoInWalletForm(hash,sender,recipient,amount, Calendar.getInstance().getTime()));
+    public void addToList(String hash, String sender, String recipient, int amount) {
+        list.add(new TransactionInfoInWalletForm(hash, sender, recipient, amount, Calendar.getInstance().getTime()));
     }
-    public void repaintMainPanel(){
+
+    public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
     }

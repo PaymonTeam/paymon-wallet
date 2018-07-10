@@ -8,6 +8,7 @@ public class TransactionInfoInWalletForm {
     private String recipientAddress;
     private String senderAddress;
     private Date date;
+
     public TransactionInfoInWalletForm(String hash, String senderAddress, String recipientAddress, int amount, Date date) {
         super();
         this.hash = hash;
@@ -16,13 +17,14 @@ public class TransactionInfoInWalletForm {
         this.amount = amount;
         this.date = date;
     }
+
     public TransactionInfoInWalletForm(String hash) {
         super();
         this.hash = hash;
     }
 
 
-        public String getHash() {
+    public String getHash() {
         return hash;
     }
 

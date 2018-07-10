@@ -1,7 +1,7 @@
 package com.paymon.wallet.utils
 
-import java.nio.ByteOrder
 import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.nio.charset.Charset
 
 class SerializedBuffer : SerializableData {
@@ -24,10 +24,10 @@ class SerializedBuffer : SerializableData {
         if (size >= 0) {
 //            address = native_getFreeBuffer(size)
 //            if (address != 0) {
-                buffer = ByteBuffer.allocate(size) //native_getJavaByteBuffer(address)
-                buffer.position(0)
-                buffer.limit(size)
-                buffer.order(ByteOrder.LITTLE_ENDIAN)
+            buffer = ByteBuffer.allocate(size) //native_getJavaByteBuffer(address)
+            buffer.position(0)
+            buffer.limit(size)
+            buffer.order(ByteOrder.LITTLE_ENDIAN)
 //            }
         } else {
             throw Exception("invalid SerializedBuffer size")

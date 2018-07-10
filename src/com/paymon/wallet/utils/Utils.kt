@@ -23,7 +23,7 @@ class WalletAccount(sk: PrivateKey) {
         address = addressFromPublicKey(publicKey)
     }
 
-    fun createBackup(password: String) : JsonElement {
+    fun createBackup(password: String): JsonElement {
         val cipher = PaddedBufferedBlockCipher(CBCBlockCipher(AESEngine()))
         val ivGen = KeyGenerator.getInstance("AES")
         ivGen.init(128)
@@ -50,7 +50,7 @@ class WalletAccount(sk: PrivateKey) {
     }
 }
 
-private fun generateKeySpec(key: String) : ByteArray {
+private fun generateKeySpec(key: String): ByteArray {
     val len = 128 / 8
     val keyBytes = key.toByteArray()
     val passKeyLen = keyBytes.size
@@ -64,7 +64,7 @@ private fun generateKeySpec(key: String) : ByteArray {
     return bytes
 }
 
-fun restoreFromBackup(json: JsonElement, password: String) : WalletAccount? {
+fun restoreFromBackup(json: JsonElement, password: String): WalletAccount? {
     if (!json.isJsonObject) {
         println("Invalid format")
         return null

@@ -4,14 +4,14 @@ import com.google.gson.*
 import com.paymon.wallet.*
 import com.paymon.wallet.utils.SerializedBuffer
 import com.paymon.wallet.utils.WalletAccount
-import java.lang.reflect.Type
-import java.util.*
 import org.bouncycastle.util.encoders.Hex
 import java.io.InputStreamReader
+import java.lang.reflect.Type
 import java.net.InetSocketAddress
 import java.net.Socket
-import kotlin.collections.ArrayList
 import java.net.URI
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 class API {
@@ -30,9 +30,9 @@ class API {
     init {
         val hosts = arrayOf("tcp://127.0.0.1:79")
         Arrays.stream(hosts).distinct()
-                .filter{s -> !s.isEmpty()}
-                .map{s -> Optional.of(URI(s))}
-                .map{u -> u.get()}
+                .filter { s -> !s.isEmpty() }
+                .map { s -> Optional.of(URI(s)) }
+                .map { u -> u.get() }
                 .filter { u ->
                     if (u != null) {
                         if (u.scheme == "tcp" || u.scheme == "udp") {
@@ -45,11 +45,11 @@ class API {
                     }
                     println("Invalid URI scheme $u")
                     false
-                }.map{u -> Neighbor(u)}
+                }.map { u -> Neighbor(u) }
                 .peek { u ->
                     println("Adding neighbor ${u.addr}")
                 }
-                .forEach{n -> neighbors.add(n)}
+                .forEach { n -> neighbors.add(n) }
 
         val gsonb = GsonBuilder()
         gsonb.registerTypeAdapter(Address::class.java, AddressSerializer())
@@ -73,20 +73,20 @@ class API {
         gson = gsonb.create()
     }
 
-    private fun sendRequest(json: JsonElement, neighbor: Neighbor) : String? {
+    private fun sendRequest(json: JsonElement, neighbor: Neighbor): String? {
         return this.sendRequest(json.toString(), neighbor)
     }
 
-    private fun sendRequest(json: String, neighbor: Neighbor) : String? {
+    private fun sendRequest(json: String, neighbor: Neighbor): String? {
         val length = json.length
         val requestStr =
                 "POST / HTTP/1.0\r\n" +
-                "content-type:application/json\r\n" +
-                "X-PMNC-API-Version: 0.1\r\n" +
-                "Host:localhost\r\n" +
-                "content-length:$length" +
-                "\r\n\r\n" +
-                json
+                        "content-type:application/json\r\n" +
+                        "X-PMNC-API-Version: 0.1\r\n" +
+                        "Host:localhost\r\n" +
+                        "content-length:$length" +
+                        "\r\n\r\n" +
+                        json
         val sock = Socket()
         try {
             sock.connect(neighbor.addr, 5)
@@ -125,11 +125,11 @@ class API {
         return resp
     }
 
-    fun getBalanceRequest(address: Address) : Long? {
+    fun getBalanceRequest(address: Address): Long? {
         return getBalanceRequest(LinkedList(arrayListOf(address)))
     }
 
-    fun getBalanceRequest(addresses: LinkedList<Address>) : Long? {
+    fun getBalanceRequest(addresses: LinkedList<Address>): Long? {
         if (neighbors.isEmpty()) {
             return null
         }
@@ -147,7 +147,7 @@ class API {
         return null
     }
 
-    fun getTransactionToApprove() : TransactionsToApprove? {
+    fun getTransactionToApprove(): TransactionsToApprove? {
         if (neighbors.isEmpty()) return null
 
         val obj = GetTransactionsToApprove(1, 5, HASH_NULL.clone())
@@ -160,7 +160,7 @@ class API {
         return null
     }
 
-    fun createTransaction(to: Address, amount: Long, trunk: Hash, branch: Hash) : Transaction? {
+    fun createTransaction(to: Address, amount: Long, trunk: Hash, branch: Hash): Transaction? {
         if (neighbors.isEmpty() || account == null) {
             return null
         }
@@ -185,7 +185,7 @@ class API {
         return transaction
     }
 
-    fun broadcastTransaction(transaction: Transaction) : Boolean {
+    fun broadcastTransaction(transaction: Transaction): Boolean {
         if (neighbors.isEmpty()) {
             return false
         }
@@ -213,7 +213,7 @@ class API {
         }
     }
 
-    fun getAddressTransactionHashes(address: Address) : LinkedList<Hash>? {
+    fun getAddressTransactionHashes(address: Address): LinkedList<Hash>? {
         if (neighbors.isEmpty()) return null
 
         val obj = FindTransactions(LinkedList(arrayListOf(address)), LinkedList(), LinkedList())
@@ -228,7 +228,7 @@ class API {
         return null
     }
 
-    fun getTransactions(hashes: LinkedList<Hash>) : LinkedList<TransactionObject>? {
+    fun getTransactions(hashes: LinkedList<Hash>): LinkedList<TransactionObject>? {
         if (neighbors.isEmpty()) return null
 
         val obj = GetTransactionsData(hashes)

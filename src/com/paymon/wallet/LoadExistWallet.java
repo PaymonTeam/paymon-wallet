@@ -56,7 +56,7 @@ public class LoadExistWallet extends JFrame {
         //pack();
     }
 
-    private void visibleSetter(){
+    private void visibleSetter() {
         messagePanel.setVisible(true);
         messagePanel.setOpaque(false);
 
@@ -80,7 +80,7 @@ public class LoadExistWallet extends JFrame {
         //setVisible(true);
     }
 
-    private void initComponents(){
+    private void initComponents() {
         handler = new Handler();
         setContentPane(panel);
         setTitle("Wallet Load");
@@ -91,14 +91,14 @@ public class LoadExistWallet extends JFrame {
         filePicker.setMode(JFilePicker.MODE_OPEN);
         filePicker.addFileTypeFilter(".json", "JSON Files");
         filePicker.setOpaque(true);
-        filePicker.setBackground(new Color(51,181,229));
+        filePicker.setBackground(new Color(51, 181, 229));
         fileExplorerPanel.add(filePicker, BorderLayout.CENTER);
 
-        incorrectPassMessage.setForeground(new Color(51,181,229));
+        incorrectPassMessage.setForeground(new Color(51, 181, 229));
 
-        fileExplorerMessageLabel.setForeground(new Color(51,181,229));
+        fileExplorerMessageLabel.setForeground(new Color(51, 181, 229));
 
-        panel.setBackground(new Color(51,181,229));
+        panel.setBackground(new Color(51, 181, 229));
 
         loadWalletLabel.setForeground(Color.WHITE);
 
@@ -108,34 +108,36 @@ public class LoadExistWallet extends JFrame {
 
     }
 
-    public boolean loadButtonHandler(){
+    public boolean loadButtonHandler() {
         boolean passIsOk;
         boolean fileExplorerIsOk;
-        passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
+        passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(51, 181, 229));
 
-        if(handler.fileIsCorrect(filePicker.getSelectedFilePath(),"json")){
+        if (handler.fileIsCorrect(filePicker.getSelectedFilePath(), "json")) {
             File f = new File(filePicker.getSelectedFilePath());
-            if(f.exists() && !f.isDirectory()) {
+            if (f.exists() && !f.isDirectory()) {
                 System.out.println("Selected .json file: " + filePicker.getSelectedFilePath());
-                fileExplorerMessageLabel.setForeground(new Color(51,181,229));
-                fileExplorerIsOk =  true;
-            }else{
+                fileExplorerMessageLabel.setForeground(new Color(51, 181, 229));
+                fileExplorerIsOk = true;
+            } else {
                 fileExplorerMessageLabel.setText("File in selected path does not exist");
                 fileExplorerMessageLabel.setForeground(Color.RED);
-                fileExplorerIsOk =  false;
+                fileExplorerIsOk = false;
             }
-        }else{
+        } else {
             System.out.println("Wrong file selected");
             fileExplorerMessageLabel.setText("Wrong file type selected");
             fileExplorerMessageLabel.setForeground(Color.RED);
-            fileExplorerIsOk =  false;
+            fileExplorerIsOk = false;
         }
         return passIsOk && fileExplorerIsOk;
     }
-    public String getPassword(){
-        return password.getPassword().toString();
+
+    public String getPassword() {
+        return new String(password.getPassword());
     }
-    public String getPath(){
+
+    public String getPath() {
         return filePicker.getSelectedFilePath();
     }
 

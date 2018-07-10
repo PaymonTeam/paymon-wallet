@@ -6,6 +6,7 @@ import java.awt.*;
 class ImagePanel extends JPanel {
 
     public Image img;
+
     public ImagePanel(String img) {
         this(new ImageIcon(img).getImage());
     }

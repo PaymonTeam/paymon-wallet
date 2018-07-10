@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
-public class JsonFileSave extends JFrame{
+public class JsonFileSave extends JFrame {
     private JPanel panel;
     private JPanel titlePanel;
     private JPanel jsonSavePanel;
@@ -23,18 +23,20 @@ public class JsonFileSave extends JFrame{
 
     private File json;
 
-    public JsonFileSave(){
+    public JsonFileSave() {
 
         initComponents();
         visibleSetter();
 
     }
-    private void initComponents(){
+
+    private void initComponents() {
         setContentPane(panel);
         setSize(480, 480);
         setFileExplorer();
     }
-    private void visibleSetter(){
+
+    private void visibleSetter() {
 
         titlePanel.setOpaque(false);
 
@@ -53,31 +55,36 @@ public class JsonFileSave extends JFrame{
 
         panel.setBackground(new Color(51, 181, 229));
     }
-    public boolean checkBoxHandler(){
-        if(agreeCheckBox.isSelected()){
+
+    public boolean checkBoxHandler() {
+        if (agreeCheckBox.isSelected()) {
 
             massageLabel.setForeground(new Color(51, 181, 229));
 
-        }else{
+        } else {
             massageLabel.setForeground(Color.RED);
         }
         return agreeCheckBox.isSelected();
     }
-    private void setFileExplorer(){
+
+    private void setFileExplorer() {
         filePicker = new JFilePicker("Select a folder", "Browse...");
         filePicker.setMode(JFilePicker.MODE_SAVE);
         filePicker.addFileTypeFilter(".json", "JSON Files");
         filePicker.setOpaque(true);
-        filePicker.setBackground(new Color(51,181,229));
+        filePicker.setBackground(new Color(51, 181, 229));
         jsonSavePanel.add(filePicker, BorderLayout.CENTER);
     }
-    public void setFile(File f){
+
+    public void setFile(File f) {
         json = f;
     }
-    public File getFile(){
+
+    public File getFile() {
         return json;
     }
-    public void writeFile() throws IOException{
+
+    public void writeFile() throws IOException {
         InputStream is = null;
         OutputStream os = null;
         try {
@@ -89,8 +96,12 @@ public class JsonFileSave extends JFrame{
                 os.write(buffer, 0, length);
             }
         } finally {
-            is.close();
-            os.close();
+            if (is != null) {
+                is.close();
+            }
+            if (os != null) {
+                os.close();
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ public class Handler {
     }
 
     public boolean fileIsCorrect(String path, String fileFormat) {
-        if(path == null){
+        if (path == null) {
             return false;
         }
         String[] modules = path.split("/");
@@ -44,10 +44,10 @@ public class Handler {
         if (fileModules.length != 0) {
             if (fileModules[fileModules.length - 1].equals(fileFormat)) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
     }

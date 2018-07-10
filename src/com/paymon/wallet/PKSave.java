@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 
-public class PKSave extends JFrame{
+public class PKSave extends JFrame {
     private JPanel panel;
     private JPanel titlePanel;
     private JPanel PKPanel;
@@ -15,20 +15,18 @@ public class PKSave extends JFrame{
     public JButton copyButton;
     private JLabel titleLabel;
 
-    public PKSave(){
-
+    public PKSave() {
         initComponents();
         visibleSetter();
-
     }
-    private void initComponents(){
+
+    private void initComponents() {
         setContentPane(panel);
         setSize(480, 480);
     }
-    private void visibleSetter(){
 
+    private void visibleSetter() {
         titlePanel.setOpaque(false);
-
         PKPanel.setOpaque(false);
 
 //        navigationPanel.setOpaque(false);
@@ -37,9 +35,9 @@ public class PKSave extends JFrame{
 
         panel.setBackground(new Color(51, 181, 229));
     }
+
     public void setClipboard(String str) {
         StringSelection ss = new StringSelection(str);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
     }
-
 }

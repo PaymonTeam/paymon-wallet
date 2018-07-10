@@ -13,14 +13,14 @@ typealias PublicKey = ByteArray
 typealias PrivateKey = ByteArray
 typealias Hash = ByteArray
 
-fun addressFromPublicKey(pk: PublicKey) : Address {
+fun addressFromPublicKey(pk: PublicKey): Address {
     val sha = SHA3.Digest256()
     val digest = sha.digest(pk)
     val offset = 32 - ADDRESS_SIZE + 1
 
     var checksumByte: Short = 0
     val bytes = digest.sliceArray(offset..32)
-    for ((i, b:Byte) in bytes.withIndex()) {
+    for ((i, b: Byte) in bytes.withIndex()) {
         checksumByte = if ((i and 1) == 0) {
             (checksumByte + b).toShort()
         } else {
@@ -48,7 +48,7 @@ class Address {
         return "P" + String(Hex.encode(inner)).toUpperCase()
     }
 
-    fun clone() : Address {
+    fun clone(): Address {
         return Address(inner.clone())
     }
 }
@@ -59,11 +59,11 @@ enum class TransactionType(_v: Int) {
 }
 
 class Transaction(val obj: TransactionObject) {
-    fun calculateSignature(sk: PrivateKey, pk: PublicKey) : Signature {
+    fun calculateSignature(sk: PrivateKey, pk: PublicKey): Signature {
         return NTRUMLSNative.sign(obj.hash, sk, pk)
     }
 
-    fun calculateHash() : Hash {
+    fun calculateHash(): Hash {
         val sha = SHA3.Digest256()
         val bb = ByteBuffer.allocate(ADDRESS_SIZE + 4 + 8 + HASH_SIZE)
         bb.order(ByteOrder.LITTLE_ENDIAN)
@@ -76,7 +76,7 @@ class Transaction(val obj: TransactionObject) {
         return sha.digest(bb.array()).sliceArray(0..(HASH_SIZE - 1))
     }
 
-    fun findNonce(mwm: Int) : Long {
+    fun findNonce(mwm: Int): Long {
         var nonce = 0L
         val sha = SHA3.Digest256()
         val bb = ByteBuffer.allocate(8 + HASH_SIZE * 2)
@@ -85,7 +85,7 @@ class Transaction(val obj: TransactionObject) {
         bb.put(obj.branch_transaction)
         bb.put(obj.trunk_transaction)
         bb.putLong(nonce)
-        loop@while(true) {
+        loop@ while (true) {
             val buf = sha.digest(bb.array())
             for (i in 0..mwm) {
                 val x = buf[i / 8]
