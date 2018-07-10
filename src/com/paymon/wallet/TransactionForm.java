@@ -3,7 +3,7 @@ package com.paymon.wallet;
 import javax.swing.*;
 import java.awt.*;
 
-public class TransactionForm extends JFrame{
+public class TransactionForm extends JFrame {
     private JPanel panel;
     private JPanel textPanel;
     private JPanel infoPanel;
@@ -26,7 +26,7 @@ public class TransactionForm extends JFrame{
     private JLabel recipientLabel;
     private JLabel amoutLabel;
 
-    TransactionForm(){
+    TransactionForm() {
         initComponents();
         visibleSetter();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -37,7 +37,8 @@ public class TransactionForm extends JFrame{
         }
         setDefaultLookAndFeelDecorated(false);
     }
-    private void visibleSetter(){
+
+    private void visibleSetter() {
         textPanel.setOpaque(false);
 
         infoPanel.setOpaque(false);
@@ -57,7 +58,8 @@ public class TransactionForm extends JFrame{
         balanceLabel.setForeground(Color.WHITE);
 
     }
-    private void initComponents(){
+
+    private void initComponents() {
 
         setTitle("New Transaction");
         setSize(480, 480);

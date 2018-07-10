@@ -1,7 +1,7 @@
 package com.paymon.wallet.net
 
-import com.paymon.wallet.utils.SerializedBuffer
 import com.paymon.wallet.utils.SerializableData
+import com.paymon.wallet.utils.SerializedBuffer
 
 open class Serializable {
     internal var disableFree = false

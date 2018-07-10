@@ -1,10 +1,7 @@
 package com.paymon.wallet
 
-import java.awt.Component
 import java.util.*
 import javax.swing.AbstractListModel
-import javax.swing.JList
-import javax.swing.ListCellRenderer
 
 class TransactionElement(var value: Long) {
 }

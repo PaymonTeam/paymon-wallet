@@ -1,7 +1,6 @@
 package com.paymon.wallet;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
 
@@ -10,14 +9,15 @@ public class JListPanel extends JPanel {
     private List<TransactionInfoInWalletForm> txList;
     private JList<TransactionInfoInWalletForm> txJList;
 
-    public JListPanel(List<TransactionInfoInWalletForm> txList){
+    public JListPanel(List<TransactionInfoInWalletForm> txList) {
         this.txList = txList;
     }
+
     private JList<TransactionInfoInWalletForm> createList() {
         // create List model
         DefaultListModel<TransactionInfoInWalletForm> model = new DefaultListModel<>();
         // add item to model
-        for (TransactionInfoInWalletForm tx: this.txList) {
+        for (TransactionInfoInWalletForm tx : this.txList) {
             model.addElement(tx);
         }
         // create JList with model
@@ -26,6 +26,7 @@ public class JListPanel extends JPanel {
         list.setCellRenderer(new TxRenderer());
         return list;
     }
+
     public JPanel createPanel() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1.0;
@@ -33,7 +34,7 @@ public class JListPanel extends JPanel {
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.BOTH;
         JPanel panel = new JPanel(new GridBagLayout());
-       //panel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        //panel.setBorder(new EmptyBorder(10, 10, 10, 10));
         // create list book and set to scrollpane and add to panel
         panel.add(new JScrollPane(this.txJList = createList()),
                 gbc);

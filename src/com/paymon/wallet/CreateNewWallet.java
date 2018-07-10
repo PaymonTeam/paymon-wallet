@@ -1,4 +1,5 @@
 package com.paymon.wallet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -52,7 +53,7 @@ public class CreateNewWallet extends JFrame {
         });
     }
 
-    private void visibleSetter(){
+    private void visibleSetter() {
         messagePanel.setVisible(true);
         incorrectPassMessage.setVisible(true);
         firstPanel.setOpaque(false);
@@ -60,25 +61,29 @@ public class CreateNewWallet extends JFrame {
         buttPanel.setOpaque(false);
         setVisible(true);
     }
-    public void initComponents(){
+
+    public void initComponents() {
         setContentPane(panel);
         handler = new Handler();
         setSize(480, 480);
         setTitle("Paymon Wallet");
-        incorrectPassMessage.setForeground(new Color(51,181,229));
+        incorrectPassMessage.setForeground(new Color(51, 181, 229));
         createNewWalletLabel.setForeground(Color.WHITE);
         enterPasswordLabel.setForeground(Color.WHITE);
-        panel.setBackground(new Color(51,181,229));
+        panel.setBackground(new Color(51, 181, 229));
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
     }
-    public void repaintMainPanel(){
+
+    public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
     }
-    public boolean createButtonHandler(){
-        return handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
+
+    public boolean createButtonHandler() {
+        return handler.passFieldHandler(password, incorrectPassMessage, new Color(51, 181, 229));
     }
-    public String getPassword(){
+
+    public String getPassword() {
         return new String(password.getPassword());
     }
 

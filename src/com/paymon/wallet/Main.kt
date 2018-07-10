@@ -31,6 +31,7 @@ val ADDRESS_SIZE = HASH_SIZE + 1
 val ADDRESS_NULL = Address(ByteArray(ADDRESS_SIZE))
 val HASH_NULL = ByteArray(HASH_SIZE)
 val api = API()
+
 fun main(args: Array<String>) {
     try {
         api.account = WalletAccount(Hex.decode("8003FFFFF6882320DEEE46AC97069EC8C56928643907230EA3A80BA656312A5351768E1525CDDC40D661C4E6646FB5C0A9D52DB66A74C86F1ADD764AC3CF7BD66D16E9D619EF4090E996C350B75BA5CE856285775792700AF58203B65198012953514B5B0F1F86D8DDC8D6BB9ADF0A9665B6CADA1C6D166B93E704BDB063ACEAF6A519D6A58F88836E6B4AD431A576B13DBE59D4A603D833DAAD7EAF4AC5B48015522E1C3163A751EEAF34D8EE692806C88ABE6CB151DA79BE48C13CA894AC1DD3D4361B7F5574D1BC28754916B04849A066A8659CEEE9C334CEA0C327B99D458CC64257EC37C9B4216C9CE3469FD5B23DBC964488780E282790198443EA7A1F1FC824C51FDB7D18B5A6C188A2907446224B6C6FDCD264095E0BE053D293B544E22875470B55D58F5707EFD58E8DC5DDB475F25C5A660E63B202669524F02D4F973B5D4C2D52AC2C62BFCD5B54614F92F22B4B94E51E43AD0BEED8"))
@@ -55,7 +56,7 @@ fun main(args: Array<String>) {
 fun initListeners() {
     authForm.createNewWalletButton.addActionListener(object : ActionListener{
         override fun actionPerformed(e: ActionEvent?) {
-            if(authForm.createButtonHandler()) {
+            if (authForm.createButtonHandler()) {
                 authForm.contentPane = jsonSave.contentPane
                 authForm.repaintMainPanel()
             }
@@ -67,16 +68,19 @@ fun initListeners() {
             loadForm.isVisible = true
         }
     })
+
     loadForm.loadButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
-            if (loadForm.loadButtonHandler()){
-                api.account = restoreFromBackup(loadForm.getPassword(), loadForm.getPath())
+            if (loadForm.loadButtonHandler()) {
+                println("pass_open=${loadForm.password}=${String(Hex.encode(loadForm.password.toByteArray()))}")
+                api.account = restoreFromBackup(loadForm.password, loadForm.path)
                 loadForm.dispose()
                 walletForm.isVisible = true
             }
         }
 
     })
+
     loadForm.backButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             loadForm.dispose()
@@ -84,24 +88,28 @@ fun initListeners() {
         }
 
     })
+
     walletForm.createNewTransactionButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             walletForm.contentPane = tx.contentPane
             walletForm.repaintMainPanel()
         }
     })
+
     tx.backToWalletPageButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
-           walletForm.contentPane = walletForm.panel
+            walletForm.contentPane = walletForm.panel
             walletForm.repaintMainPanel()
         }
     })
+
     jsonSave.backButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             authForm.contentPane = authForm.panel
             authForm.repaintMainPanel()
         }
     })
+
     jsonSave.nextButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
             if(jsonSave.checkBoxHandler()) {
@@ -127,7 +135,7 @@ fun initListeners() {
     })
     pkSave.copyButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
-            if(pkSave.privateKeyTextField.text != null) {
+            if (pkSave.privateKeyTextField.text != null) {
                 pkSave.setClipboard(pkSave.privateKeyTextField.text)
             }
         }
@@ -203,22 +211,24 @@ fun createBackup(password: String, path_name: String): File?{
         val path = Paths.get(pathJson)
         Files.write(path, backup.toString().toByteArray())
         file = path.toFile()
-        return file
+        file
     } catch (e: IOException) {
         println("Failed to create backup")
-        return null
+        null
     }
 }
-fun getPrivateKey(): ByteArray{
+
+fun getPrivateKey(): ByteArray {
     val key = api.account?.privateKey
-    if (key != null){
+    if (key != null) {
         return key
-    }else{
+    } else {
         println("Failed to get key")
     }
     return "Empty key".toByteArray()
 }
-fun restoreFromBackup(password: String, path: String): WalletAccount?{
+
+fun restoreFromBackup(password: String, path: String): WalletAccount? {
     val bu = JsonParser().parse(String(Files.readAllBytes(Paths.get(path))))
     return restoreFromBackup(bu, password)
 }

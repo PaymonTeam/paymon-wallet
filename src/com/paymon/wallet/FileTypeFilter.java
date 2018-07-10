@@ -1,7 +1,7 @@
 package com.paymon.wallet;
 
-import java.io.File;
 import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 public class FileTypeFilter extends FileFilter {
 
@@ -24,7 +24,8 @@ public class FileTypeFilter extends FileFilter {
     public String getDescription() {
         return description + String.format(" (*%s)", extension);
     }
-    public String getExtension(){
+
+    public String getExtension() {
         return extension;
     }
 }
