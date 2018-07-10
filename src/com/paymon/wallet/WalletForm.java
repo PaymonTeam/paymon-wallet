@@ -94,6 +94,9 @@ public class WalletForm extends JFrame {
         setContentPane(panel);
         initToolbar();
         initJListPanel();
+        JLPanel.setSize(getSize().width - 20,getSize().height -
+                (toolbarPanel.getHeight() + textPanel.getHeight() + newTxPanel.getHeight() + refreshPanel.getHeight() + exceptionLabel.getHeight()));
+        repaintMainPanel();
     }
 
     public void visibleSetter() {
