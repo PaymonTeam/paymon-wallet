@@ -115,6 +115,9 @@ public class WalletForm extends JFrame {
 
         mainPanel.setBackground(new Color(51, 181, 229));
 
+        exceptionLabel.setVisible(true);
+        exceptionLabel.setForeground(new Color(51, 181, 229));
+
         //setVisible(true);
     }
 

@@ -79,6 +79,40 @@ public class TransactionForm extends JFrame {
         balanceButton.setText(Integer.toString(balance));
     }
 
+    public boolean txHandler(){
+        boolean amountIsOk;
+        boolean addressIsOk;
+        if (amount.getText() == null) {
+            amountIsOk = false;
+        }else{
+            if(Integer.parseInt(amount.getText()) <= 0){
+                amountIsOk = false;
+            }else{
+                amountIsOk = true;
+            }
+        }
+        if (recipientAddress.getText() == null) {
+            addressIsOk = false;
+        }else{
+            if (recipientAddress.getText().length() != 21){
+                addressIsOk = false;
+            }else{
+                addressIsOk = true;
+            }
+        }
+        return amountIsOk && addressIsOk;
+    }
+    public String getRecipientAddress(){
+        return recipientAddress.getText();
+    }
+    public int getAmount(){
+        if(amount.getText() != null) {
+            return Integer.parseInt(amount.getText());
+        }else{
+            return -1;
+        }
+    }
+
 }
 class DigitFilter extends DocumentFilter {
     private static final String DIGITS = "\\d+";

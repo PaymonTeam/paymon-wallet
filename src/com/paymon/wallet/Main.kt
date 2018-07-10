@@ -145,6 +145,15 @@ fun initListeners() {
             }
         }
     })
+    tx.sendButton.addActionListener(object : ActionListener {
+        override fun actionPerformed(e: ActionEvent?) {
+            if(tx.txHandler()){
+                api.sendCoins(Address(tx.recipientAddress), tx.amount.toLong()){
+                    println("Result $it")
+                }
+            }
+        }
+    })
 
 
     //updateAddress()
