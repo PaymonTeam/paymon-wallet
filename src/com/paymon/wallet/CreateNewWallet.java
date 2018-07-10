@@ -79,7 +79,7 @@ public class CreateNewWallet extends JFrame {
         return handler.passFieldHandler(password, incorrectPassMessage, new Color(51,181,229));
     }
     public String getPassword(){
-        return password.getPassword().toString();
+        return new String(password.getPassword());
     }
 
 
