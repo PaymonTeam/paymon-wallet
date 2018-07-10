@@ -97,6 +97,7 @@ fun initListeners() {
             walletForm.pack()
         }
     })
+
     tx.backToWalletPageButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
            walletForm.contentPane = walletForm.panel

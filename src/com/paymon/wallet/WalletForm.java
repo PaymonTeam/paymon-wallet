@@ -2,6 +2,7 @@ package com.paymon.wallet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -45,6 +46,14 @@ public class WalletForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
             }
+        });
+        addressButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringSelection ss = new StringSelection(addressButton.getText());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+            }
+
         });
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
