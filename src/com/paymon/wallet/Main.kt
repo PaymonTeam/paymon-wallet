@@ -73,6 +73,7 @@ fun initListeners() {
                 println("pass_open=${loadForm.password}=${String(Hex.encode(loadForm.password.toByteArray()))}")
                 api.account = restoreFromBackup(loadForm.password, loadForm.path)
                 updateAddress()
+                updateBalance()
                 loadForm.dispose()
                 walletForm.isVisible = true
 
@@ -89,15 +90,8 @@ fun initListeners() {
     })
     walletForm.createNewTransactionButton.addActionListener(object : ActionListener {
         override fun actionPerformed(e: ActionEvent?) {
-            val addr = api.account?.address
-            if (addr != null) {
-                tx.setAddress(addr.toString())
-                //TODO uncomment befor getBalanceRequest will be fixed
-/*                val balance = api.getBalanceRequest(addr)
-                if (balance != null) {
-                    tx.setBalance(balance.toInt())
-                }*/
-            }
+            updateAddress()
+            updateBalance()
             walletForm.contentPane = tx.contentPane
             walletForm.repaintMainPanel()
             walletForm.pack()
@@ -160,9 +154,19 @@ fun initListeners() {
 }
 
 fun updateAddress() {
-    walletForm.addressButton.text = api.account?.address.toString()
+    walletForm.setAddress(api.account?.address.toString())
+    tx.setAddress(api.account?.address.toString())
 }
-
+fun updateBalance(){
+    val address = api.account?.address
+    if (address != null) {
+        val balance = api.getBalanceRequest(address)
+        if (balance != null) {
+            walletForm.setBalance(balance.toInt())
+            tx.setBalance(balance.toInt())
+        }
+    }
+}
 fun updateThread() {
     while (running) {
         val addr = api.account?.address

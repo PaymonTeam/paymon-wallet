@@ -28,7 +28,7 @@ class API {
     }
 
     init {
-        val hosts = arrayOf("tcp://127.0.0.1:79")
+        val hosts = arrayOf("tcp://91.226.80.26:79")
         Arrays.stream(hosts).distinct()
                 .filter { s -> !s.isEmpty() }
                 .map { s -> Optional.of(URI(s)) }
