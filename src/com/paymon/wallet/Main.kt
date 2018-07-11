@@ -5,6 +5,7 @@ import com.paymon.wallet.net.API
 import com.paymon.wallet.utils.WalletAccount
 import com.paymon.wallet.utils.restoreFromBackup
 import org.bouncycastle.util.encoders.Hex
+import java.awt.Color
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.io.File
@@ -79,6 +80,7 @@ fun initListeners() {
         updateAddress()
         //updateBalance()
         walletForm.contentPane = tx.contentPane
+        tx.clear()
         walletForm.repaintMainPanel()
         walletForm.pack()
     }
@@ -123,10 +125,15 @@ fun initListeners() {
     tx.sendButton.addActionListener {
         if (tx.txHandler()) {
             api.sendCoins(Address(tx.recipientAddress), tx.amount.toLong()) {
-                println("Result $it")
+                if(!it){
+                    tx.showExceptionMessage(!it, "Transaction error")
+                }else{
+                    tx.showExceptionMessage(Color(0, 100, 0), "Transaction sent")
+                }
             }
         }
     }
+
 }
 
 fun updateAddress() {
@@ -154,6 +161,7 @@ fun updateThread() {
                 val balance = api.getBalanceRequest(addr)
                 if (balance != null) {
                     walletForm.setBalance(balance.toInt())
+                    //tx.setBalance(balance.toInt())
                 }
                 println("Current balance: $balance")
                 val txHashes = api.getAddressTransactionHashes(addr)

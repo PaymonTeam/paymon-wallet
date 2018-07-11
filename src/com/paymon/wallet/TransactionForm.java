@@ -6,6 +6,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TransactionForm extends JFrame {
     private JPanel panel;
@@ -15,8 +18,8 @@ public class TransactionForm extends JFrame {
     private JPanel navigationPanel;
 
 
-    private JButton addressButton;
-    private JButton balanceButton;
+    public JButton addressButton;
+    public JButton balanceButton;
     public JButton sendButton;
     public JButton backToWalletPageButton;
 
@@ -36,6 +39,22 @@ public class TransactionForm extends JFrame {
     TransactionForm() {
         initComponents();
         visibleSetter();
+        addressButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringSelection ss = new StringSelection(addressButton.getText());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+            }
+
+        });
+        balanceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringSelection ss = new StringSelection(balanceButton.getText());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+            }
+
+        });
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -173,6 +192,21 @@ public class TransactionForm extends JFrame {
         } else {
             addressException.setForeground(panel.getForeground());
         }
+    }
+    public void showExceptionMessage(Color color, String message) {
+        if (message != null) {
+            exceptionLabel.setText(message);
+        }
+        if (color != null) {
+            exceptionLabel.setForeground(color);
+        }
+    }
+    public void clear(){
+        addressException.setForeground(new Color(51, 181, 229));
+        amountException.setForeground(new Color(51, 181, 229));
+        exceptionLabel.setForeground(new Color(51, 181, 229));
+        amount.setText("0");
+        recipientAddress.setText("");
     }
 
 }
