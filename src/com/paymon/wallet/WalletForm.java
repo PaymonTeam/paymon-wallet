@@ -6,7 +6,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 public class WalletForm extends JFrame {
     public JToolBar toolbar;
@@ -103,7 +103,7 @@ public class WalletForm extends JFrame {
         setContentPane(panel);
         initToolbar();
         initJListPanel();
-        JLPanel.setSize(getSize().width - 20,getSize().height -
+        JLPanel.setSize(getSize().width - 20, getSize().height -
                 (toolbarPanel.getHeight() + textPanel.getHeight() + newTxPanel.getHeight() + refreshPanel.getHeight() + exceptionLabel.getHeight()));
         repaintMainPanel();
     }
@@ -144,21 +144,22 @@ public class WalletForm extends JFrame {
         toolbar.addSeparator();
     }
 
-    public void addToList(String hash, String sender, String recipient, int amount) {
-        list.add(new TransactionInfoInWalletForm(hash, sender, recipient, amount, Calendar.getInstance().getTime()));
+    public void addToList(String hash, String sender, String recipient, int amount, long timestamp) {
+        list.add(new TransactionInfoInWalletForm(hash, sender, recipient, amount, new Date(timestamp * 1000)));
     }
 
     public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
     }
-    public void showExceptionMessage(boolean flag, String message){
-        if(message != null){
+
+    public void showExceptionMessage(boolean flag, String message) {
+        if (message != null) {
             exceptionLabel.setText(message);
         }
-        if(flag){
+        if (flag) {
             exceptionLabel.setForeground(Color.RED);
-        }else{
+        } else {
             exceptionLabel.setForeground(panel.getForeground());
         }
     }

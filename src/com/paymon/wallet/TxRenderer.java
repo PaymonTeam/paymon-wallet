@@ -30,9 +30,9 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
     public Component getListCellRendererComponent(JList<? extends TransactionInfoInWalletForm> list,
                                                   TransactionInfoInWalletForm tx, int index, boolean isSelected, boolean cellHasFocus) {
         int amount = tx.getAmount();
-        lbAmount.setText(Integer.toString(amount));
+        lbAmount.setText("  Amount: " + Integer.toString(amount));
         if (amount > 0) {
-            lbAmount.setForeground(Color.GREEN);
+            lbAmount.setForeground(new Color(0, 100, 0));
         }
         if (amount < 0) {
             lbAmount.setForeground(Color.RED);
@@ -40,9 +40,9 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         if (amount == 0) {
             lbAmount.setForeground(Color.BLUE);
         }
-        lbHash.setText(tx.getHash());
-        lbSender.setText(tx.getSenderAddress());
-        lbRecipient.setText(tx.getRecipientAddress());
+        lbHash.setText("Hash: " + tx.getHash());
+        lbSender.setText("From: " + tx.getSenderAddress());
+        lbRecipient.setText("To: " + tx.getRecipientAddress());
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         lbDate.setText(df.format(tx.getDate()));
         lbDate.setForeground(Color.ORANGE);

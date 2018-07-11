@@ -54,7 +54,7 @@ public class CreateNewWallet extends JFrame {
     }
 
     private void visibleSetter() {
-       // messagePanel.setVisible(true);
+        // messagePanel.setVisible(true);
         incorrectPassMessage.setVisible(true);
         firstPanel.setOpaque(false);
         passFieldPanel.setOpaque(false);

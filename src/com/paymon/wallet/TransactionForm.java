@@ -75,9 +75,6 @@ public class TransactionForm extends JFrame {
         amountException.setVisible(true);
 
         amountException.setForeground(new Color(51, 181, 229));
-
-
-
     }
 
     private void initComponents() {
@@ -97,17 +94,23 @@ public class TransactionForm extends JFrame {
         balanceButton.setText(Integer.toString(balance));
     }
 
-    public boolean txHandler(){
+    public boolean txHandler() {
         boolean amountIsOk;
         boolean addressIsOk;
+
         if (amount.getText().equals("")) {
             amountIsOk = false;
             showAmountExceptionMessage(true, "Amount field must not be empty");
-        }else{
-            if (Integer.parseInt(amount.getText()) <= 0){
-                amountIsOk = false;
-                showAmountExceptionMessage(true, "The amount must be greater than zero");
-            }else{
+        } else {
+            try {
+                if (Integer.parseInt(amount.getText()) <= 0) {
+                    amountIsOk = false;
+                    showAmountExceptionMessage(true, "The amount must be greater than zero");
+                } else {
+                    amountIsOk = true;
+                    showAmountExceptionMessage(false, "");
+                }
+            } catch (NumberFormatException e) {
                 amountIsOk = true;
                 showAmountExceptionMessage(false, "");
             }
@@ -115,63 +118,65 @@ public class TransactionForm extends JFrame {
         if (recipientAddress.getText().equals("")) {
             addressIsOk = false;
             showAddressExceptionMessage(true, "Address field must not be empty");
-        }else{
-            if (recipientAddress.getText().length() != 21){
+        } else {
+            try {
+                Address addr = new Address(recipientAddress.getText());
+                addressIsOk = addr.verify();
+            } catch (Exception e) {
                 addressIsOk = false;
-                showAddressExceptionMessage(true, "Incorrect address format");
-
-            }else{
-                addressIsOk = true;
-                showAddressExceptionMessage(false, "");
             }
+            showAddressExceptionMessage(!addressIsOk, addressIsOk ? "" : "Incorrect address");
         }
         return amountIsOk && addressIsOk;
     }
 
-    public String getRecipientAddress(){
+    public String getRecipientAddress() {
         return recipientAddress.getText();
     }
 
-    public int getAmount(){
+    public int getAmount() {
         if (amount.getText() != null) {
             return Integer.parseInt(amount.getText());
-        }else{
+        } else {
             return -1;
         }
     }
 
-    public void showExceptionMessage(boolean flag, String message){
-        if(message != null){
+    public void showExceptionMessage(boolean flag, String message) {
+        if (message != null) {
             exceptionLabel.setText(message);
         }
-        if(flag){
+        if (flag) {
             exceptionLabel.setForeground(Color.RED);
-        }else{
+        } else {
             exceptionLabel.setForeground(panel.getForeground());
         }
     }
-    private void showAmountExceptionMessage(boolean flag, String message){
-        if(message != null){
+
+    private void showAmountExceptionMessage(boolean flag, String message) {
+        if (message != null) {
             amountException.setText(message);
         }
-        if(flag){
+        if (flag) {
             amountException.setForeground(Color.RED);
-        }else{
+        } else {
             amountException.setForeground(panel.getForeground());
         }
     }
-    private void showAddressExceptionMessage(boolean flag, String message){
-        if(message != null){
+
+    private void showAddressExceptionMessage(boolean flag, String message) {
+        if (message != null) {
             addressException.setText(message);
         }
-        if(flag){
+        if (flag) {
             addressException.setForeground(Color.RED);
-        }else{
+        } else {
             addressException.setForeground(panel.getForeground());
         }
     }
 
 }
+
 class DigitFilter extends DocumentFilter {
     private static final String DIGITS = "\\d+";
 
