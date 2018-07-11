@@ -29,6 +29,7 @@ class API {
 
     init {
         val hosts = arrayOf("tcp://91.226.80.26:79")
+//        val hosts = arrayOf("tcp://127.0.0.1:79")
         Arrays.stream(hosts).distinct()
                 .filter { s -> !s.isEmpty() }
                 .map { s -> Optional.of(URI(s)) }
@@ -87,12 +88,13 @@ class API {
                         "content-length:$length" +
                         "\r\n\r\n" +
                         json
+
         val sock = Socket()
-        try {
-            sock.connect(neighbor.addr, 5)
-        } catch (e: Exception) {
-            println("${e.message}")
-        }
+//        try {
+        sock.connect(neighbor.addr, 5000)
+//        } catch (e: Exception) {
+//            println("${e.message}")
+//        }
         val streamOut = sock.getOutputStream()
         val streamIn = InputStreamReader(sock.getInputStream())
         streamOut.write(requestStr.toByteArray())
@@ -110,8 +112,6 @@ class API {
                 } else if (resp.startsWith('{')) {
                     break
                 }
-            } else {
-                resp = ""
             }
             resp = ""
         }

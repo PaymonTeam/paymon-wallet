@@ -85,7 +85,7 @@ public class JsonFileSave extends JFrame {
         return json;
     }
 
-    public String getFilePath(){
+    public String getFilePath() {
         return filePicker.getSelectedFilePath();
     }
 

@@ -148,13 +148,13 @@ public class LoadExistWallet extends JFrame {
         return filePicker.getSelectedFilePath();
     }
 
-    public void showExceptionMessage(boolean flag, String message){
-        if(message != null){
+    public void showExceptionMessage(boolean flag, String message) {
+        if (message != null) {
             exceptionLabel.setText(message);
         }
-        if(flag){
+        if (flag) {
             exceptionLabel.setForeground(Color.RED);
-        }else{
+        } else {
             exceptionLabel.setForeground(panel.getForeground());
         }
     }

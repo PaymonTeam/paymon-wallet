@@ -13,13 +13,8 @@ typealias PublicKey = ByteArray
 typealias PrivateKey = ByteArray
 typealias Hash = ByteArray
 
-fun addressFromPublicKey(pk: PublicKey): Address {
-    val sha = SHA3.Digest256()
-    val digest = sha.digest(pk)
-    val offset = 32 - ADDRESS_SIZE + 1
-
+fun calculateAddressChecksum(bytes: ByteArray) : Byte {
     var checksumByte: Short = 0
-    val bytes = digest.sliceArray(offset..32)
     for ((i, b: Byte) in bytes.withIndex()) {
         checksumByte = if ((i and 1) == 0) {
             (checksumByte + b).toShort()
@@ -29,8 +24,19 @@ fun addressFromPublicKey(pk: PublicKey): Address {
         checksumByte = (checksumByte % 256).toShort()
     }
 
-    bytes[ADDRESS_SIZE - 1] = checksumByte.toByte()
-    return Address(bytes)
+    return checksumByte.toByte()
+}
+
+fun addressFromPublicKey(pk: PublicKey): Address {
+    val sha = SHA3.Digest256()
+    val digest = sha.digest(pk)
+    val offset = 32 - ADDRESS_SIZE + 1
+
+    val checksumByte = calculateAddressChecksum(digest.sliceArray(offset..(32-1)))
+    val addr = ADDRESS_NULL.clone()
+    System.arraycopy(digest, offset, addr.inner, 0, ADDRESS_SIZE - 1)
+    addr.inner[ADDRESS_SIZE - 1] = checksumByte
+    return addr
 }
 
 class Address {
@@ -42,6 +48,10 @@ class Address {
 
     constructor(str: String) {
         this.inner = Hex.decode(str.substring(1))
+    }
+
+    fun verify() : Boolean {
+        return calculateAddressChecksum(inner.sliceArray(0..(ADDRESS_SIZE-2))) == inner[ADDRESS_SIZE-1]
     }
 
     override fun toString(): String {
@@ -157,10 +167,10 @@ class TransactionObject : Serializable() {
         attachment_timestamp_upper_bound = stream.readInt64()
         stream.readBytes(branch_transaction)
         stream.readBytes(trunk_transaction)
-        nonce = stream.readInt32().toLong()
+        nonce = stream.readInt64()
         stream.readBytes(tag)
         timestamp = stream.readInt64()
-        value = stream.readInt64()
+        value = stream.readInt32().toLong()
         data_type = when (stream.readByte()) {
             0.toByte() -> TransactionType.HashOnly
             else -> TransactionType.Full
