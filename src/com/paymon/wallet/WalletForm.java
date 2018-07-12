@@ -40,17 +40,18 @@ public class WalletForm extends JFrame {
                 updateJListPanel();
             }
         });
-
-        createNewTransactionButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         addressButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 StringSelection ss = new StringSelection(addressButton.getText());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+            }
+
+        });
+        balanceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringSelection ss = new StringSelection(balanceButton.getText());
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
             }
 
