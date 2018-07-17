@@ -48,6 +48,10 @@ fun initListeners() {
 
     authForm.loadWalletButton.addActionListener {
         authForm.dispose()
+        val path = loadForm.loadFilePath()
+        if(path != null){
+            loadForm.setFileExplorerText(path)
+        }
         loadForm.isVisible = true
     }
 
