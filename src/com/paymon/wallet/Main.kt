@@ -57,6 +57,10 @@ fun initListeners() {
 
     authForm.loadWalletButton.addActionListener {
         authForm.dispose()
+        val path = loadForm.loadFilePath()
+        if(path != null){
+            loadForm.setFileExplorerText(path)
+        }
         loadForm.isVisible = true
     }
 
@@ -65,6 +69,7 @@ fun initListeners() {
             api.account = restoreFromBackup(loadForm.password, loadForm.path)
             updateAddress()
             //updateBalance()
+            loadForm.saveFilePath(loadForm.path)
             loadForm.dispose()
             walletForm.isVisible = true
             walletForm.setSize(500, 670)

@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class LoadExistWallet extends JFrame {
     private JPanel panel;
@@ -158,6 +161,40 @@ public class LoadExistWallet extends JFrame {
             exceptionLabel.setForeground(panel.getForeground());
         }
     }
+    public void saveFilePath(String path){
+        try (FileOutputStream fos = new FileOutputStream("jsonPath")) {
+            byte[] buffer = path.getBytes();
+
+            fos.write(buffer, 0, buffer.length);
+        }
+        catch (IOException ex) {
+
+            System.out.println(ex.getMessage());
+        }
+        System.out.println("The file has been written");
+
+    }
+    public String loadFilePath(){
+
+        try (FileInputStream fin = new FileInputStream("jsonPath")) {
+            byte[] buffer = new byte[fin.available()];
+
+            fin.read(buffer, 0, fin.available());
+
+            return new String(buffer);
+        }
+        catch (IOException ex) {
+            return null;
+        }
+    }
+    public void setFileExplorerText(String text){
+        if (text != null) {
+            filePicker.setTextField(text);
+        }else{
+            System.out.println("Null string");
+        }
+    }
+
 }
 
 
