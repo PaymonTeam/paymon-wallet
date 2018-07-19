@@ -34,9 +34,7 @@ fun main(args: Array<String>) {
         println(e.message)
         exitProcess(-1)
     }*/
-
-
-
+    
     initListeners()
 //    api.sendCoins(Address("PE138221B1A9CBEFCEAF03E17934A7373D6289F0536"), 100) {
 //        println("Result $it")
@@ -166,7 +164,7 @@ fun updateThread() {
                 val balance = api.getBalanceRequest(addr)
                 if (balance != null) {
                     walletForm.setBalance(balance.toInt())
-                    //tx.setBalance(balance.toInt())
+                    tx.setBalance(balance.toInt())
                 }
                 println("Current balance: $balance")
                 val txHashes = api.getAddressTransactionHashes(addr)
