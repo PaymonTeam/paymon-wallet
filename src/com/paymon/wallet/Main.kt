@@ -2,6 +2,7 @@ package com.paymon.wallet
 
 import com.google.gson.JsonParser
 import com.paymon.wallet.net.API
+import com.paymon.wallet.utils.BACKUP_VERSION
 import com.paymon.wallet.utils.WalletAccount
 import com.paymon.wallet.utils.restoreFromBackup
 import org.bouncycastle.util.encoders.Hex
@@ -12,6 +13,7 @@ import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+import javax.swing.JOptionPane
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
@@ -51,12 +53,24 @@ fun initListeners() {
 
     loadForm.loadButton.addActionListener {
         if (loadForm.loadButtonHandler()) {
-            api.account = restoreFromBackup(loadForm.password, loadForm.path)
-            updateAddress()
-            //updateBalance()
-            loadForm.dispose()
-            walletForm.isVisible = true
-            walletForm.setSize(500, 670)
+            val acc = restoreFromBackup(loadForm.password, loadForm.path)
+            if (acc != null) {
+                if (acc.version == 1) {
+                    JOptionPane.showMessageDialog(loadForm,
+                            "This backup file is obsolete. " +
+                                    "Please create new wallet account.")
+                    return@addActionListener
+                } else if (acc.version < BACKUP_VERSION) {
+                    println("Your backup version (${acc.version}) is too old from the latest one ($BACKUP_VERSION)")
+                }
+                api.account = acc
+
+                updateAddress()
+                //updateBalance()
+                loadForm.dispose()
+                walletForm.isVisible = true
+                walletForm.setSize(500, 670)
+            }
         }
     }
 
@@ -206,7 +220,10 @@ fun createBackup(password: String, path_name: String): File? {
     } else {
         pathJson = path_name.plus(".json")
     }
-    api.account = WalletAccount(NTRUMLSNative.generateKeyPair().privateKey)
+
+    val sk = NTRUMLSNative.generateKeyPair().privateKey
+    println(String(Hex.encode(sk)))
+    api.account = WalletAccount(sk, BACKUP_VERSION)
     val backup = api.account?.createBackup(password)
     val file: File
     return try {

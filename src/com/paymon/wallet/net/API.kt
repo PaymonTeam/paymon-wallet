@@ -170,7 +170,7 @@ class API {
         transactionObject.value = amount
         transactionObject.trunk_transaction = trunk
         transactionObject.branch_transaction = branch
-        transactionObject.timestamp = System.currentTimeMillis()
+        transactionObject.timestamp = System.currentTimeMillis() / 1000
         transactionObject.data_type = TransactionType.Full
 
         val transaction = Transaction(transactionObject)
