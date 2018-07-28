@@ -126,8 +126,14 @@ fun initListeners() {
     }
 
     pkSave.finishButton.addActionListener {
+        api.account = restoreFromBackup(authForm.password, jsonSave.filePath + ".json")
+        updateAddress()
+        //updateBalance()
+        loadForm.saveFilePath(jsonSave.filePath + ".json")
+        authForm.dispose()
         authForm.contentPane = authForm.panel
-        authForm.repaintMainPanel()
+        walletForm.isVisible = true
+        walletForm.setSize(500, 670)
     }
 
     pkSave.copyButton.addActionListener {
