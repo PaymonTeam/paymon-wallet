@@ -157,6 +157,9 @@ public class WalletForm extends JFrame {
     public void addToList(String hash, String sender, String recipient, int amount, long timestamp) {
         list.add(new TransactionInfoInWalletForm(hash, sender, recipient, amount, new Date(timestamp * 1000)));
     }
+    public void addToList(TransactionInfoInWalletForm tx) {
+        list.add(tx);
+    }
 
     public void repaintMainPanel() {
         getContentPane().repaint();

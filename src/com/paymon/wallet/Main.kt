@@ -12,6 +12,7 @@ import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.*
 import kotlin.concurrent.thread
 
 var authForm = CreateNewWallet()
@@ -181,11 +182,13 @@ fun updateThread() {
                         walletForm.list.clear()
                         for (tx in txs) {
                             val from = addressFromPublicKey(tx.signature_pubkey)
-                            walletForm.addToList(String(Hex.encode(tx.hash)),
+                            val txInfo = TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
                                     from.toString(),
                                     tx.address.toString(),
                                     tx.value.toInt(),
-                                    tx.timestamp)
+                                    Date(tx.timestamp * 1000))
+                            txInfo.isConfirmed = true
+                            walletForm.addToList(txInfo)
                         }
                         walletForm.showExceptionMessage(false, "")
                     }
