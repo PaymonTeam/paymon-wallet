@@ -86,7 +86,9 @@ public class CreateNewWallet extends JFrame {
     public String getPassword() {
         return new String(password.getPassword());
     }
-
+    public void clear(){
+        password.setText("");
+    }
 
 }
 
