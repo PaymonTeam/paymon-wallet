@@ -23,6 +23,10 @@ public class TransactionInfoInWalletForm {
         isConfirmed = confirmed;
     }
 
+    public boolean isConfirmed() {
+        return isConfirmed;
+    }
+
     public TransactionInfoInWalletForm(String hash) {
         super();
         this.hash = hash;
