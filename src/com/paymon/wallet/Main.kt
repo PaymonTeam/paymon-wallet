@@ -153,6 +153,13 @@ fun initListeners() {
             }
         }
     }
+    walletForm.logoutToolbarButton.addActionListener{
+        walletForm.dispose()
+        walletForm.clear()
+        loadForm.clear()
+        authForm.clear()
+        authForm.isVisible = true
+    }
 
 }
 
@@ -200,10 +207,10 @@ fun updateThread() {
                                     tx.value.toInt(),
                                     tx.timestamp)
                         }
-
                         walletForm.showExceptionMessage(false, "")
                     }
                 }
+                walletForm.updateJListPanel()
             }
         } catch (e: Exception) {
             println("Error: ${e.message}")

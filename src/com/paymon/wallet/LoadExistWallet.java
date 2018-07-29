@@ -194,6 +194,9 @@ public class LoadExistWallet extends JFrame {
             System.out.println("Null string");
         }
     }
+    public void clear(){
+        password.setText("");
+    }
 
 }
 

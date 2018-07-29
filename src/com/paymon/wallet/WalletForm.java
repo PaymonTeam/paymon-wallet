@@ -23,6 +23,10 @@ public class WalletForm extends JFrame {
     public JButton addressButton;
     public JButton createNewTransactionButton;
     public JButton refreshTransactionListButton;
+    public JButton fileToolbarButton;
+    public JButton optionsToolbarButton;
+    public JButton logoutToolbarButton;
+
 
     private JLabel addrLabel;
     private JLabel balanceLabel;
@@ -107,6 +111,7 @@ public class WalletForm extends JFrame {
         JLPanel.setSize(getSize().width - 20, getSize().height -
                 (toolbarPanel.getHeight() + textPanel.getHeight() + newTxPanel.getHeight() + refreshPanel.getHeight() + exceptionLabel.getHeight()));
         repaintMainPanel();
+
     }
 
     public void visibleSetter() {
@@ -137,12 +142,16 @@ public class WalletForm extends JFrame {
     private void initToolbar() {
         toolbar.setFloatable(false);
         toolbar.addSeparator();
-        JButton fileToolbarButton = new JButton("File");
+        fileToolbarButton = new JButton("File");
         toolbar.add(fileToolbarButton);
         toolbar.addSeparator();
-        JButton optionsToolbarButton = new JButton("Options");
+        optionsToolbarButton = new JButton("Options");
         toolbar.add(optionsToolbarButton);
         toolbar.addSeparator();
+        logoutToolbarButton = new JButton("Log out");
+        toolbar.add(logoutToolbarButton);
+        toolbar.addSeparator();
+
     }
 
     public void addToList(String hash, String sender, String recipient, int amount, long timestamp) {
@@ -163,5 +172,10 @@ public class WalletForm extends JFrame {
         } else {
             exceptionLabel.setForeground(panel.getForeground());
         }
+    }
+    public void clear(){
+        balanceButton.setText("");
+        addressButton.setText("");
+        JLPanel.removeAll();
     }
 }

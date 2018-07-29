@@ -34,8 +34,6 @@ public class JListPanel extends JPanel {
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.BOTH;
         JPanel panel = new JPanel(new GridBagLayout());
-        //panel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        // create list book and set to scrollpane and add to panel
         panel.add(new JScrollPane(this.txJList = createList()),
                 gbc);
         return panel;

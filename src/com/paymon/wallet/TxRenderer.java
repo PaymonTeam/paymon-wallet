@@ -13,7 +13,7 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
     private JLabel lbAmount = new JLabel();
     private JLabel lbRecipient = new JLabel();
     private JLabel lbDate = new JLabel();
-
+    private JLabel lbIsConfirmed = new JLabel();
     public TxRenderer() {
         setLayout(new BorderLayout(5, 5));
 
@@ -22,6 +22,7 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         panelText.add(lbSender);
         panelText.add(lbRecipient);
         panelText.add(lbDate);
+
         add(lbAmount, BorderLayout.WEST);
         add(panelText, BorderLayout.CENTER);
     }

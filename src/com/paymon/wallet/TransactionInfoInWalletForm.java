@@ -8,6 +8,7 @@ public class TransactionInfoInWalletForm {
     private String recipientAddress;
     private String senderAddress;
     private Date date;
+    private boolean isConfirmed;
 
     public TransactionInfoInWalletForm(String hash, String senderAddress, String recipientAddress, int amount, Date date) {
         super();
@@ -16,6 +17,10 @@ public class TransactionInfoInWalletForm {
         this.recipientAddress = recipientAddress;
         this.amount = amount;
         this.date = date;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        isConfirmed = confirmed;
     }
 
     public TransactionInfoInWalletForm(String hash) {
