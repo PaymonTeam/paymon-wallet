@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 
 
 public class CreateNewWallet extends JFrame {
@@ -67,20 +68,38 @@ public class CreateNewWallet extends JFrame {
         handler = new Handler();
         setSize(480, 480);
         setTitle("Paymon Wallet");
-        incorrectPassMessage.setForeground(new Color(51, 181, 229));
-        createNewWalletLabel.setForeground(Color.WHITE);
-        enterPasswordLabel.setForeground(Color.WHITE);
-        panel.setBackground(new Color(51, 181, 229));
+        setFonts();
+        incorrectPassMessage.setForeground(new Color(50, 50, 50));
+        panel.setBackground(new Color(50, 50, 50));
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
     }
+    private void setFonts(){
+        InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
+        InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
+        try {
+            Font arkhip = Font.createFont(Font.TRUETYPE_FONT, isArkhip);
+            Font roboto = Font.createFont(Font.TRUETYPE_FONT, isRoboto);
+            arkhip = arkhip.deriveFont(28f);
+            roboto = roboto.deriveFont(20f);
+            createNewWalletLabel.setFont(arkhip);
+            createNewWalletButton.setFont(roboto);
+            loadWalletButton.setFont(roboto);
+            enterPasswordLabel.setFont(roboto);
+            incorrectPassMessage.setFont(roboto);
+        }catch (Exception ex){
+            System.out.println("Incorrect font");
+        }
 
+
+
+    }
     public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
     }
 
     public boolean createButtonHandler() {
-        return handler.passFieldHandler(password, incorrectPassMessage, new Color(51, 181, 229));
+        return handler.passFieldHandler(password, incorrectPassMessage, new Color(50, 50, 50));
     }
 
     public String getPassword() {

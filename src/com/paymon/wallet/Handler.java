@@ -6,11 +6,11 @@ import java.awt.*;
 public class Handler {
     public void oButtonHandler(boolean cliked, JButton button, JPasswordField field) {
         if (!cliked) {
-            Image oButtonImage = new ImageIcon(this.getClass().getResource("/oButton.png")).getImage();
+            Image oButtonImage = new ImageIcon(this.getClass().getResource("/images/eye.png")).getImage();
             button.setIcon(new ImageIcon(oButtonImage));
             field.setEchoChar((char) 0);
         } else {
-            Image oButtonImage = new ImageIcon(this.getClass().getResource("/oButtonClicked.png")).getImage();
+            Image oButtonImage = new ImageIcon(this.getClass().getResource("/images/blind.png")).getImage();
             button.setIcon(new ImageIcon(oButtonImage));
             field.setEchoChar('*');
         }
@@ -20,7 +20,7 @@ public class Handler {
         //FIX getText()
         int len = passwordField.getText().trim().length();
         if (len < 9) {
-            incorrectPassMessage.setForeground(Color.RED);
+            incorrectPassMessage.setForeground(new Color(0xe15754));
             return false;
         } else {
             incorrectPassMessage.setForeground(color);
