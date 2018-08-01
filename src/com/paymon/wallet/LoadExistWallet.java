@@ -4,10 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class LoadExistWallet extends JFrame {
     private JPanel panel;
@@ -30,6 +27,10 @@ public class LoadExistWallet extends JFrame {
     private JLabel loadWalletLabel;
     public JButton backButton;
     private JLabel exceptionLabel;
+    private JButton browseButton;
+    private JTextField filePath;
+    private JPanel fieldsPanel;
+    private JLabel pickFileLabel;
 
     private JFilePicker filePicker;
 
@@ -37,6 +38,9 @@ public class LoadExistWallet extends JFrame {
 
     private boolean oButtonIsClicked = true;
 
+    private int backgroundColor = 0x323232;
+    private int red = 0xe15754;
+    private int labelColor = 0xc2c2c2;
     public LoadExistWallet() {
 
         initComponents();
@@ -83,6 +87,7 @@ public class LoadExistWallet extends JFrame {
 
         fileExplorerPanel.setOpaque(false);
 
+        fieldsPanel.setOpaque(false);
         //setVisible(true);
     }
 
@@ -90,54 +95,73 @@ public class LoadExistWallet extends JFrame {
         handler = new Handler();
         setContentPane(panel);
         setTitle("Wallet Load");
-        setSize(480, 480);
+        setSize(450, 650);
 
-        panel.setBackground(new Color(51, 181, 229));
+        panel.setBackground(new Color(backgroundColor));
 
-        filePicker = new JFilePicker("Pick a file", "Browse...");
+        filePicker = new JFilePicker(filePath, browseButton);
         filePicker.setMode(JFilePicker.MODE_OPEN);
         filePicker.addFileTypeFilter(".json", "JSON Files");
         filePicker.setOpaque(true);
-        filePicker.setBackground(new Color(51, 181, 229));
-        fileExplorerPanel.add(filePicker, BorderLayout.CENTER);
+        filePicker.setBackground(new Color(backgroundColor));
 
-        incorrectPassMessage.setForeground(new Color(51, 181, 229));
+        incorrectPassMessage.setForeground(new Color(backgroundColor));
 
-        fileExplorerMessageLabel.setForeground(new Color(51, 181, 229));
+        fileExplorerMessageLabel.setForeground(new Color(backgroundColor));
 
-        exceptionLabel.setForeground(new Color(51, 181, 229));
+        exceptionLabel.setForeground(new Color(backgroundColor));
 
 
-        loadWalletLabel.setForeground(Color.WHITE);
+        loadWalletLabel.setForeground(new Color(labelColor));
 
-        enterPasswordLabel.setForeground(Color.WHITE);
+        enterPasswordLabel.setForeground(new Color(labelColor));
 
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
 
-        passFieldPanel.setSize(fileExplorerPanel.getSize());
+        setFonts();
 
+    }
+    private void setFonts(){
+        InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
+        InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
+        try {
+            Font arkhip = Font.createFont(Font.TRUETYPE_FONT, isArkhip);
+            Font roboto = Font.createFont(Font.TRUETYPE_FONT, isRoboto);
+            arkhip = arkhip.deriveFont(28f);
+            roboto = roboto.deriveFont(20f);
+            loadWalletLabel.setFont(arkhip);
+            browseButton.setFont(roboto);
+            loadButton.setFont(roboto);
+            backButton.setFont(roboto);
+            pickFileLabel.setFont(roboto);
+            enterPasswordLabel.setFont(roboto);
+            incorrectPassMessage.setFont(roboto);
+            fileExplorerMessageLabel.setFont(roboto);
+        }catch (Exception ex){
+            System.out.println("Incorrect font");
+        }
     }
 
     public boolean loadButtonHandler() {
         boolean passIsOk;
         boolean fileExplorerIsOk;
-        passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(51, 181, 229));
+        passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(backgroundColor));
 
         if (handler.fileIsCorrect(filePicker.getSelectedFilePath(), "json")) {
             File f = new File(filePicker.getSelectedFilePath());
             if (f.exists() && !f.isDirectory()) {
                 System.out.println("Selected .json file: " + filePicker.getSelectedFilePath());
-                fileExplorerMessageLabel.setForeground(new Color(51, 181, 229));
+                fileExplorerMessageLabel.setForeground(new Color(backgroundColor));
                 fileExplorerIsOk = true;
             } else {
                 fileExplorerMessageLabel.setText("File in selected path does not exist");
-                fileExplorerMessageLabel.setForeground(Color.RED);
+                fileExplorerMessageLabel.setForeground(new Color(red));
                 fileExplorerIsOk = false;
             }
         } else {
             System.out.println("Wrong file selected");
             fileExplorerMessageLabel.setText("Wrong file type selected");
-            fileExplorerMessageLabel.setForeground(Color.RED);
+            fileExplorerMessageLabel.setForeground(new Color(red));
             fileExplorerIsOk = false;
         }
         return passIsOk && fileExplorerIsOk;
@@ -156,7 +180,7 @@ public class LoadExistWallet extends JFrame {
             exceptionLabel.setText(message);
         }
         if (flag) {
-            exceptionLabel.setForeground(Color.RED);
+            exceptionLabel.setForeground(new Color(red));
         } else {
             exceptionLabel.setForeground(panel.getForeground());
         }

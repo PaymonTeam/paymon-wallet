@@ -18,6 +18,9 @@ public class JsonFileSave extends JFrame {
 
     private JLabel titleLabel;
     private JLabel massageLabel;
+    private JButton browseButton;
+    private JLabel pickFileLabel;
+    private JTextField filePath;
 
     private JFilePicker filePicker;
 
@@ -69,12 +72,11 @@ public class JsonFileSave extends JFrame {
     }
 
     private void setFileExplorer() {
-        filePicker = new JFilePicker("Select a folder", "Browse...");
+        filePicker = new JFilePicker(filePath, browseButton);
         filePicker.setMode(JFilePicker.MODE_SAVE);
         filePicker.addFileTypeFilter(".json", "JSON Files");
         filePicker.setOpaque(true);
         filePicker.setBackground(new Color(51, 181, 229));
-        jsonSavePanel.add(filePicker, BorderLayout.CENTER);
     }
 
     public void setFile(File f) {

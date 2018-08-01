@@ -20,17 +20,11 @@ public class JFilePicker extends JPanel {
     public static final int MODE_OPEN = 1;
     public static final int MODE_SAVE = 2;
 
-    public JFilePicker(String textFieldLabel, String buttonLabel) {
-        this.textFieldLabel = textFieldLabel;
-        this.buttonLabel = buttonLabel;
+    public JFilePicker(JTextField textField, JButton button) {
         fileChooser = new JFileChooser();
 
-        setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-        label = new JLabel(textFieldLabel);
-
-        textField = new JTextField(20);
-        button = new JButton(buttonLabel);
+        this.textField = textField;
+        this.button = button;
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -39,10 +33,6 @@ public class JFilePicker extends JPanel {
             }
         });
 
-        label.setForeground(Color.WHITE);
-        add(label);
-        add(textField);
-        add(button);
 
     }
 

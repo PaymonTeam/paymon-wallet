@@ -62,7 +62,7 @@ fun initListeners() {
             loadForm.saveFilePath(loadForm.path)
             loadForm.dispose()
             walletForm.isVisible = true
-            walletForm.setSize(500, 670)
+            walletForm.setSize(470, 665)
         }
     }
 
@@ -83,7 +83,7 @@ fun initListeners() {
     tx.backToWalletPageButton.addActionListener {
         walletForm.contentPane = walletForm.panel
         walletForm.repaintMainPanel()
-        walletForm.setSize(500, 670)
+        walletForm.setSize(470, 665)
     }
 
     jsonSave.backButton.addActionListener {
@@ -114,7 +114,7 @@ fun initListeners() {
         authForm.dispose()
         authForm.contentPane = authForm.panel
         walletForm.isVisible = true
-        walletForm.setSize(500, 670)
+        walletForm.setSize(470, 665)
     }
 
     pkSave.copyButton.addActionListener {
@@ -129,7 +129,7 @@ fun initListeners() {
                 if(!it){
                     tx.showExceptionMessage(!it, "Transaction error")
                 }else{
-                    tx.showExceptionMessage(Color(0, 100, 0), "Transaction sent")
+                    tx.showExceptionMessage(Color(0x45ba56), "Transaction sent")
                 }
             }
         }
