@@ -29,14 +29,6 @@
           </component>
         </children>
       </grid>
-      <grid id="acc10" binding="jsonSavePanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children/>
-      </grid>
       <grid id="5a81d" binding="checkBoxPanel" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
@@ -85,6 +77,62 @@
           <text value="Next"/>
         </properties>
       </component>
+      <grid id="ee146" binding="jsonSavePanel" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-14335133"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="ca3a2" class="javax.swing.JButton" binding="browseButton">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-4013374"/>
+              <foreground color="-13487566"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="11"/>
+              <margin top="0" left="10" bottom="0" right="0"/>
+              <text value="Browse..."/>
+            </properties>
+            <clientProperties>
+              <html.disable class="java.lang.Boolean" value="true"/>
+            </clientProperties>
+          </component>
+          <component id="df736" class="javax.swing.JLabel" binding="pickFileLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-4013374"/>
+              <enabled value="true"/>
+              <font size="20"/>
+              <foreground color="-4013374"/>
+              <horizontalAlignment value="0"/>
+              <text value="Pick a file"/>
+            </properties>
+          </component>
+          <component id="5f544" class="javax.swing.JTextField" binding="filePath">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag weightx="0.0" weighty="0.0" ipadx="200" ipady="7"/>
+            </constraints>
+            <properties>
+              <background color="-11908534"/>
+              <caretColor color="-4013374"/>
+              <foreground color="-4013374"/>
+              <margin top="2" left="5" bottom="2" right="5"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

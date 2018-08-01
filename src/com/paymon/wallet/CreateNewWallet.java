@@ -29,6 +29,8 @@ public class CreateNewWallet extends JFrame {
 
     private boolean oButtonIsClicked = true;
 
+    private ImagePanel imagePanel;
+
     public CreateNewWallet() {
 
         initComponents();
@@ -55,7 +57,6 @@ public class CreateNewWallet extends JFrame {
     }
 
     private void visibleSetter() {
-        // messagePanel.setVisible(true);
         incorrectPassMessage.setVisible(true);
         firstPanel.setOpaque(false);
         passFieldPanel.setOpaque(false);
@@ -66,9 +67,11 @@ public class CreateNewWallet extends JFrame {
     public void initComponents() {
         setContentPane(panel);
         handler = new Handler();
-        setSize(480, 480);
+        setSize(450, 650);
         setTitle("Paymon Wallet");
         setFonts();
+        imagePanel = new ImagePanel("/images/Background.jpg");
+        getContentPane().add(imagePanel);
         incorrectPassMessage.setForeground(new Color(50, 50, 50));
         panel.setBackground(new Color(50, 50, 50));
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
@@ -85,13 +88,11 @@ public class CreateNewWallet extends JFrame {
             createNewWalletButton.setFont(roboto);
             loadWalletButton.setFont(roboto);
             enterPasswordLabel.setFont(roboto);
+
             incorrectPassMessage.setFont(roboto);
         }catch (Exception ex){
             System.out.println("Incorrect font");
         }
-
-
-
     }
     public void repaintMainPanel() {
         getContentPane().repaint();
