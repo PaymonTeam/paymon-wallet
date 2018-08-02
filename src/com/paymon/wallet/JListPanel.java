@@ -27,15 +27,16 @@ public class JListPanel extends JPanel {
         return list;
     }
 
-    public JPanel createPanel() {
+    public JPanel createPanel(Color background) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.BOTH;
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.add(new JScrollPane(this.txJList = createList()),
-                gbc);
+        JScrollPane scroll = new JScrollPane(this.txJList = createList());
+        scroll.setBackground(background);
+        panel.add(scroll, gbc);
         return panel;
     }
 }

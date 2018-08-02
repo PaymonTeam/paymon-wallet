@@ -3,28 +3,36 @@ package com.paymon.wallet;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class JsonFileSave extends JFrame {
     private JPanel panel;
     private JPanel titlePanel;
     private JPanel jsonSavePanel;
     private JPanel checkBoxPanel;
-    private JPanel navigationPanel;
+    private JPanel buttPanel;
 
     private JCheckBox agreeCheckBox;
 
     public JButton backButton;
     public JButton nextButton;
 
-    private JLabel titleLabel;
+    private JLabel title1Label;
     private JLabel massageLabel;
-    private JButton browseButton;
     private JLabel pickFileLabel;
+
+    private JButton browseButton;
     private JTextField filePath;
 
     private JFilePicker filePicker;
 
     private File json;
+
+    private int backgroundColor = 0x323232;
+    private int red = 0xe15754;
+    private int labelColor = 0xc2c2c2;
 
     public JsonFileSave() {
 
@@ -35,22 +43,26 @@ public class JsonFileSave extends JFrame {
 
     private void initComponents() {
         setContentPane(panel);
-        setSize(480, 480);
+        setSize(450, 650);
         setFileExplorer();
+        setFonts();
+        title1Label.setForeground(new Color(labelColor));
 
-        titleLabel.setForeground(Color.WHITE);
+        agreeCheckBox.setForeground(new Color(labelColor));
 
-        agreeCheckBox.setForeground(Color.WHITE);
+        massageLabel.setForeground(new Color(backgroundColor));
 
-        massageLabel.setForeground(new Color(51, 181, 229));
+        agreeCheckBox.setForeground(new Color(labelColor));
 
-        panel.setBackground(new Color(51, 181, 229));
+        panel.setBackground(new Color(backgroundColor));
 
     }
 
     private void visibleSetter() {
 
         titlePanel.setOpaque(false);
+
+        buttPanel.setOpaque(false);
 
         jsonSavePanel.setOpaque(false);
 
@@ -59,16 +71,59 @@ public class JsonFileSave extends JFrame {
         massageLabel.setVisible(true);
 
     }
-
+    private void setFonts(){
+        InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
+        InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
+        try {
+            Font arkhip = Font.createFont(Font.TRUETYPE_FONT, isArkhip);
+            Font roboto = Font.createFont(Font.TRUETYPE_FONT, isRoboto);
+            arkhip = arkhip.deriveFont(22f);
+            roboto = roboto.deriveFont(20f);
+            title1Label.setFont(arkhip);
+            browseButton.setFont(roboto);
+            filePath.setFont(roboto);
+            nextButton.setFont(roboto);
+            backButton.setFont(roboto);
+            pickFileLabel.setFont(roboto);
+            massageLabel.setFont(roboto);
+            agreeCheckBox.setFont(roboto);
+        }catch (Exception ex){
+            System.out.println("Incorrect font");
+        }
+    }
     public boolean checkBoxHandler() {
         if (agreeCheckBox.isSelected()) {
-
-            massageLabel.setForeground(new Color(51, 181, 229));
-
+            massageLabel.setForeground(new Color(backgroundColor));
         } else {
-            massageLabel.setForeground(Color.RED);
+            massageLabel.setForeground(new Color(red));
         }
         return agreeCheckBox.isSelected();
+    }
+    public void showExceptionMessage(boolean flag, String message) {
+        if (message != null) {
+            massageLabel.setText(message);
+        }
+        if (flag) {
+            massageLabel.setForeground(new Color(red));
+        } else {
+            massageLabel.setForeground(new Color(backgroundColor));
+        }
+    }
+    public boolean filePathHandler(){
+        String path = filePicker.getSelectedFilePath();
+        if(path.equals("")){
+            return false;
+        }else {
+           /* Path isPath = Paths.get(path);
+            if (Files.exists(isPath)) {
+               /* File file = new File(path);
+                return file.isDirectory();
+               return true;
+            } else {
+                return false;
+            }*/
+           return true;
+        }
     }
 
     private void setFileExplorer() {
@@ -76,16 +131,9 @@ public class JsonFileSave extends JFrame {
         filePicker.setMode(JFilePicker.MODE_SAVE);
         filePicker.addFileTypeFilter(".json", "JSON Files");
         filePicker.setOpaque(true);
-        filePicker.setBackground(new Color(51, 181, 229));
+        filePicker.setBackground(new Color(backgroundColor));
     }
 
-    public void setFile(File f) {
-        json = f;
-    }
-
-    public File getFile() {
-        return json;
-    }
 
     public String getFilePath() {
         return filePicker.getSelectedFilePath();

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,6 +32,10 @@ public class WalletForm extends JFrame {
     private JLabel addrLabel;
     private JLabel balanceLabel;
     private JLabel exceptionLabel;
+
+    private int backgroundColor = 0x323232;
+    private int red = 0xe15754;
+    private int labelColor = 0xc2c2c2;
 
     public ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
 
@@ -73,7 +78,8 @@ public class WalletForm extends JFrame {
     private void initJListPanel() {
         JListPanel JLPan = new JListPanel(list);
         JLPanel.removeAll();
-        JLPanel.add(JLPan.createPanel(), BorderLayout.CENTER);
+        JPanel jlist = JLPan.createPanel(new Color(backgroundColor));
+        JLPanel.add(jlist, BorderLayout.CENTER);
     }
 
     private void setList(ArrayList<TransactionInfoInWalletForm> list) {
@@ -85,7 +91,8 @@ public class WalletForm extends JFrame {
         JLPanel.removeAll();
         JLPanel.repaint();
         JLPanel.revalidate();
-        JLPanel.add(JLPan.createPanel(), BorderLayout.CENTER);
+        JPanel jlist = JLPan.createPanel(new Color(backgroundColor));
+        JLPanel.add(jlist, BorderLayout.CENTER);
         JLPanel.repaint();
         JLPanel.revalidate();
         panel.repaint();
@@ -104,12 +111,10 @@ public class WalletForm extends JFrame {
 
     private void initComponents() {
         setTitle("PaymonCoin Wallet");
-        setSize(480, 480);
+        setSize(450, 650);
+        setFonts();
         setContentPane(panel);
-        initToolbar();
         initJListPanel();
-        JLPanel.setSize(getSize().width - 20, getSize().height -
-                (toolbarPanel.getHeight() + textPanel.getHeight() + newTxPanel.getHeight() + refreshPanel.getHeight() + exceptionLabel.getHeight()));
         repaintMainPanel();
 
     }
@@ -125,35 +130,40 @@ public class WalletForm extends JFrame {
 
         textPanel.setOpaque(false);
 
-        addrLabel.setForeground(Color.WHITE);
+        addrLabel.setForeground(new Color(labelColor));
 
-        balanceLabel.setForeground(Color.WHITE);
+        balanceLabel.setForeground(new Color(labelColor));
 
-        panel.setBackground(new Color(51, 181, 229));
+        panel.setBackground(new Color(backgroundColor));
 
-        mainPanel.setBackground(new Color(51, 181, 229));
+        mainPanel.setBackground(new Color(backgroundColor));
 
         exceptionLabel.setVisible(true);
-        exceptionLabel.setForeground(new Color(51, 181, 229));
+        exceptionLabel.setForeground(new Color(backgroundColor));
 
         //setVisible(true);
     }
 
-    private void initToolbar() {
-        toolbar.setFloatable(false);
-        toolbar.addSeparator();
-        fileToolbarButton = new JButton("File");
-        toolbar.add(fileToolbarButton);
-        toolbar.addSeparator();
-        optionsToolbarButton = new JButton("Options");
-        toolbar.add(optionsToolbarButton);
-        toolbar.addSeparator();
-        logoutToolbarButton = new JButton("Log out");
-        toolbar.add(logoutToolbarButton);
-        toolbar.addSeparator();
-
+    private void setFonts(){
+        InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
+        try {
+            Font roboto = Font.createFont(Font.TRUETYPE_FONT, isRoboto);
+            roboto = roboto.deriveFont(20f);
+            addrLabel.setFont(roboto);
+            balanceLabel.setFont(roboto);
+            exceptionLabel.setFont(roboto);
+            addressButton.setFont(roboto);
+            balanceButton.setFont(roboto);
+            optionsToolbarButton.setFont(roboto);
+            fileToolbarButton.setFont(roboto);
+            logoutToolbarButton.setFont(roboto);
+            exceptionLabel.setFont(roboto);
+            refreshTransactionListButton.setFont(roboto);
+            createNewTransactionButton.setFont(roboto);
+        }catch (Exception ex){
+            System.out.println("Incorrect font");
+        }
     }
-
     public void addToList(String hash, String sender, String recipient, int amount, long timestamp) {
         list.add(new TransactionInfoInWalletForm(hash, sender, recipient, amount, new Date(timestamp * 1000)));
     }
@@ -171,9 +181,9 @@ public class WalletForm extends JFrame {
             exceptionLabel.setText(message);
         }
         if (flag) {
-            exceptionLabel.setForeground(Color.RED);
+            exceptionLabel.setForeground(new Color(red));
         } else {
-            exceptionLabel.setForeground(panel.getForeground());
+            exceptionLabel.setForeground(new Color(backgroundColor));
         }
     }
     public void clear(){
