@@ -10,13 +10,15 @@ import org.bouncycastle.crypto.params.KeyParameter
 import org.bouncycastle.crypto.params.ParametersWithIV
 import org.bouncycastle.util.encoders.Hex
 import javax.crypto.KeyGenerator
+import javax.swing.JOptionPane
 
-const val BACKUP_VERSION = 1
+const val BACKUP_VERSION = 2
 
-class WalletAccount(sk: PrivateKey) {
+class WalletAccount(sk: PrivateKey, val version: Int) {
     var privateKey = sk
     var publicKey: PublicKey
     var address: Address
+//    var version: Int
 
     init {
         publicKey = NTRUMLSNative.publicKeyFromPrivate(privateKey) ?: throw IllegalArgumentException("Invalid private key")
@@ -71,6 +73,12 @@ fun restoreFromBackup(json: JsonElement, password: String): WalletAccount? {
     }
 
     val obj = json.asJsonObject
+
+    var v = 0
+    if (obj.has("version") && obj.get("version").isJsonPrimitive) {
+        v = obj.get("version").asJsonPrimitive.asNumber.toInt()
+    }
+
     if (!obj.has("address") || !obj.has("Crypto")) {
         println("No address or Cipher params")
         return null
@@ -126,7 +134,7 @@ fun restoreFromBackup(json: JsonElement, password: String): WalletAccount? {
     System.arraycopy(outputBuffer, 0, decrypted, 0, decrypted.size)
 
     return try {
-        val wallet = WalletAccount(decrypted)
+        val wallet = WalletAccount(decrypted, v)
         if (!wallet.address.inner.contentEquals(addr.inner)) {
             println("Different addresses")
         }

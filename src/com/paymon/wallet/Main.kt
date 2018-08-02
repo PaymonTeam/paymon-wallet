@@ -2,6 +2,7 @@ package com.paymon.wallet
 
 import com.google.gson.JsonParser
 import com.paymon.wallet.net.API
+import com.paymon.wallet.utils.BACKUP_VERSION
 import com.paymon.wallet.utils.WalletAccount
 import com.paymon.wallet.utils.restoreFromBackup
 import org.bouncycastle.util.encoders.Hex
@@ -13,7 +14,9 @@ import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
+import javax.swing.JOptionPane
 import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
@@ -29,7 +32,6 @@ val HASH_NULL = ByteArray(HASH_SIZE)
 val api = API()
 
 fun main(args: Array<String>) {
-
     initListeners()
 
     thread {
@@ -56,13 +58,23 @@ fun initListeners() {
 
     loadForm.loadButton.addActionListener {
         if (loadForm.loadButtonHandler()) {
-            api.account = restoreFromBackup(loadForm.password, loadForm.path)
-            updateAddress()
-            //updateBalance()
-            loadForm.saveFilePath(loadForm.path)
-            loadForm.dispose()
-            walletForm.isVisible = true
-            walletForm.setSize(470, 665)
+            val acc = restoreFromBackup(loadForm.password, loadForm.path)
+            if (acc != null) {
+                if (acc.version == 1) {
+                    JOptionPane.showMessageDialog(loadForm,
+                            "This backup file is obsolete. " +
+                                    "Please create new wallet account.")
+                    return@addActionListener
+                } else if (acc.version < BACKUP_VERSION) {
+                    println("Your backup version (${acc.version}) is too old from the latest one ($BACKUP_VERSION)")
+                }
+                api.account = acc
+
+                updateAddress()
+                updateBalance()
+                loadForm.dispose()
+                walletForm.isVisible = true
+            }
         }
     }
 
@@ -73,17 +85,15 @@ fun initListeners() {
 
     walletForm.createNewTransactionButton.addActionListener {
         updateAddress()
-        //updateBalance()
+        updateBalance()
         walletForm.contentPane = tx.contentPane
         tx.clear()
         walletForm.repaintMainPanel()
-        walletForm.pack()
     }
 
     tx.backToWalletPageButton.addActionListener {
         walletForm.contentPane = walletForm.panel
         walletForm.repaintMainPanel()
-        walletForm.setSize(470, 665)
     }
 
     jsonSave.backButton.addActionListener {
@@ -92,15 +102,36 @@ fun initListeners() {
     }
 
     jsonSave.nextButton.addActionListener {
-        if (jsonSave.checkBoxHandler()) {
+
+        if (jsonSave.checkBoxHandler() && jsonSave.filePathHandler()) {
             val password = authForm.password
             createBackup(password, jsonSave.filePath)
-            authForm.contentPane = pkSave.contentPane
-            authForm.repaintMainPanel()
-            pkSave.privateKeyTextField.text = String(Hex.encode(getPrivateKey()))
+            api.account = restoreFromBackup(authForm.password, jsonSave.filePath + ".json")
+            updateAddress()
+            updateBalance()
+            loadForm.saveFilePath(jsonSave.filePath + ".json")
+            authForm.dispose()
+            authForm.contentPane = authForm.panel
+            walletForm.isVisible = true
+        }else{
+            val message: String
+            if(!jsonSave.checkBoxHandler() && !jsonSave.filePathHandler()) {
+                message = "<html>Please, select a folder<br> and agree with the conditions"
+            }else{
+                if (!jsonSave.checkBoxHandler()) {
+                    message = "Please, agree with the conditions"
+                }else {
+                    if (!jsonSave.filePathHandler()) {
+                        message = "Please, select a folder"
+                    }else{
+                        message = ""
+                    }
+                }
+            }
+            jsonSave.showExceptionMessage(true, message)
         }
     }
-
+/*
     pkSave.backButton.addActionListener {
         authForm.contentPane = jsonSave.contentPane
         authForm.repaintMainPanel()
@@ -109,12 +140,11 @@ fun initListeners() {
     pkSave.finishButton.addActionListener {
         api.account = restoreFromBackup(authForm.password, jsonSave.filePath + ".json")
         updateAddress()
-        //updateBalance()
+        updateBalance()
         loadForm.saveFilePath(jsonSave.filePath + ".json")
         authForm.dispose()
         authForm.contentPane = authForm.panel
         walletForm.isVisible = true
-        walletForm.setSize(470, 665)
     }
 
     pkSave.copyButton.addActionListener {
@@ -122,7 +152,7 @@ fun initListeners() {
             pkSave.setClipboard(pkSave.privateKeyTextField.text)
         }
     }
-
+*/
     tx.sendButton.addActionListener {
         if (tx.txHandler()) {
             api.sendCoins(Address(tx.recipientAddress), tx.amount.toLong()) {
@@ -169,7 +199,7 @@ fun updateThread() {
                 val balance = api.getBalanceRequest(addr)
                 if (balance != null) {
                     walletForm.setBalance(balance.toInt())
-                    tx.setBalance(balance.toInt())
+                    //tx.setBalance(balance.toInt())
                 }
                 println("Current balance: $balance")
                 val txHashes = api.getAddressTransactionHashes(addr)
@@ -227,7 +257,10 @@ fun createBackup(password: String, path_name: String): File? {
     } else {
         pathJson = path_name.plus(".json")
     }
-    api.account = WalletAccount(NTRUMLSNative.generateKeyPair().privateKey)
+
+    val sk = NTRUMLSNative.generateKeyPair().privateKey
+    println(String(Hex.encode(sk)))
+    api.account = WalletAccount(sk, BACKUP_VERSION)
     val backup = api.account?.createBackup(password)
     val file: File
     return try {

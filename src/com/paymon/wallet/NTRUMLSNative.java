@@ -30,6 +30,9 @@ public class NTRUMLSNative {
     native public static boolean verify(byte[] msg, byte[] signature, byte[] pk);
 
     static {
-        System.loadLibrary("ntrumls");
+        System.loadLibrary(
+                System.getProperty("sun.arch.data.model").contentEquals("32") ?
+                        "ntrumls" : "ntrumls64"
+        );
     }
 }

@@ -41,6 +41,7 @@ public class LoadExistWallet extends JFrame {
     private int backgroundColor = 0x323232;
     private int red = 0xe15754;
     private int labelColor = 0xc2c2c2;
+
     public LoadExistWallet() {
 
         initComponents();
@@ -88,7 +89,6 @@ public class LoadExistWallet extends JFrame {
         fileExplorerPanel.setOpaque(false);
 
         fieldsPanel.setOpaque(false);
-        //setVisible(true);
     }
 
     private void initComponents() {
@@ -130,6 +130,8 @@ public class LoadExistWallet extends JFrame {
             arkhip = arkhip.deriveFont(28f);
             roboto = roboto.deriveFont(20f);
             loadWalletLabel.setFont(arkhip);
+            filePath.setFont(roboto);
+            password.setFont(roboto);
             browseButton.setFont(roboto);
             loadButton.setFont(roboto);
             backButton.setFont(roboto);

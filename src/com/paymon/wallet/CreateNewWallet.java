@@ -31,6 +31,8 @@ public class CreateNewWallet extends JFrame {
 
     private ImagePanel imagePanel;
 
+    private int backgroundColor = 0x323232;
+
     public CreateNewWallet() {
 
         initComponents();
@@ -70,10 +72,8 @@ public class CreateNewWallet extends JFrame {
         setSize(450, 650);
         setTitle("Paymon Wallet");
         setFonts();
-        imagePanel = new ImagePanel("/images/Background.jpg");
-        getContentPane().add(imagePanel);
-        incorrectPassMessage.setForeground(new Color(50, 50, 50));
-        panel.setBackground(new Color(50, 50, 50));
+        incorrectPassMessage.setForeground(new Color(backgroundColor));
+        panel.setBackground(new Color(backgroundColor));
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
     }
     private void setFonts(){
@@ -85,6 +85,7 @@ public class CreateNewWallet extends JFrame {
             arkhip = arkhip.deriveFont(28f);
             roboto = roboto.deriveFont(20f);
             createNewWalletLabel.setFont(arkhip);
+            password.setFont(roboto);
             createNewWalletButton.setFont(roboto);
             loadWalletButton.setFont(roboto);
             enterPasswordLabel.setFont(roboto);
@@ -100,7 +101,7 @@ public class CreateNewWallet extends JFrame {
     }
 
     public boolean createButtonHandler() {
-        return handler.passFieldHandler(password, incorrectPassMessage, new Color(50, 50, 50));
+        return handler.passFieldHandler(password, incorrectPassMessage, new Color(backgroundColor));
     }
 
     public String getPassword() {
