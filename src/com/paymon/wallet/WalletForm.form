@@ -6,7 +6,8 @@
       <xy x="33" y="47" width="398" height="605"/>
     </constraints>
     <properties>
-      <foreground color="-4473925"/>
+      <background color="-13487566"/>
+      <foreground color="-13487566"/>
       <minimumSize width="398" height="605"/>
       <opaque value="true"/>
       <preferredSize width="398" height="555"/>
@@ -18,7 +19,8 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <foreground color="-4473925"/>
+          <background color="-13487566"/>
+          <foreground color="-13487566"/>
           <minimumSize width="398" height="605"/>
           <opaque value="true"/>
           <preferredSize width="398" height="555"/>
@@ -28,7 +30,7 @@
           <grid id="46edd" binding="toolbarPanel" layout-manager="GridBagLayout">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-              <gridbag top="25" left="0" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
+              <gridbag top="30" left="0" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
               <opaque value="true"/>
@@ -96,7 +98,7 @@
               <component id="9d0d6" class="javax.swing.JLabel" binding="balanceLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag top="18" left="0" bottom="20" right="0" weightx="1.0" weighty="1.0"/>
+                  <gridbag top="15" left="0" bottom="18" right="0" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <text value="Your balance:"/>
@@ -105,7 +107,7 @@
               <component id="6d0f7" class="javax.swing.JLabel" binding="addrLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag top="15" left="0" bottom="20" right="0" weightx="1.0" weighty="1.0"/>
+                  <gridbag top="18" left="0" bottom="18" right="0" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <text value="Your address:"/>
@@ -115,7 +117,7 @@
           </grid>
           <grid id="f86f2" binding="JLPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
@@ -128,7 +130,7 @@
           </grid>
           <grid id="73fe8" binding="newTxPanel" layout-manager="GridBagLayout">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag top="30" left="0" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties/>
@@ -152,8 +154,8 @@
           </grid>
           <grid id="1d340" binding="refreshPanel" layout-manager="GridBagLayout">
             <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag top="15" left="0" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="15" left="0" bottom="15" right="0" weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -177,13 +179,60 @@
           </grid>
           <component id="2ccb3" class="javax.swing.JLabel" binding="exceptionLabel">
             <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
               <text value="ExceptionMassage"/>
             </properties>
           </component>
+          <grid id="ddea6" binding="formPanel" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag top="10" left="0" bottom="0" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-13487566"/>
+              <foreground color="-4013374"/>
+              <opaque value="false"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="a6dcd" class="javax.swing.JLabel" binding="id">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="25" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <background color="-4013374"/>
+                  <foreground color="-4013374"/>
+                  <text value="ID Transaction"/>
+                </properties>
+              </component>
+              <component id="2f40e" class="javax.swing.JLabel" binding="quantity">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <background color="-4013374"/>
+                  <foreground color="-4013374"/>
+                  <text value="Amount"/>
+                </properties>
+              </component>
+              <component id="3405c" class="javax.swing.JLabel" binding="address">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="0" bottom="0" right="25" weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <background color="-4013374"/>
+                  <foreground color="-4013374"/>
+                  <text value="Address"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>

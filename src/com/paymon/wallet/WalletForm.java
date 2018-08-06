@@ -29,6 +29,10 @@ public class WalletForm extends JFrame {
     private JLabel addrLabel;
     private JLabel balanceLabel;
     private JLabel exceptionLabel;
+    private JPanel formPanel;
+    private JLabel id;
+    private JLabel quantity;
+    private JLabel address;
 
     private int backgroundColor = 0x323232;
     private int red = 0xe15754;
@@ -139,6 +143,7 @@ public class WalletForm extends JFrame {
 
         exceptionLabel.setVisible(true);
         exceptionLabel.setForeground(new Color(backgroundColor));
+
         //setVisible(true);
     }
 
@@ -156,6 +161,9 @@ public class WalletForm extends JFrame {
             exceptionLabel.setFont(roboto);
             refreshTransactionListButton.setFont(roboto);
             createNewTransactionButton.setFont(roboto);
+            id.setFont(roboto);
+            quantity.setFont(roboto);
+            address.setFont(roboto);
         }catch (Exception ex){
             System.out.println("Incorrect font");
         }
