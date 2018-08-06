@@ -27,69 +27,30 @@
         <children>
           <grid id="46edd" binding="toolbarPanel" layout-manager="GridBagLayout">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="0.0"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="25" left="0" bottom="0" right="0" weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
               <opaque value="true"/>
             </properties>
             <border type="none"/>
             <children>
-              <toolbar id="d0591" binding="toolbar">
+              <component id="fbd6b" class="javax.swing.JButton" binding="logoutToolbarButton">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="1" fill="0" indent="0" use-parent-layout="false">
-                    <preferred-size width="-1" height="20"/>
-                  </grid>
-                  <gridbag weightx="1.0" weighty="1.0"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="c2e51" class="javax.swing.JButton" binding="fileToolbarButton">
-                    <constraints/>
-                    <properties>
-                      <autoscrolls value="false"/>
-                      <background color="-4013374"/>
-                      <borderPainted value="true"/>
-                      <foreground color="-13487566"/>
-                      <maximumSize width="105" height="40"/>
-                      <minimumSize width="105" height="40"/>
-                      <preferredSize width="105" height="40"/>
-                      <text value="File"/>
-                    </properties>
-                  </component>
-                  <hspacer id="5f52">
-                    <constraints/>
-                  </hspacer>
-                  <component id="e7792" class="javax.swing.JButton" binding="optionsToolbarButton">
-                    <constraints/>
-                    <properties>
-                      <background color="-4013374"/>
-                      <borderPainted value="true"/>
-                      <foreground color="-13487566"/>
-                      <maximumSize width="105" height="40"/>
-                      <minimumSize width="105" height="40"/>
-                      <preferredSize width="105" height="40"/>
-                      <text value="Options"/>
-                    </properties>
-                  </component>
-                  <hspacer id="714db">
-                    <constraints/>
-                  </hspacer>
-                  <component id="e51cf" class="javax.swing.JButton" binding="logoutToolbarButton">
-                    <constraints/>
-                    <properties>
-                      <background color="-4013374"/>
-                      <borderPainted value="true"/>
-                      <foreground color="-13487566"/>
-                      <maximumSize width="105" height="40"/>
-                      <minimumSize width="105" height="40"/>
-                      <preferredSize width="105" height="40"/>
-                      <text value="Log out"/>
-                    </properties>
-                  </component>
-                </children>
-              </toolbar>
+                <properties>
+                  <background color="-4013374"/>
+                  <borderPainted value="true"/>
+                  <foreground color="-13487566"/>
+                  <horizontalAlignment value="0"/>
+                  <maximumSize width="105" height="40"/>
+                  <minimumSize width="105" height="40"/>
+                  <preferredSize width="105" height="40"/>
+                  <text value="Log out"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="821c9" binding="textPanel" layout-manager="GridBagLayout">
@@ -106,8 +67,8 @@
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
-                  <background color="-4013374"/>
-                  <foreground color="-13487566"/>
+                  <background color="-11908534"/>
+                  <foreground color="-4013374"/>
                   <horizontalTextPosition value="0"/>
                   <maximumSize width="380" height="40"/>
                   <minimumSize width="380" height="40"/>
@@ -122,8 +83,9 @@
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
-                  <background color="-4013374"/>
-                  <foreground color="-13487566"/>
+                  <background color="-11908534"/>
+                  <foreground color="-4013374"/>
+                  <hideActionText value="true"/>
                   <horizontalTextPosition value="0"/>
                   <maximumSize width="380" height="40"/>
                   <minimumSize width="380" height="40"/>
@@ -143,7 +105,7 @@
               <component id="6d0f7" class="javax.swing.JLabel" binding="addrLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag top="0" left="0" bottom="20" right="0" weightx="1.0" weighty="1.0"/>
+                  <gridbag top="15" left="0" bottom="20" right="0" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <text value="Your address:"/>
@@ -178,8 +140,8 @@
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
-                  <background color="-4013374"/>
-                  <foreground color="-13487566"/>
+                  <background color="-11908534"/>
+                  <foreground color="-4013374"/>
                   <maximumSize width="265" height="40"/>
                   <minimumSize width="265" height="40"/>
                   <preferredSize width="265" height="40"/>
@@ -202,8 +164,8 @@
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
-                  <background color="-4013374"/>
-                  <foreground color="-13487566"/>
+                  <background color="-11908534"/>
+                  <foreground color="-4013374"/>
                   <horizontalTextPosition value="0"/>
                   <maximumSize width="265" height="40"/>
                   <minimumSize width="265" height="40"/>

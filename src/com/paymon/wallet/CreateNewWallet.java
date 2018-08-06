@@ -35,9 +35,6 @@ public class CreateNewWallet extends JFrame {
 
     public CreateNewWallet() {
 
-        initComponents();
-        visibleSetter();
-
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -46,6 +43,8 @@ public class CreateNewWallet extends JFrame {
             e.printStackTrace();
         }
 
+        initComponents();
+        visibleSetter();
 
         setDefaultLookAndFeelDecorated(false);
 
@@ -89,7 +88,6 @@ public class CreateNewWallet extends JFrame {
             createNewWalletButton.setFont(roboto);
             loadWalletButton.setFont(roboto);
             enterPasswordLabel.setFont(roboto);
-
             incorrectPassMessage.setFont(roboto);
         }catch (Exception ex){
             System.out.println("Incorrect font");
