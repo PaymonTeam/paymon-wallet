@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.InputStream;
 
 public class TransactionForm extends JFrame {
     private JPanel panel;
@@ -36,7 +37,20 @@ public class TransactionForm extends JFrame {
     private JLabel addressException;
     private JLabel amountException;
 
+
+    private int backgroundColor = 0x323232;
+    private int red = 0xe15754;
+    private int labelColor = 0xc2c2c2;
+
     TransactionForm() {
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setDefaultLookAndFeelDecorated(false);
         initComponents();
         visibleSetter();
         addressButton.addActionListener(new ActionListener() {
@@ -55,13 +69,6 @@ public class TransactionForm extends JFrame {
             }
 
         });
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        setDefaultLookAndFeelDecorated(false);
     }
 
     private void visibleSetter() {
@@ -73,34 +80,64 @@ public class TransactionForm extends JFrame {
 
         navigationPanel.setOpaque(false);
 
-        newTransactionLabel.setForeground(Color.WHITE);
+        newTransactionLabel.setForeground(new Color(labelColor));
 
-        addrLabel.setForeground(Color.WHITE);
+        addrLabel.setForeground(new Color(labelColor));
 
-        amoutLabel.setForeground(Color.WHITE);
+        amoutLabel.setForeground(new Color(labelColor));
 
-        recipientLabel.setForeground(Color.WHITE);
+        recipientLabel.setForeground(new Color(labelColor));
 
-        balanceLabel.setForeground(Color.WHITE);
+        balanceLabel.setForeground(new Color(labelColor));
 
         exceptionLabel.setVisible(true);
 
-        exceptionLabel.setForeground(new Color(51, 181, 229));
+        exceptionLabel.setForeground(new Color(backgroundColor));
 
         addressException.setVisible(true);
 
-        addressException.setForeground(new Color(51, 181, 229));
+        addressException.setForeground(new Color(backgroundColor));
 
         amountException.setVisible(true);
 
-        amountException.setForeground(new Color(51, 181, 229));
+        amountException.setForeground(new Color(backgroundColor));
+
+        panel.setBackground(new Color(backgroundColor));
+    }
+    private void setFonts(){
+        InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
+        InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
+        try {
+            Font arkhip = Font.createFont(Font.TRUETYPE_FONT, isArkhip);
+            Font roboto = Font.createFont(Font.TRUETYPE_FONT, isRoboto);
+            arkhip = arkhip.deriveFont(28f);
+            roboto = roboto.deriveFont(20f);
+            newTransactionLabel.setFont(arkhip);
+            addrLabel.setFont(roboto);
+            balanceLabel.setFont(roboto);
+            exceptionLabel.setFont(roboto);
+            addressButton.setFont(roboto);
+            balanceButton.setFont(roboto);
+            amoutLabel.setFont(roboto);
+            recipientLabel.setFont(roboto);
+            exceptionLabel.setFont(roboto);
+            addressException.setFont(roboto);
+            amountException.setFont(roboto);
+            recipientAddress.setFont(roboto);
+            amount.setFont(roboto);
+            sendButton.setFont(roboto);
+            backToWalletPageButton.setFont(roboto);
+        }catch (Exception ex){
+            System.out.println("Incorrect font");
+        }
     }
 
     private void initComponents() {
 
         setTitle("New Transaction");
-        //setSize(480, 480);
+        setSize(450, 650);
         setContentPane(panel);
+        setFonts();
         PlainDocument doc = (PlainDocument) amount.getDocument();
         doc.setDocumentFilter(new DigitFilter());
     }
@@ -127,14 +164,14 @@ public class TransactionForm extends JFrame {
                     showAmountExceptionMessage(true, "The amount must be greater than zero");
                 } else {
                     amountIsOk = true;
-                    showAmountExceptionMessage(false, "");
+                    showAmountExceptionMessage(false, " ");
                 }
             } catch (NumberFormatException e) {
                 amountIsOk = true;
-                showAmountExceptionMessage(false, "");
+                showAmountExceptionMessage(false, " ");
             }
         }
-        if (recipientAddress.getText().equals("")) {
+        if (recipientAddress.getText().equals(" ")) {
             addressIsOk = false;
             showAddressExceptionMessage(true, "Address field must not be empty");
         } else {
@@ -144,7 +181,7 @@ public class TransactionForm extends JFrame {
             } catch (Exception e) {
                 addressIsOk = false;
             }
-            showAddressExceptionMessage(!addressIsOk, addressIsOk ? "" : "Incorrect address");
+            showAddressExceptionMessage(!addressIsOk, addressIsOk ? " " : "Incorrect address");
         }
         return amountIsOk && addressIsOk;
     }
@@ -166,9 +203,9 @@ public class TransactionForm extends JFrame {
             exceptionLabel.setText(message);
         }
         if (flag) {
-            exceptionLabel.setForeground(Color.RED);
+            exceptionLabel.setForeground(new Color(red));
         } else {
-            exceptionLabel.setForeground(panel.getForeground());
+            exceptionLabel.setForeground(new Color(backgroundColor));
         }
     }
 
@@ -177,9 +214,9 @@ public class TransactionForm extends JFrame {
             amountException.setText(message);
         }
         if (flag) {
-            amountException.setForeground(Color.RED);
+            amountException.setForeground(new Color(red));
         } else {
-            amountException.setForeground(panel.getForeground());
+            amountException.setForeground(new Color(backgroundColor));
         }
     }
 
@@ -188,9 +225,9 @@ public class TransactionForm extends JFrame {
             addressException.setText(message);
         }
         if (flag) {
-            addressException.setForeground(Color.RED);
+            addressException.setForeground(new Color(red));
         } else {
-            addressException.setForeground(panel.getForeground());
+            addressException.setForeground(new Color(backgroundColor));
         }
     }
     public void showExceptionMessage(Color color, String message) {
@@ -202,9 +239,9 @@ public class TransactionForm extends JFrame {
         }
     }
     public void clear(){
-        addressException.setForeground(new Color(51, 181, 229));
-        amountException.setForeground(new Color(51, 181, 229));
-        exceptionLabel.setForeground(new Color(51, 181, 229));
+        addressException.setForeground(new Color(backgroundColor));
+        amountException.setForeground(new Color(backgroundColor));
+        exceptionLabel.setForeground(new Color(backgroundColor));
         amount.setText("0");
         recipientAddress.setText("");
     }

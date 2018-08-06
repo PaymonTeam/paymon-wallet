@@ -163,7 +163,7 @@
             </constraints>
             <properties>
               <background color="-4013374"/>
-              <borderPainted value="false"/>
+              <borderPainted value="true"/>
               <font size="20"/>
               <foreground color="-13487566"/>
               <maximumSize width="265" height="40"/>

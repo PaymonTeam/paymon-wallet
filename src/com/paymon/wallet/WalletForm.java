@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class WalletForm extends JFrame {
-    public JToolBar toolbar;
 
     public JPanel panel;
     private JPanel toolbarPanel;
@@ -24,8 +23,6 @@ public class WalletForm extends JFrame {
     public JButton addressButton;
     public JButton createNewTransactionButton;
     public JButton refreshTransactionListButton;
-    public JButton fileToolbarButton;
-    public JButton optionsToolbarButton;
     public JButton logoutToolbarButton;
 
 
@@ -40,6 +37,15 @@ public class WalletForm extends JFrame {
     public ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
 
     public WalletForm() {
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setDefaultLookAndFeelDecorated(false);
+
         initComponents();
         visibleSetter();
 
@@ -66,13 +72,6 @@ public class WalletForm extends JFrame {
 
         });
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        setDefaultLookAndFeelDecorated(false);
     }
 
     private void initJListPanel() {
@@ -140,7 +139,6 @@ public class WalletForm extends JFrame {
 
         exceptionLabel.setVisible(true);
         exceptionLabel.setForeground(new Color(backgroundColor));
-
         //setVisible(true);
     }
 
@@ -154,8 +152,6 @@ public class WalletForm extends JFrame {
             exceptionLabel.setFont(roboto);
             addressButton.setFont(roboto);
             balanceButton.setFont(roboto);
-            optionsToolbarButton.setFont(roboto);
-            fileToolbarButton.setFont(roboto);
             logoutToolbarButton.setFont(roboto);
             exceptionLabel.setFont(roboto);
             refreshTransactionListButton.setFont(roboto);

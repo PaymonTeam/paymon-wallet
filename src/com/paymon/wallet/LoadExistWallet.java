@@ -139,15 +139,16 @@ public class LoadExistWallet extends JFrame {
             enterPasswordLabel.setFont(roboto);
             incorrectPassMessage.setFont(roboto);
             fileExplorerMessageLabel.setFont(roboto);
+            exceptionLabel.setFont(roboto);
         }catch (Exception ex){
             System.out.println("Incorrect font");
         }
     }
 
     public boolean loadButtonHandler() {
-        boolean passIsOk;
+       // boolean passIsOk;
         boolean fileExplorerIsOk;
-        passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(backgroundColor));
+       // passIsOk = handler.passFieldHandler(password, incorrectPassMessage, new Color(backgroundColor));
 
         if (handler.fileIsCorrect(filePicker.getSelectedFilePath(), "json")) {
             File f = new File(filePicker.getSelectedFilePath());
@@ -166,7 +167,8 @@ public class LoadExistWallet extends JFrame {
             fileExplorerMessageLabel.setForeground(new Color(red));
             fileExplorerIsOk = false;
         }
-        return passIsOk && fileExplorerIsOk;
+        //return passIsOk && fileExplorerIsOk;
+        return fileExplorerIsOk;
     }
 
     public String getPassword() {

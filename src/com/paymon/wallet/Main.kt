@@ -275,6 +275,12 @@ fun getPrivateKey(): ByteArray {
 }
 
 fun restoreFromBackup(password: String, path: String): WalletAccount? {
-    val bu = JsonParser().parse(String(Files.readAllBytes(Paths.get(path))))
-    return restoreFromBackup(bu, password)
+    try {
+        val bu = JsonParser().parse(String(Files.readAllBytes(Paths.get(path))))
+        return restoreFromBackup(bu, password)
+    }catch (e:Exception){
+        println("Error: ${e.message}")
+        loadForm.showExceptionMessage(true, "Incorrect password or backup file")
+    }
+    return null
 }
