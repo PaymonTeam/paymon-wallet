@@ -36,6 +36,7 @@ public class TransactionForm extends JFrame {
     private JLabel exceptionLabel;
     private JLabel addressException;
     private JLabel amountException;
+    private JLabel hintLabel;
 
 
     private int backgroundColor = 0x323232;
@@ -127,6 +128,8 @@ public class TransactionForm extends JFrame {
             amount.setFont(roboto);
             sendButton.setFont(roboto);
             backToWalletPageButton.setFont(roboto);
+            roboto = roboto.deriveFont(15f);
+            hintLabel.setFont(roboto);
         }catch (Exception ex){
             System.out.println("Incorrect font");
         }

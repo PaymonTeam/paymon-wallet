@@ -65,7 +65,7 @@
             <children>
               <component id="a2a74" class="javax.swing.JButton" binding="addressButton">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
@@ -81,7 +81,7 @@
               </component>
               <component id="dcab4" class="javax.swing.JButton" binding="balanceButton" default-binding="true">
                 <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
@@ -97,7 +97,7 @@
               </component>
               <component id="9d0d6" class="javax.swing.JLabel" binding="balanceLabel">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag top="15" left="0" bottom="18" right="0" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
@@ -107,10 +107,21 @@
               <component id="6d0f7" class="javax.swing.JLabel" binding="addrLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag top="18" left="0" bottom="18" right="0" weightx="1.0" weighty="1.0"/>
+                  <gridbag top="18" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <text value="Your address:"/>
+                </properties>
+              </component>
+              <component id="ef4af" class="javax.swing.JLabel" binding="hintLabel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag top="0" left="0" bottom="5" right="0" weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <background color="-13487566"/>
+                  <foreground color="-4013374"/>
+                  <text value="(click to copy)"/>
                 </properties>
               </component>
             </children>
