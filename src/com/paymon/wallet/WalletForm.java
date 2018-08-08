@@ -33,6 +33,7 @@ public class WalletForm extends JFrame {
     private JLabel id;
     private JLabel quantity;
     private JLabel address;
+    private JLabel hintLabel;
 
     private int backgroundColor = 0x323232;
     private int red = 0xe15754;
@@ -80,9 +81,11 @@ public class WalletForm extends JFrame {
 
     private void initJListPanel() {
         JListPanel JLPan = new JListPanel(list);
+        JLPan.setOpaque(false);
         JLPanel.removeAll();
-        JPanel jlist = JLPan.createPanel(new Color(backgroundColor));
-        JLPanel.add(jlist, BorderLayout.CENTER);
+        JPanel jList = JLPan.createPanel(new Color(backgroundColor));
+        jList.setOpaque(false);
+        JLPanel.add(jList, BorderLayout.CENTER);
     }
 
     private void setList(ArrayList<TransactionInfoInWalletForm> list) {
@@ -103,7 +106,6 @@ public class WalletForm extends JFrame {
 
     }
 
-    //TODO change by using public access
     public void setAddress(String address) {
         addressButton.setText(address);
     }
@@ -144,7 +146,6 @@ public class WalletForm extends JFrame {
         exceptionLabel.setVisible(true);
         exceptionLabel.setForeground(new Color(backgroundColor));
 
-        //setVisible(true);
     }
 
     private void setFonts(){
@@ -164,6 +165,8 @@ public class WalletForm extends JFrame {
             id.setFont(roboto);
             quantity.setFont(roboto);
             address.setFont(roboto);
+            roboto = roboto.deriveFont(15f);
+            hintLabel.setFont(roboto);
         }catch (Exception ex){
             System.out.println("Incorrect font");
         }

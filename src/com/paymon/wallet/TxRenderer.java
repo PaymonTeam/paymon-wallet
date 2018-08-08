@@ -3,75 +3,91 @@ package com.paymon.wallet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWalletForm> {
 
-    private JLabel lbHash = new JLabel();
+    private JButton lbHash = new JButton();
     private JLabel lbSender = new JLabel();
     private JLabel lbAmount = new JLabel();
     private JLabel lbRecipient = new JLabel();
     private JLabel lbDate = new JLabel();
     private JLabel lbIsConfirmed = new JLabel();
     public TxRenderer() {
-        setLayout(new BorderLayout(5,5));
-        add(lbHash, BorderLayout.WEST);
-        add(lbAmount, BorderLayout.CENTER);
-        add(lbRecipient, BorderLayout.EAST);
+        setLayout(new GridBagLayout());
+
+        lbHash.setForeground(new Color(0xC2C2C2));
+        lbAmount.setForeground(new Color(0xC2C2C2));
+        lbRecipient.setForeground(new Color(0xC2C2C2));
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(lbHash, c);
+        c.gridx = 1;
+        c.gridy = 0;
+        add(lbAmount, c);
+        c.gridx = 2;
+        c.gridy = 0;
+        add(lbRecipient, c);
     }
 
     @Override
     public Component getListCellRendererComponent(JList<? extends TransactionInfoInWalletForm> list,
                                                   TransactionInfoInWalletForm tx, int index, boolean isSelected, boolean cellHasFocus) {
         int amount = tx.getAmount();
-        lbAmount.setText("  Amount: " + Integer.toString(amount));
-        if (amount > 0) {
-            lbAmount.setForeground(new Color(0, 100, 0));
+        lbAmount.setText(Integer.toString(amount));
+        lbHash.setText(tx.getHash().substring(0, 9) + "...");
+        lbHash.setBorderPainted(false);
+        lbHash.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringSelection ss = new StringSelection(tx.getHash());
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+            }
+        });
+
+        lbRecipient.setText(tx.getRecipientAddress().substring(0, 9) + "...");
+
+        InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
+        try {
+            Font roboto = Font.createFont(Font.TRUETYPE_FONT, isRoboto);
+            roboto = roboto.deriveFont(20f);
+            lbHash.setFont(roboto);
+            lbAmount.setFont(roboto);
+            lbRecipient.setFont(roboto);
+        }catch (Exception ex){
+            System.out.println("Incorrect font");
         }
-        if (amount < 0) {
-            lbAmount.setForeground(Color.RED);
-        }
-        if (amount == 0) {
-            lbAmount.setForeground(Color.BLUE);
-        }
-        lbHash.setText("Hash: " + tx.getHash());
-        lbSender.setText("From: " + tx.getSenderAddress());
-        lbRecipient.setText("To: " + tx.getRecipientAddress());
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        lbDate.setText(df.format(tx.getDate()));
-        lbDate.setForeground(Color.ORANGE);
-        if (tx.isConfirmed()){
-            lbIsConfirmed.setText("Is confirmed: " + Character.toString((char)0x2611));
-            lbIsConfirmed.setForeground(new Color(0, 100, 0));
-        }else{
-            lbIsConfirmed.setText("Is confirmed: " + Character.toString((char)0x2612));
-            lbIsConfirmed.setForeground(Color.RED);
-        }
-        // set Opaque to change background color of JLabel
+
+
         lbHash.setOpaque(true);
-        lbSender.setOpaque(true);
         lbAmount.setOpaque(true);
         lbRecipient.setOpaque(true);
-        lbDate.setOpaque(true);
-        lbIsConfirmed.setOpaque(true);
-        // when select item
+
+        list.setForeground(new Color(0xC2C2C2));
+        list.setBackground(new Color(0x323232));
+        list.setSelectionBackground(new Color(0xC2C2C2));
+        list.setSelectionForeground(new Color(0x323232));
+
         if (isSelected) {
             lbAmount.setBackground(list.getSelectionBackground());
-            lbDate.setBackground(list.getSelectionBackground());
             lbHash.setBackground(list.getSelectionBackground());
             lbRecipient.setBackground(list.getSelectionBackground());
-            lbSender.setBackground(list.getSelectionBackground());
-            lbIsConfirmed.setBackground(list.getSelectionBackground());
             setBackground(list.getSelectionBackground());
 
-        } else { // when don't select
+        } else {
             lbAmount.setBackground(list.getBackground());
-            lbDate.setBackground(list.getBackground());
+            lbAmount.setForeground(list.getForeground());
             lbHash.setBackground(list.getBackground());
+            lbHash.setForeground(list.getForeground());
             lbRecipient.setBackground(list.getBackground());
-            lbSender.setBackground(list.getBackground());
-            lbSender.setBackground(list.getBackground());
+            lbRecipient.setForeground(list.getForeground());
             setBackground(list.getBackground());
         }
         return this;
