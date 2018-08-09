@@ -126,19 +126,6 @@
               </component>
             </children>
           </grid>
-          <grid id="f86f2" binding="JLPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <alignmentX value="0.0"/>
-              <background color="-13487566"/>
-              <foreground color="-13487566"/>
-            </properties>
-            <border type="none"/>
-            <children/>
-          </grid>
           <grid id="73fe8" binding="newTxPanel" layout-manager="GridBagLayout">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -243,6 +230,22 @@
                 </properties>
               </component>
             </children>
+          </grid>
+          <grid id="60f34" binding="JLPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-13487566"/>
+              <foreground color="-13487566"/>
+              <maximumSize width="380" height="160"/>
+              <minimumSize width="380" height="160"/>
+              <opaque value="false"/>
+              <preferredSize width="380" height="180"/>
+            </properties>
+            <border type="empty"/>
+            <children/>
           </grid>
         </children>
       </grid>

@@ -13,11 +13,8 @@ import java.text.SimpleDateFormat;
 class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWalletForm> {
 
     private JButton lbHash = new JButton();
-    private JLabel lbSender = new JLabel();
     private JLabel lbAmount = new JLabel();
     private JLabel lbRecipient = new JLabel();
-    private JLabel lbDate = new JLabel();
-    private JLabel lbIsConfirmed = new JLabel();
     public TxRenderer() {
         setLayout(new GridBagLayout());
 
@@ -25,15 +22,21 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         lbAmount.setForeground(new Color(0xC2C2C2));
         lbRecipient.setForeground(new Color(0xC2C2C2));
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.ipadx = 0;
+        c.fill = GridBagConstraints.WEST;
         c.gridx = 0;
         c.gridy = 0;
+        c.insets.left = 25;
         add(lbHash, c);
+        c.fill = GridBagConstraints.CENTER;
+        c.insets.left = 0;
         c.gridx = 1;
-        c.gridy = 0;
         add(lbAmount, c);
+        c.fill = GridBagConstraints.EAST;
+        c.insets.right = 25;
         c.gridx = 2;
-        c.gridy = 0;
         add(lbRecipient, c);
     }
 

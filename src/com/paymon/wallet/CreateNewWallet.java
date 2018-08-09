@@ -107,6 +107,7 @@ public class CreateNewWallet extends JFrame {
     }
     public void clear(){
         password.setText("");
+        incorrectPassMessage.setForeground(new Color(backgroundColor));
     }
 
 }
