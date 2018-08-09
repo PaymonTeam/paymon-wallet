@@ -23,7 +23,6 @@ var walletForm = WalletForm()
 var loadForm = LoadExistWallet()
 var tx = TransactionForm()
 var jsonSave = JsonFileSave()
-var pkSave = PKSave()
 var running = true
 val HASH_SIZE = 20
 val ADDRESS_SIZE = HASH_SIZE + 1
@@ -81,6 +80,7 @@ fun initListeners() {
     loadForm.backButton.addActionListener {
         loadForm.dispose()
         authForm.isVisible = true
+        authForm.clear()
     }
 
     walletForm.createNewTransactionButton.addActionListener {
@@ -113,6 +113,7 @@ fun initListeners() {
             authForm.dispose()
             authForm.contentPane = authForm.panel
             walletForm.isVisible = true
+
         }else{
             val message: String
             if(!jsonSave.checkBoxHandler() && !jsonSave.filePathHandler()) {
@@ -130,29 +131,9 @@ fun initListeners() {
             }
             jsonSave.showExceptionMessage(true, message)
         }
-    }
-/*
-    pkSave.backButton.addActionListener {
-        authForm.contentPane = jsonSave.contentPane
-        authForm.repaintMainPanel()
-    }
 
-    pkSave.finishButton.addActionListener {
-        api.account = restoreFromBackup(authForm.password, jsonSave.filePath + ".json")
-        updateAddress()
-        updateBalance()
-        loadForm.saveFilePath(jsonSave.filePath + ".json")
-        authForm.dispose()
-        authForm.contentPane = authForm.panel
-        walletForm.isVisible = true
-    }
 
-    pkSave.copyButton.addActionListener {
-        if (pkSave.privateKeyTextField.text != null) {
-            pkSave.setClipboard(pkSave.privateKeyTextField.text)
-        }
     }
-*/
     tx.sendButton.addActionListener {
         if (tx.txHandler()) {
             api.sendCoins(Address(tx.recipientAddress), tx.amount.toLong()) {

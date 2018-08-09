@@ -88,9 +88,6 @@ public class WalletForm extends JFrame {
         JLPanel.add(jList, BorderLayout.CENTER);
     }
 
-    private void setList(ArrayList<TransactionInfoInWalletForm> list) {
-        this.list = list;
-    }
 
     public void updateJListPanel() {
         JListPanel JLPan = new JListPanel(list);
