@@ -35,6 +35,7 @@ public class JListPanel extends JPanel {
         gbc.fill = GridBagConstraints.BOTH;
         JPanel panel = new JPanel(new GridBagLayout());
         JScrollPane scroll = new JScrollPane(this.txJList = createList());
+        scroll.getVerticalScrollBar().setBackground(background);
         scroll.setBackground(background);
         panel.add(scroll, gbc);
         return panel;

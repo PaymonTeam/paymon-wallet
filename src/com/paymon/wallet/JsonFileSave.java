@@ -38,6 +38,15 @@ public class JsonFileSave extends JFrame {
 
         initComponents();
         visibleSetter();
+        setResizable(false);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setDefaultLookAndFeelDecorated(false);
 
     }
 
