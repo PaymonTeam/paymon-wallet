@@ -1,5 +1,6 @@
 package com.paymon.wallet;
 
+import java.util.Comparator;
 import java.util.Date;
 
 public class TransactionInfoInWalletForm {
@@ -54,5 +55,11 @@ public class TransactionInfoInWalletForm {
     }
 
 
+    public static final Comparator<TransactionInfoInWalletForm> COMPARE_BY_DATE = new Comparator<TransactionInfoInWalletForm>() {
+        @Override
+        public int compare(TransactionInfoInWalletForm lhs, TransactionInfoInWalletForm rhs) {
+            return lhs.getDate().compareTo(rhs.getDate());
+        }
+    };
 }
 

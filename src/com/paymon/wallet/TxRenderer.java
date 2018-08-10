@@ -80,8 +80,11 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
 
         if (isSelected) {
             lbAmount.setBackground(list.getSelectionBackground());
+            lbAmount.setForeground(list.getBackground());
             lbHash.setBackground(list.getSelectionBackground());
+            lbHash.setForeground(list.getBackground());
             lbRecipient.setBackground(list.getSelectionBackground());
+            lbRecipient.setForeground(list.getBackground());
             setBackground(list.getSelectionBackground());
 
         } else {

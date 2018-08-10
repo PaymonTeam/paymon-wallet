@@ -44,6 +44,9 @@ public class TransactionForm extends JFrame {
     private int labelColor = 0xc2c2c2;
 
     TransactionForm() {
+        initComponents();
+        visibleSetter();
+        setResizable(false);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
@@ -52,8 +55,7 @@ public class TransactionForm extends JFrame {
             e.printStackTrace();
         }
         setDefaultLookAndFeelDecorated(false);
-        initComponents();
-        visibleSetter();
+
         addressButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

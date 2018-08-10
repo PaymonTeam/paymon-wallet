@@ -35,6 +35,10 @@ public class CreateNewWallet extends JFrame {
 
     public CreateNewWallet() {
 
+        initComponents();
+        visibleSetter();
+        setResizable(false);
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -42,9 +46,6 @@ public class CreateNewWallet extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        initComponents();
-        visibleSetter();
 
         setDefaultLookAndFeelDecorated(false);
 

@@ -15,6 +15,8 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
 import javax.swing.JOptionPane
+import javax.swing.JPanel
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
@@ -136,7 +138,15 @@ fun initListeners() {
     }
     tx.sendButton.addActionListener {
         if (tx.txHandler()) {
+            if(walletForm.glassPane != null) {
+                walletForm.glassPane.isVisible = true
+                walletForm.repaintMainPanel()
+            }else{
+                println("Nullable TransactionForm GlassPane")
+            }
             api.sendCoins(Address(tx.recipientAddress), tx.amount.toLong()) {
+                walletForm.glassPane.isVisible = false
+                walletForm.repaintMainPanel()
                 if(!it){
                     tx.showExceptionMessage(!it, "Transaction error")
                 }else{
@@ -180,17 +190,13 @@ fun updateThread() {
                 val balance = api.getBalanceRequest(addr)
                 if (balance != null) {
                     walletForm.setBalance(balance.toInt())
-                    //tx.setBalance(balance.toInt())
                 }
                 println("Current balance: $balance")
                 val txHashes = api.getAddressTransactionHashes(addr)
                 if (txHashes != null) {
-//                for (hash in txHashes) {
-//                    println("request hash=${String(Hex.encode(hash))}")
-//                }
                     val txs = api.getTransactions(txHashes)
                     if (txs != null) {
-                        walletForm.list.clear()
+                        val txInfos : ArrayList<TransactionInfoInWalletForm> = ArrayList()
                         for (tx in txs) {
                             val from = addressFromPublicKey(tx.signature_pubkey)
                             val txInfo = TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
@@ -199,8 +205,10 @@ fun updateThread() {
                                     tx.value.toInt(),
                                     Date(tx.timestamp * 1000))
                             txInfo.isConfirmed = true
-                            walletForm.addToList(txInfo)
+                           txInfos.add(txInfo)
                         }
+                        sortTxInfo(txInfos)
+                        walletForm.setList(txInfos)
                         walletForm.showExceptionMessage(false, "")
                     }
                 }
@@ -213,7 +221,9 @@ fun updateThread() {
         Thread.sleep(10_000)
     }
 }
-
+fun sortTxInfo(list: ArrayList<TransactionInfoInWalletForm>){
+    Collections.sort(list, TransactionInfoInWalletForm.COMPARE_BY_DATE.reversed())
+}
 fun buckupTest() {
     val backup = api.account?.createBackup("123456789")
     try {

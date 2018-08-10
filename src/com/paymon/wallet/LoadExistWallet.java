@@ -46,6 +46,7 @@ public class LoadExistWallet extends JFrame {
 
         initComponents();
         visibleSetter();
+        setResizable(false);
 
         oButton.addActionListener(new ActionListener() {
             @Override
@@ -62,7 +63,6 @@ public class LoadExistWallet extends JFrame {
             e.printStackTrace();
         }
         setDefaultLookAndFeelDecorated(false);
-        //pack();
     }
 
     private void visibleSetter() {

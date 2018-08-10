@@ -3,8 +3,11 @@ package com.paymon.wallet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
+import java.awt.desktop.SystemEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +21,7 @@ public class WalletForm extends JFrame {
     private JPanel newTxPanel;
     private JPanel refreshPanel;
     private JPanel mainPanel;
+    private JPanel processPanel;
 
     public JButton balanceButton;
     public JButton addressButton;
@@ -34,6 +38,9 @@ public class WalletForm extends JFrame {
     private JLabel quantity;
     private JLabel address;
     private JLabel hintLabel;
+    private JLabel processLabel;
+
+
 
     private int backgroundColor = 0x323232;
     private int red = 0xe15754;
@@ -53,6 +60,7 @@ public class WalletForm extends JFrame {
 
         initComponents();
         visibleSetter();
+        setResizable(false);
 
         refreshTransactionListButton.addActionListener(new ActionListener() {
             @Override
@@ -78,13 +86,37 @@ public class WalletForm extends JFrame {
         });
 
     }
+    private void initGlassPanel(){
+        processPanel = new JPanel(new GridBagLayout()){
+            public void paintComponent(Graphics g)
+            {
+                g.setColor(new Color(50,50,50,225));
+                g.fillRect(0,0, getWidth(), getHeight());
+            }
+        };
 
+        processPanel.setOpaque(false);
+
+        processLabel = new JLabel("Please wait, it may take a few minutes");
+        processLabel.setForeground(new Color(labelColor));
+        processLabel.setBackground(new Color(0x4A4A4A));
+
+        processPanel.add(processLabel);
+        processPanel.addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent me){
+                me.consume();
+            }
+        });
+
+        setGlassPane(processPanel);
+
+    }
     private void initJListPanel() {
         JListPanel JLPan = new JListPanel(list);
         JLPan.setOpaque(false);
-        JLPanel.removeAll();
         JPanel jList = JLPan.createPanel(new Color(backgroundColor));
         jList.setOpaque(false);
+        JLPanel.removeAll();
         JLPanel.add(jList, BorderLayout.CENTER);
     }
 
@@ -114,6 +146,7 @@ public class WalletForm extends JFrame {
     private void initComponents() {
         setTitle("PaymonCoin Wallet");
         setSize(450, 650);
+        initGlassPanel();
         setFonts();
         setContentPane(panel);
         initJListPanel();
@@ -137,6 +170,8 @@ public class WalletForm extends JFrame {
         balanceLabel.setForeground(new Color(labelColor));
 
         panel.setBackground(new Color(backgroundColor));
+
+        JLPanel.setBackground(new Color(backgroundColor));
 
         mainPanel.setBackground(new Color(backgroundColor));
 
@@ -162,19 +197,28 @@ public class WalletForm extends JFrame {
             id.setFont(roboto);
             quantity.setFont(roboto);
             address.setFont(roboto);
+            if(processLabel != null) {
+                processLabel.setFont(roboto);
+            }else{
+                System.out.println("Nullable processLabel");
+            }
             roboto = roboto.deriveFont(15f);
             hintLabel.setFont(roboto);
         }catch (Exception ex){
             System.out.println("Incorrect font");
         }
     }
-    public void addToList(String hash, String sender, String recipient, int amount, long timestamp) {
-        list.add(new TransactionInfoInWalletForm(hash, sender, recipient, amount, new Date(timestamp * 1000)));
-    }
     public void addToList(TransactionInfoInWalletForm tx) {
         list.add(tx);
     }
-
+    public void setList(ArrayList<TransactionInfoInWalletForm> txList){
+        list.clear();
+        if(txList != null) {
+            list = txList;
+        }else{
+            System.out.println("Nullable ArrayList object");
+        }
+    }
     public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
