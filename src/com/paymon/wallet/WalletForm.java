@@ -157,6 +157,8 @@ public class WalletForm extends JFrame {
     public void visibleSetter() {
         JLPanel.setOpaque(false);
 
+        formPanel.setOpaque(false);
+
         toolbarPanel.setOpaque(false);
 
         refreshPanel.setOpaque(false);

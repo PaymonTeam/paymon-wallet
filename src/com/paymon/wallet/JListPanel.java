@@ -14,15 +14,12 @@ public class JListPanel extends JPanel {
     }
 
     private JList<TransactionInfoInWalletForm> createList() {
-        // create List model
+
         DefaultListModel<TransactionInfoInWalletForm> model = new DefaultListModel<>();
-        // add item to model
         for (TransactionInfoInWalletForm tx : this.txList) {
             model.addElement(tx);
         }
-        // create JList with model
         JList<TransactionInfoInWalletForm> list = new JList<TransactionInfoInWalletForm>(model);
-        // set cell renderer
         list.setCellRenderer(new TxRenderer());
         return list;
     }
