@@ -76,7 +76,7 @@ fun initListeners() {
                     println("Your backup version (${acc.version}) is too old from the latest one ($BACKUP_VERSION)")
                 }
                 api.account = acc
-
+                loadForm.saveFilePath(loadForm.path)
                 updateAddress()
                 //updateBalance()
                 loadForm.dispose()
@@ -156,9 +156,10 @@ fun initListeners() {
     }
     walletForm.logoutToolbarButton.addActionListener{
         walletForm.dispose()
-        walletForm.clear()
-        loadForm.clear()
-        authForm.clear()
+        walletForm = WalletForm()
+        loadForm = LoadExistWallet()
+        authForm = CreateNewWallet()
+        initListeners()
         authForm.isVisible = true
     }
 

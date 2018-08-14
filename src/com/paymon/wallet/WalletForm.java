@@ -90,7 +90,7 @@ public class WalletForm extends JFrame {
         processPanel = new JPanel(new GridBagLayout()){
             public void paintComponent(Graphics g)
             {
-                g.setColor(new Color(50,50,50,225));
+                g.setColor(new Color(50,50,50,200));
                 g.fillRect(0,0, getWidth(), getHeight());
             }
         };

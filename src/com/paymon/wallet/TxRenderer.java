@@ -29,14 +29,17 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         c.gridx = 0;
         c.gridy = 0;
         c.insets.left = 25;
+        lbHash.setHorizontalAlignment(SwingConstants.LEFT);
         add(lbHash, c);
         c.fill = GridBagConstraints.CENTER;
         c.insets.left = 0;
         c.gridx = 1;
+        lbHash.setHorizontalAlignment(SwingConstants.CENTER);
         add(lbAmount, c);
         c.fill = GridBagConstraints.EAST;
         c.insets.right = 25;
         c.gridx = 2;
+        lbHash.setHorizontalAlignment(SwingConstants.RIGHT);
         add(lbRecipient, c);
     }
 
