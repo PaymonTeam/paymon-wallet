@@ -21,26 +21,33 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         lbHash.setForeground(new Color(0xC2C2C2));
         lbAmount.setForeground(new Color(0xC2C2C2));
         lbRecipient.setForeground(new Color(0xC2C2C2));
+        JPanel panel;
         GridBagConstraints c = new GridBagConstraints();
         c.weightx = 1.0;
         c.weighty = 1.0;
         c.ipadx = 0;
-        c.fill = GridBagConstraints.WEST;
+        c.ipady = 0;
+        c.anchor = GridBagConstraints.WEST;
         c.gridx = 0;
         c.gridy = 0;
-        c.insets.left = 25;
-        lbHash.setHorizontalAlignment(SwingConstants.LEFT);
-        add(lbHash, c);
-        c.fill = GridBagConstraints.CENTER;
+        //c.insets.left = 25;
+        panel = new JPanel(new BorderLayout());
+        panel.add(lbHash, BorderLayout.CENTER);
+        add(panel, c);
+        c.anchor = GridBagConstraints.CENTER;
         c.insets.left = 0;
         c.gridx = 1;
-        lbHash.setHorizontalAlignment(SwingConstants.CENTER);
-        add(lbAmount, c);
-        c.fill = GridBagConstraints.EAST;
+
+        panel = new JPanel(new BorderLayout());
+        panel.add(lbAmount, BorderLayout.CENTER);
+        add(panel, c);
+        c.anchor = GridBagConstraints.EAST;
         c.insets.right = 25;
         c.gridx = 2;
-        lbHash.setHorizontalAlignment(SwingConstants.RIGHT);
-        add(lbRecipient, c);
+
+        panel = new JPanel(new BorderLayout());
+        panel.add(lbRecipient, BorderLayout.CENTER);
+        add(panel, c);
     }
 
     @Override
@@ -58,7 +65,12 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
             }
         });
 
-        lbRecipient.setText(tx.getRecipientAddress().substring(0, 9) + "...");
+        if(!tx.getRecipientAddress().equals("You")) {
+            lbRecipient.setText(tx.getRecipientAddress().substring(0, 9) + "...");
+        }else{
+            lbRecipient.setText(tx.getRecipientAddress() + "                ");
+
+        }
 
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
         try {

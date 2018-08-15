@@ -137,7 +137,20 @@ fun initListeners() {
 
     }
     tx.sendButton.addActionListener {
-        if (tx.txHandler()) {
+        val bal: Int
+        val address = api.account?.address
+        if (address != null) {
+            val balance = api.getBalanceRequest(address)
+            if (balance != null) {
+                bal = balance.toInt()
+            }else{
+                bal = 0
+            }
+        }else{
+            bal = 0
+        }
+
+        if (tx.txHandler(bal)) {
             if(walletForm.glassPane != null) {
                 walletForm.glassPane.isVisible = true
                 walletForm.repaintMainPanel()
@@ -202,7 +215,11 @@ fun updateThread() {
                             val from = addressFromPublicKey(tx.signature_pubkey)
                             val txInfo = TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
                                     from.toString(),
-                                    tx.address.toString(),
+                                    if(tx.address.toString() == addr.toString()) {
+                                        "You"
+                                    }else{
+                                        tx.address.toString()
+                                    },
                                     tx.value.toInt(),
                                     Date(tx.timestamp * 1000))
                             txInfo.isConfirmed = true

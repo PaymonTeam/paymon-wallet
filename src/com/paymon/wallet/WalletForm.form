@@ -77,6 +77,7 @@
                   <preferredSize width="380" height="40"/>
                   <rolloverEnabled value="true"/>
                   <text value="P00000000000000000000"/>
+                  <toolTipText value="Click to copy"/>
                 </properties>
               </component>
               <component id="dcab4" class="javax.swing.JButton" binding="balanceButton" default-binding="true">
@@ -92,7 +93,8 @@
                   <maximumSize width="380" height="40"/>
                   <minimumSize width="380" height="40"/>
                   <preferredSize width="380" height="40"/>
-                  <text value="Balance"/>
+                  <text value="0"/>
+                  <toolTipText value="Click to copy"/>
                 </properties>
               </component>
               <component id="9d0d6" class="javax.swing.JLabel" binding="balanceLabel">
@@ -204,13 +206,13 @@
                 <properties>
                   <background color="-4013374"/>
                   <foreground color="-4013374"/>
-                  <text value="ID Transaction"/>
+                  <text value="Hash"/>
                 </properties>
               </component>
               <component id="2f40e" class="javax.swing.JLabel" binding="quantity">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
+                  <gridbag top="0" left="25" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <background color="-4013374"/>
@@ -226,7 +228,7 @@
                 <properties>
                   <background color="-4013374"/>
                   <foreground color="-4013374"/>
-                  <text value="Address"/>
+                  <text value="Recipient"/>
                 </properties>
               </component>
             </children>

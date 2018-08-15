@@ -136,6 +136,7 @@
               <preferredSize width="380" height="40"/>
               <rolloverEnabled value="true"/>
               <text value="P00000000000000000000"/>
+              <toolTipText value="Click to copy"/>
             </properties>
           </component>
           <component id="ee38e" class="javax.swing.JButton" binding="balanceButton" default-binding="true">
@@ -151,7 +152,8 @@
               <maximumSize width="380" height="40"/>
               <minimumSize width="380" height="40"/>
               <preferredSize width="380" height="40"/>
-              <text value="Balance"/>
+              <text value="0"/>
+              <toolTipText value="Click to copy"/>
             </properties>
           </component>
           <component id="c18e2" class="javax.swing.JLabel" binding="balanceLabel">
