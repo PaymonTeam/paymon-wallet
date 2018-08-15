@@ -155,7 +155,7 @@ public class TransactionForm extends JFrame {
         balanceButton.setText(Integer.toString(balance));
     }
 
-    public boolean txHandler() {
+    public boolean txHandler(int balance) {
         boolean amountIsOk;
         boolean addressIsOk;
 
@@ -168,8 +168,13 @@ public class TransactionForm extends JFrame {
                     amountIsOk = false;
                     showAmountExceptionMessage(true, "The amount must be greater than zero");
                 } else {
-                    amountIsOk = true;
-                    showAmountExceptionMessage(false, " ");
+                    if (Integer.parseInt(amount.getText()) > balance) {
+                        showAmountExceptionMessage(true, "Insufficient balance");
+                        amountIsOk = false;
+                    }else {
+                        amountIsOk = true;
+                        showAmountExceptionMessage(false, " ");
+                    }
                 }
             } catch (NumberFormatException e) {
                 amountIsOk = true;
