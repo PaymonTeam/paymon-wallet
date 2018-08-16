@@ -164,7 +164,7 @@ public class TransactionForm extends JFrame {
             showAmountExceptionMessage(true, "Amount field must not be empty");
         } else {
             try {
-                if (Integer.parseInt(amount.getText()) <= 0) {
+                if (Integer.parseInt(amount.getText()) < 0) {
                     amountIsOk = false;
                     showAmountExceptionMessage(true, "The amount must be greater than zero");
                 } else {
