@@ -142,8 +142,8 @@
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
-                  <background color="-11908534"/>
-                  <foreground color="-4013374"/>
+                  <background color="-4013374"/>
+                  <foreground color="-13487566"/>
                   <maximumSize width="265" height="40"/>
                   <minimumSize width="265" height="40"/>
                   <preferredSize width="265" height="40"/>
@@ -166,8 +166,9 @@
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
-                  <background color="-11908534"/>
-                  <foreground color="-4013374"/>
+                  <autoscrolls value="false"/>
+                  <background color="-4013374"/>
+                  <foreground color="-13487566"/>
                   <horizontalTextPosition value="0"/>
                   <maximumSize width="265" height="40"/>
                   <minimumSize width="265" height="40"/>
