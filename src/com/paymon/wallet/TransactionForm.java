@@ -105,6 +105,14 @@ public class TransactionForm extends JFrame {
 
         amountException.setForeground(new Color(backgroundColor));
 
+        addressButton.setOpaque(false);
+        addressButton.setBorderPainted(false);
+        addressButton.setOpaque(true);
+
+        balanceButton.setOpaque(false);
+        balanceButton.setBorderPainted(false);
+        balanceButton.setOpaque(true);
+
         panel.setBackground(new Color(backgroundColor));
     }
     private void setFonts(){

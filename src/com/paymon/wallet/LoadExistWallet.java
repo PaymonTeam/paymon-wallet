@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.*;
 
 public class LoadExistWallet extends JFrame {
@@ -14,23 +16,28 @@ public class LoadExistWallet extends JFrame {
     private JPanel messageFileExplorerPanel;
     private JPanel firstPanel;
     private JPanel passFieldPanel;
+    private JPanel fieldsPanel;
+    public JPanel processPanel;
 
     private JButton oButton;
     public JButton loadButton;
+    public JButton backButton;
+    private JButton browseButton;
 
     private JPasswordField password;
 
     private JLabel passwordLable;
     private JLabel enterPasswordLabel;
     private JLabel loadWalletLabel;
-    public JButton backButton;
-    private JLabel exceptionLabel;
-    private JButton browseButton;
-    private JTextField filePath;
-    private JPanel fieldsPanel;
+    private JLabel processLabel;
     private JLabel pickFileLabel;
+    private JLabel exceptionLabel;
+
+    private JTextField filePath;
 
     private JFilePicker filePicker;
+
+    public JProgressBar progressBar;
 
     private Handler handler;
 
@@ -108,6 +115,8 @@ public class LoadExistWallet extends JFrame {
 
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
 
+        showLoadPane();
+
         setFonts();
 
     }
@@ -128,6 +137,11 @@ public class LoadExistWallet extends JFrame {
             pickFileLabel.setFont(roboto);
             enterPasswordLabel.setFont(roboto);
             exceptionLabel.setFont(roboto);
+            if(processLabel != null) {
+                processLabel.setFont(roboto);
+            }else{
+                System.out.println("Nullable processLabel");
+            }
         }catch (Exception ex){
             System.out.println("Incorrect font");
         }
@@ -211,6 +225,34 @@ public class LoadExistWallet extends JFrame {
     public void clear(){
         password.setText("");
         exceptionLabel.setForeground(new Color(backgroundColor));
+    }
+    public void showLoadPane(){
+        processPanel = new JPanel(new GridBagLayout()){
+            public void paintComponent(Graphics g)
+            {
+                g.setColor(new Color(50,50,50,200));
+                g.fillRect(0,0, getWidth(), getHeight());
+            }
+        };
+
+        processPanel.setOpaque(false);
+
+        processLabel = new JLabel("Please wait, it may take a few moments");
+        processLabel.setForeground(new Color(labelColor));
+        processLabel.setBackground(new Color(0x4A4A4A));
+
+        processPanel.add(processLabel);
+        processPanel.addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent me){
+                me.consume();
+            }
+        });
+        progressBar = new JProgressBar();
+        processPanel.add(progressBar);
+    }
+    public void repaintMainPanel() {
+        getContentPane().repaint();
+        getContentPane().revalidate();
     }
 
 }

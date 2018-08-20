@@ -35,7 +35,7 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         panel.add(lbHash, BorderLayout.CENTER);
         add(panel, c);
         c.anchor = GridBagConstraints.CENTER;
-        c.insets.left = 0;
+        c.insets.right = 10;
         c.gridx = 1;
 
         panel = new JPanel(new BorderLayout());

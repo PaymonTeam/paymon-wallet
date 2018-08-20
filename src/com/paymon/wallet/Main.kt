@@ -76,6 +76,14 @@ fun initListeners() {
                 loadForm.saveFilePath(loadForm.path)
                 updateAddress()
                 updateBalance()
+                loadForm.showLoadPane()
+                loadForm.glassPane = loadForm.processPanel
+                loadForm.glassPane.isVisible = true
+                loadForm.repaintMainPanel()
+                for(i in 0..100){
+                    loadForm.progressBar.value = i
+                    //Thread.sleep(100)
+                }
                 loadForm.dispose()
                 walletForm.isVisible = true
             }
@@ -154,19 +162,16 @@ fun initListeners() {
         }
 
         if (tx.txHandler(bal)) {
-            if(walletForm.glassPane != null) {
-                walletForm.glassPane = walletForm.processPanel
-                walletForm.glassPane.isVisible = true
-                walletForm.repaintMainPanel()
-            }else{
-                println("Nullable TransactionForm GlassPane")
-            }
+            walletForm.glassPane = walletForm.processPanel
+            walletForm.glassPane.isVisible = true
+            walletForm.repaintMainPanel()
+
             api.sendCoins(Address(tx.recipientAddress), tx.amount.toLong()) {
                 walletForm.glassPane.isVisible = false
                 walletForm.repaintMainPanel()
-                if(!it){
+                if (!it) {
                     tx.showExceptionMessage(!it, "Transaction error")
-                }else{
+                } else {
                     tx.showExceptionMessage(Color(0x45ba56), "Transaction sent")
                 }
             }
@@ -201,7 +206,6 @@ fun updateBalance() {
 
 fun updateThread() {
     val txInfos : ArrayList<TransactionInfoInWalletForm> = ArrayList()
-    val set : HashSet<Hash> = HashSet()
     while (running) {
         try {
             txInfos.clear()
@@ -258,9 +262,11 @@ fun updateThread() {
                         sortTxInfo(txInfos)
                         walletForm.setList(txInfos)
                         walletForm.showExceptionMessage(false, "")
+                        walletForm.updateJListPanel()
                     }
+                }else {
+                    walletForm.updateJListPanel()
                 }
-                walletForm.updateJListPanel()
             }
         } catch (e: Exception) {
             println("Error: ${e.message}")
