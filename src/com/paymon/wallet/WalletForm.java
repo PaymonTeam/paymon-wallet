@@ -130,17 +130,10 @@ public class WalletForm extends JFrame {
     }
 
     public void updateJListPanel() {
-        JListPanel JLPan = new JListPanel(list);
         JLPanel.removeAll();
+        JLPanel.add(new JListPanel(list).createPanel(new Color(backgroundColor)), BorderLayout.CENTER);
         JLPanel.repaint();
         JLPanel.revalidate();
-        JPanel jlist = JLPan.createPanel(new Color(backgroundColor));
-        JLPanel.add(jlist, BorderLayout.CENTER);
-        JLPanel.repaint();
-        JLPanel.revalidate();
-        panel.repaint();
-        panel.revalidate();
-
     }
 
     public void setAddress(String address) {
@@ -163,7 +156,7 @@ public class WalletForm extends JFrame {
     }
 
     public void visibleSetter() {
-        JLPanel.setOpaque(false);
+        JLPanel.setOpaque(true);
 
         formPanel.setOpaque(false);
 
@@ -179,9 +172,13 @@ public class WalletForm extends JFrame {
 
         balanceLabel.setForeground(new Color(labelColor));
 
-        addressButton.setBackground(new Color(74, 74, 74));
+        addressButton.setOpaque(false);
+        addressButton.setBorderPainted(false);
+        addressButton.setOpaque(true);
 
-        balanceButton.setBackground(new Color(74, 74, 74));
+        balanceButton.setOpaque(false);
+        balanceButton.setBorderPainted(false);
+        balanceButton.setOpaque(true);
 
         panel.setBackground(new Color(backgroundColor));
 
