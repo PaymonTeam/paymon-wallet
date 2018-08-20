@@ -3,14 +3,12 @@ package com.paymon.wallet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
-import java.awt.desktop.SystemEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class WalletForm extends JFrame {
 
@@ -21,7 +19,7 @@ public class WalletForm extends JFrame {
     private JPanel newTxPanel;
     private JPanel refreshPanel;
     private JPanel mainPanel;
-    private JPanel processPanel;
+    public JPanel processPanel;
 
     public JButton balanceButton;
     public JButton addressButton;
@@ -82,10 +80,10 @@ public class WalletForm extends JFrame {
                 StringSelection ss = new StringSelection(balanceButton.getText());
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
             }
-
         });
 
     }
+
     private void initGlassPanel(){
         processPanel = new JPanel(new GridBagLayout()){
             public void paintComponent(Graphics g)
@@ -108,9 +106,20 @@ public class WalletForm extends JFrame {
             }
         });
 
-        setGlassPane(processPanel);
+    }
+
+    public void showTxInfo(TransactionInfoInWalletForm tx){
+        TransactionInfoForm txInfo = new TransactionInfoForm(tx);
+        txInfo.xButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getGlassPane().setVisible(false);
+            }
+        });
+        setGlassPane(txInfo.getContentPane());
 
     }
+
     private void initJListPanel() {
         JListPanel JLPan = new JListPanel(list);
         JLPan.setOpaque(false);
@@ -119,7 +128,6 @@ public class WalletForm extends JFrame {
         JLPanel.removeAll();
         JLPanel.add(jList, BorderLayout.CENTER);
     }
-
 
     public void updateJListPanel() {
         JListPanel JLPan = new JListPanel(list);
@@ -171,6 +179,10 @@ public class WalletForm extends JFrame {
 
         balanceLabel.setForeground(new Color(labelColor));
 
+        addressButton.setBackground(new Color(74, 74, 74));
+
+        balanceButton.setBackground(new Color(74, 74, 74));
+
         panel.setBackground(new Color(backgroundColor));
 
         JLPanel.setBackground(new Color(backgroundColor));
@@ -210,17 +222,15 @@ public class WalletForm extends JFrame {
             System.out.println("Incorrect font");
         }
     }
-    public void addToList(TransactionInfoInWalletForm tx) {
-        list.add(tx);
-    }
+
     public void setList(ArrayList<TransactionInfoInWalletForm> txList){
-        list.clear();
         if(txList != null) {
             list = txList;
         }else{
             System.out.println("Nullable ArrayList object");
         }
     }
+
     public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
@@ -236,6 +246,7 @@ public class WalletForm extends JFrame {
             exceptionLabel.setForeground(new Color(backgroundColor));
         }
     }
+
     public void clear(){
         balanceButton.setText("");
         addressButton.setText("");

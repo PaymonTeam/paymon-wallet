@@ -48,13 +48,16 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         panel = new JPanel(new BorderLayout());
         panel.add(lbRecipient, BorderLayout.CENTER);
         add(panel, c);
+        setToolTipText("Click to get more info");
+
     }
 
     @Override
     public Component getListCellRendererComponent(JList<? extends TransactionInfoInWalletForm> list,
                                                   TransactionInfoInWalletForm tx, int index, boolean isSelected, boolean cellHasFocus) {
+        addMouseListener(tx.getPanel());
         int amount = tx.getAmount();
-        lbAmount.setText(Integer.toString(amount));
+        lbAmount.setText(Integer.toString(amount) + " pmnt");
         lbHash.setText(tx.getHash().substring(0, 9) + "...");
         lbHash.setBorderPainted(false);
         lbHash.addActionListener(new ActionListener() {
@@ -69,7 +72,6 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
             lbRecipient.setText(tx.getRecipientAddress().substring(0, 9) + "...");
         }else{
             lbRecipient.setText(tx.getRecipientAddress() + "                ");
-
         }
 
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
@@ -101,7 +103,6 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
             lbRecipient.setBackground(list.getSelectionBackground());
             lbRecipient.setForeground(list.getBackground());
             setBackground(list.getSelectionBackground());
-
         } else {
             lbAmount.setBackground(list.getBackground());
             lbAmount.setForeground(list.getForeground());

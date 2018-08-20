@@ -1,5 +1,7 @@
 package com.paymon.wallet;
 
+import javax.swing.*;
+import java.awt.event.MouseAdapter;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -10,7 +12,17 @@ public class TransactionInfoInWalletForm {
     private String senderAddress;
     private Date date;
     private boolean isConfirmed;
+    private MouseAdapter panel;
 
+    public TransactionInfoInWalletForm(String hash, String senderAddress, String recipientAddress, int amount, Date date, MouseAdapter panel) {
+        super();
+        this.hash = hash;
+        this.senderAddress = senderAddress;
+        this.recipientAddress = recipientAddress;
+        this.amount = amount;
+        this.date = date;
+        this.panel = panel;
+    }
     public TransactionInfoInWalletForm(String hash, String senderAddress, String recipientAddress, int amount, Date date) {
         super();
         this.hash = hash;
@@ -27,12 +39,6 @@ public class TransactionInfoInWalletForm {
     public boolean isConfirmed() {
         return isConfirmed;
     }
-
-    public TransactionInfoInWalletForm(String hash) {
-        super();
-        this.hash = hash;
-    }
-
 
     public String getHash() {
         return hash;
@@ -54,6 +60,9 @@ public class TransactionInfoInWalletForm {
         return date;
     }
 
+    public MouseAdapter getPanel() {
+        return panel;
+    }
 
     public static final Comparator<TransactionInfoInWalletForm> COMPARE_BY_DATE = new Comparator<TransactionInfoInWalletForm>() {
         @Override

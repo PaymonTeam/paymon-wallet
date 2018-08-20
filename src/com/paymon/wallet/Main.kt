@@ -9,6 +9,8 @@ import org.bouncycastle.util.encoders.Hex
 import java.awt.Color
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
@@ -17,6 +19,7 @@ import java.util.*
 import javax.swing.JOptionPane
 import javax.swing.JPanel
 import kotlin.collections.ArrayList
+import kotlin.collections.HashSet
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
 
@@ -152,6 +155,7 @@ fun initListeners() {
 
         if (tx.txHandler(bal)) {
             if(walletForm.glassPane != null) {
+                walletForm.glassPane = walletForm.processPanel
                 walletForm.glassPane.isVisible = true
                 walletForm.repaintMainPanel()
             }else{
@@ -196,8 +200,11 @@ fun updateBalance() {
 }
 
 fun updateThread() {
+    val txInfos : ArrayList<TransactionInfoInWalletForm> = ArrayList()
+    val set : HashSet<Hash> = HashSet()
     while (running) {
         try {
+            txInfos.clear()
             val addr = api.account?.address
             if (addr != null) {
                 walletForm.setAddress(addr.toString())
@@ -210,20 +217,43 @@ fun updateThread() {
                 if (txHashes != null) {
                     val txs = api.getTransactions(txHashes)
                     if (txs != null) {
-                        val txInfos : ArrayList<TransactionInfoInWalletForm> = ArrayList()
                         for (tx in txs) {
                             val from = addressFromPublicKey(tx.signature_pubkey)
+                            val ma = object : MouseAdapter() {
+                                override fun mousePressed(e: MouseEvent?) {
+                                    super.mousePressed(e)
+                                    walletForm.showTxInfo(TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
+                                            from.toString(),
+                                            if (tx.address.toString() == addr.toString()) {
+                                                "You"
+                                            } else {
+                                                tx.address.toString()
+                                            },
+                                            if (tx.address.toString() == addr.toString()) {
+                                                tx.value.toInt()
+                                            } else {
+                                                -tx.value.toInt()
+                                            },
+                                            Date(tx.timestamp * 1000)))
+                                    walletForm.glassPane.isVisible = true
+                                }
+                            }
                             val txInfo = TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
                                     from.toString(),
-                                    if(tx.address.toString() == addr.toString()) {
+                                    if (tx.address.toString() == addr.toString()) {
                                         "You"
-                                    }else{
+                                    } else {
                                         tx.address.toString()
                                     },
-                                    tx.value.toInt(),
-                                    Date(tx.timestamp * 1000))
+                                    if (tx.address.toString() == addr.toString()) {
+                                        tx.value.toInt()
+                                    } else {
+                                        -tx.value.toInt()
+                                    },
+                                    Date(tx.timestamp * 1000),
+                                    ma)
                             txInfo.isConfirmed = true
-                           txInfos.add(txInfo)
+                            txInfos.add(txInfo)
                         }
                         sortTxInfo(txInfos)
                         walletForm.setList(txInfos)
@@ -239,9 +269,11 @@ fun updateThread() {
         Thread.sleep(10_000)
     }
 }
+
 fun sortTxInfo(list: ArrayList<TransactionInfoInWalletForm>){
     Collections.sort(list, TransactionInfoInWalletForm.COMPARE_BY_DATE.reversed())
 }
+
 fun buckupTest() {
     val backup = api.account?.createBackup("123456789")
     try {
