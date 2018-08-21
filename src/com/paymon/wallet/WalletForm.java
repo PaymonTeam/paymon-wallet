@@ -3,10 +3,7 @@ package com.paymon.wallet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -38,7 +35,7 @@ public class WalletForm extends JFrame {
     private JLabel hintLabel;
     private JLabel processLabel;
 
-
+    private MouseListener JLML;
 
     private int backgroundColor = 0x323232;
     private int red = 0xe15754;
@@ -63,7 +60,9 @@ public class WalletForm extends JFrame {
         refreshTransactionListButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateJListPanel();
+                if (JLML != null) {
+                    updateJListPanel(JLML);
+                }
             }
         });
         addressButton.addActionListener(new ActionListener() {
@@ -117,10 +116,9 @@ public class WalletForm extends JFrame {
             }
         });
         setGlassPane(txInfo.getContentPane());
-
     }
 
-    private void initJListPanel() {
+    public void initJListPanel() {
         JListPanel JLPan = new JListPanel(list);
         JLPan.setOpaque(false);
         JPanel jList = JLPan.createPanel(new Color(backgroundColor));
@@ -129,9 +127,10 @@ public class WalletForm extends JFrame {
         JLPanel.add(jList, BorderLayout.CENTER);
     }
 
-    public void updateJListPanel() {
+    public void updateJListPanel(MouseListener ml) {
+        JLML = ml;
         JLPanel.removeAll();
-        JLPanel.add(new JListPanel(list).createPanel(new Color(backgroundColor)), BorderLayout.CENTER);
+        JLPanel.add(new JListPanel(list, ml).createPanel(new Color(backgroundColor)), BorderLayout.CENTER);
         JLPanel.repaint();
         JLPanel.revalidate();
     }

@@ -48,7 +48,7 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
         panel = new JPanel(new BorderLayout());
         panel.add(lbRecipient, BorderLayout.CENTER);
         add(panel, c);
-        setToolTipText("Click to get more info");
+        setToolTipText("double-click to get more info");
 
     }
 

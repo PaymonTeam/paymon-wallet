@@ -245,7 +245,7 @@
               <maximumSize width="380" height="160"/>
               <minimumSize width="380" height="160"/>
               <opaque value="true"/>
-              <preferredSize width="380" height="180"/>
+              <preferredSize width="380" height="160"/>
             </properties>
             <border type="empty"/>
             <children/>
