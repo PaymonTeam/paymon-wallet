@@ -22,6 +22,11 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 import kotlin.concurrent.thread
 import kotlin.system.exitProcess
+import com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener
+import javax.swing.JList
+import java.awt.event.MouseListener
+
+
 
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
@@ -82,7 +87,7 @@ fun initListeners() {
                 loadForm.repaintMainPanel()
                 for(i in 0..100){
                     loadForm.progressBar.value = i
-                    //Thread.sleep(100)
+                    Thread.sleep(100)
                 }
                 loadForm.dispose()
                 walletForm.isVisible = true
@@ -223,25 +228,6 @@ fun updateThread() {
                     if (txs != null) {
                         for (tx in txs) {
                             val from = addressFromPublicKey(tx.signature_pubkey)
-                            val ma = object : MouseAdapter() {
-                                override fun mousePressed(e: MouseEvent?) {
-                                    super.mousePressed(e)
-                                    walletForm.showTxInfo(TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
-                                            from.toString(),
-                                            if (tx.address.toString() == addr.toString()) {
-                                                "You"
-                                            } else {
-                                                tx.address.toString()
-                                            },
-                                            if (tx.address.toString() == addr.toString()) {
-                                                tx.value.toInt()
-                                            } else {
-                                                -tx.value.toInt()
-                                            },
-                                            Date(tx.timestamp * 1000)))
-                                    walletForm.glassPane.isVisible = true
-                                }
-                            }
                             val txInfo = TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
                                     from.toString(),
                                     if (tx.address.toString() == addr.toString()) {
@@ -254,18 +240,34 @@ fun updateThread() {
                                     } else {
                                         -tx.value.toInt()
                                     },
-                                    Date(tx.timestamp * 1000),
-                                    ma)
+                                    Date(tx.timestamp * 1000))
                             txInfo.isConfirmed = true
                             txInfos.add(txInfo)
                         }
                         sortTxInfo(txInfos)
+                        val mouseListener = object : MouseAdapter() {
+                            override fun mouseClicked(mouseEvent: MouseEvent) {
+                                val theList = mouseEvent.source as JList<*>
+                                if (mouseEvent.clickCount == 2) {
+                                    val index = theList.locationToIndex(mouseEvent.point)
+                                    if (index >= 0) {
+                                        if (index < txInfos.size) {
+                                            walletForm.showTxInfo(txInfos[index])
+                                        }else{
+                                            println("Index $index out-of-bounds")
+                                        }
+                                        walletForm.glassPane.isVisible = true
+                                        println("selected tx index $index")
+                                    }
+                                }
+                            }
+                        }
                         walletForm.setList(txInfos)
                         walletForm.showExceptionMessage(false, "")
-                        walletForm.updateJListPanel()
+                        walletForm.updateJListPanel(mouseListener)
                     }
                 }else {
-                    walletForm.updateJListPanel()
+                    walletForm.initJListPanel()
                 }
             }
         } catch (e: Exception) {

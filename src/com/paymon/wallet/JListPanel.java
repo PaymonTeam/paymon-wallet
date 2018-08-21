@@ -2,13 +2,19 @@ package com.paymon.wallet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 public class JListPanel extends JPanel {
 
     private List<TransactionInfoInWalletForm> txList;
     private JList<TransactionInfoInWalletForm> txJList;
+    private MouseListener mouseListener;
 
+    public JListPanel(List<TransactionInfoInWalletForm> txList, MouseListener mouseListener) {
+        this.txList = txList;
+        this.mouseListener = mouseListener;
+    }
     public JListPanel(List<TransactionInfoInWalletForm> txList) {
         this.txList = txList;
     }
@@ -20,6 +26,7 @@ public class JListPanel extends JPanel {
             model.addElement(tx);
         }
         JList<TransactionInfoInWalletForm> list = new JList<TransactionInfoInWalletForm>(model);
+        list.addMouseListener(this.mouseListener);
         list.setCellRenderer(new TxRenderer());
         return list;
     }
