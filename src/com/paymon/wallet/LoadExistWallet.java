@@ -120,7 +120,8 @@ public class LoadExistWallet extends JFrame {
         setFonts();
 
     }
-    private void setFonts(){
+
+    private void setFonts() {
         InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
         try {
@@ -137,12 +138,12 @@ public class LoadExistWallet extends JFrame {
             pickFileLabel.setFont(roboto);
             enterPasswordLabel.setFont(roboto);
             exceptionLabel.setFont(roboto);
-            if(processLabel != null) {
+            if (processLabel != null) {
                 processLabel.setFont(roboto);
-            }else{
+            } else {
                 System.out.println("Nullable processLabel");
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Incorrect font");
         }
     }
@@ -189,20 +190,18 @@ public class LoadExistWallet extends JFrame {
             exceptionLabel.setForeground(panel.getForeground());
         }
     }
-    public void saveFilePath(String path){
+
+    public void saveFilePath(String path) {
         try (FileOutputStream fos = new FileOutputStream("jsonPath")) {
             byte[] buffer = path.getBytes();
 
             fos.write(buffer, 0, buffer.length);
-        }
-        catch (IOException ex) {
-
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
-        System.out.println("The file has been written");
-
     }
-    public String loadFilePath(){
+
+    public String loadFilePath() {
 
         try (FileInputStream fin = new FileInputStream("jsonPath")) {
             byte[] buffer = new byte[fin.available()];
@@ -210,28 +209,29 @@ public class LoadExistWallet extends JFrame {
             fin.read(buffer, 0, fin.available());
 
             return new String(buffer);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             return null;
         }
     }
-    public void setFileExplorerText(String text){
+
+    public void setFileExplorerText(String text) {
         if (text != null) {
             filePicker.setTextField(text);
-        }else{
+        } else {
             System.out.println("Null string");
         }
     }
-    public void clear(){
+
+    public void clear() {
         password.setText("");
         exceptionLabel.setForeground(new Color(backgroundColor));
     }
-    public void showLoadPane(){
-        processPanel = new JPanel(new GridBagLayout()){
-            public void paintComponent(Graphics g)
-            {
-                g.setColor(new Color(50,50,50,200));
-                g.fillRect(0,0, getWidth(), getHeight());
+
+    public void showLoadPane() {
+        processPanel = new JPanel(new GridBagLayout()) {
+            public void paintComponent(Graphics g) {
+                g.setColor(new Color(50, 50, 50, 200));
+                g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
 
@@ -242,19 +242,19 @@ public class LoadExistWallet extends JFrame {
         processLabel.setBackground(new Color(0x4A4A4A));
 
         processPanel.add(processLabel);
-        processPanel.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent me){
+        processPanel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
                 me.consume();
             }
         });
         progressBar = new JProgressBar();
         processPanel.add(progressBar);
     }
+
     public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
     }
-
 }
 
 

@@ -139,6 +139,7 @@ class API {
         json.asJsonObject.addProperty("method", "getBalances")
 //        println(json.toString())
         val resp = api.sendRequest(json, neighbors[0])
+        println(resp.toString())
         val respObj = API.gson.fromJson(resp, Balances::class.java)
         if (respObj != null && !respObj.balances.isEmpty()) {
             val balance = respObj.balances[0]

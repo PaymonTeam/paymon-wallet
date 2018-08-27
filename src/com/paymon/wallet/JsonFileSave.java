@@ -3,9 +3,6 @@ package com.paymon.wallet;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class JsonFileSave extends JFrame {
     private JPanel panel;
@@ -80,7 +77,8 @@ public class JsonFileSave extends JFrame {
         massageLabel.setVisible(true);
 
     }
-    private void setFonts(){
+
+    private void setFonts() {
         InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
         try {
@@ -96,10 +94,11 @@ public class JsonFileSave extends JFrame {
             pickFileLabel.setFont(roboto);
             massageLabel.setFont(roboto);
             agreeCheckBox.setFont(roboto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Incorrect font");
         }
     }
+
     public boolean checkBoxHandler() {
         if (agreeCheckBox.isSelected()) {
             massageLabel.setForeground(new Color(backgroundColor));
@@ -108,6 +107,7 @@ public class JsonFileSave extends JFrame {
         }
         return agreeCheckBox.isSelected();
     }
+
     public void showExceptionMessage(boolean flag, String message) {
         if (message != null) {
             massageLabel.setText(message);
@@ -118,11 +118,12 @@ public class JsonFileSave extends JFrame {
             massageLabel.setForeground(new Color(backgroundColor));
         }
     }
-    public boolean filePathHandler(){
+
+    public boolean filePathHandler() {
         String path = filePicker.getSelectedFilePath();
-        if(path.equals("")){
+        if (path.equals("")) {
             return false;
-        }else {
+        } else {
            /* Path isPath = Paths.get(path);
             if (Files.exists(isPath)) {
                /* File file = new File(path);
@@ -131,7 +132,7 @@ public class JsonFileSave extends JFrame {
             } else {
                 return false;
             }*/
-           return true;
+            return true;
         }
     }
 

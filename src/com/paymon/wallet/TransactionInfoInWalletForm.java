@@ -1,6 +1,5 @@
 package com.paymon.wallet;
 
-import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.util.Comparator;
 import java.util.Date;
@@ -23,6 +22,7 @@ public class TransactionInfoInWalletForm {
         this.date = date;
         this.panel = panel;
     }
+
     public TransactionInfoInWalletForm(String hash, String senderAddress, String recipientAddress, int amount, Date date) {
         super();
         this.hash = hash;

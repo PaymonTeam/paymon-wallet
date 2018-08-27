@@ -63,23 +63,6 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="a2a74" class="javax.swing.JButton" binding="addressButton">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
-                </constraints>
-                <properties>
-                  <background color="-11908534"/>
-                  <foreground color="-4013374"/>
-                  <horizontalTextPosition value="0"/>
-                  <maximumSize width="380" height="40"/>
-                  <minimumSize width="380" height="40"/>
-                  <preferredSize width="380" height="40"/>
-                  <rolloverEnabled value="true"/>
-                  <text value="P00000000000000000000"/>
-                  <toolTipText value="Click to copy"/>
-                </properties>
-              </component>
               <component id="dcab4" class="javax.swing.JButton" binding="balanceButton" default-binding="true">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -124,6 +107,23 @@
                   <background color="-13487566"/>
                   <foreground color="-4013374"/>
                   <text value="(click to copy)"/>
+                </properties>
+              </component>
+              <component id="a2a74" class="javax.swing.JButton" binding="addressButton">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
+                </constraints>
+                <properties>
+                  <background color="-11908534"/>
+                  <foreground color="-4013374"/>
+                  <horizontalTextPosition value="0"/>
+                  <maximumSize width="380" height="40"/>
+                  <minimumSize width="380" height="40"/>
+                  <preferredSize width="380" height="40"/>
+                  <rolloverEnabled value="true"/>
+                  <text value="P00000000000000000000"/>
+                  <toolTipText value="Click to copy"/>
                 </properties>
               </component>
             </children>
@@ -184,7 +184,7 @@
               <gridbag weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <text value="ExceptionMassage"/>
+              <text value="Error: "/>
             </properties>
           </component>
           <grid id="ddea6" binding="formPanel" layout-manager="GridBagLayout">

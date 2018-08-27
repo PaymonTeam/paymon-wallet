@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
 
-public class TransactionInfoForm extends JFrame{
+public class TransactionInfoForm extends JFrame {
     private JPanel panel;
     private JPanel mainLabelPanel;
     private JPanel addressesPanel;
@@ -74,7 +74,8 @@ public class TransactionInfoForm extends JFrame{
 
 
     }
-    private void setFonts(){
+
+    private void setFonts() {
 
         InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
@@ -97,11 +98,12 @@ public class TransactionInfoForm extends JFrame{
             senderButton.setFont(roboto);
             recipientButton.setFont(roboto);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Incorrect font");
         }
     }
-    private void setInfo(){
+
+    private void setInfo() {
         hashButton.setText(tx.getHash());
         recipientButton.setText(tx.getRecipientAddress());
         senderButton.setText(tx.getSenderAddress());

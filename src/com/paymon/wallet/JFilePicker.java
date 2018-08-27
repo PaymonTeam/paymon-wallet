@@ -1,7 +1,6 @@
 package com.paymon.wallet;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -66,10 +65,10 @@ public class JFilePicker extends JPanel {
         return fileChooser.getSelectedFile();
     }
 
-    public void setTextField(String text){
-        if(text != null) {
+    public void setTextField(String text) {
+        if (text != null) {
             textField.setText(text);
-        }else{
+        } else {
             System.out.println("Null string");
         }
     }

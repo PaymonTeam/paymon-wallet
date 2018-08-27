@@ -7,23 +7,24 @@ import com.paymon.wallet.utils.WalletAccount
 import com.paymon.wallet.utils.restoreFromBackup
 import org.bouncycastle.util.encoders.Hex
 import java.awt.Color
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.*
+import javax.swing.JList
 import javax.swing.JOptionPane
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
-import kotlin.system.exitProcess
+
 
 var authForm = CreateNewWallet()
 var walletForm = WalletForm()
 var loadForm = LoadExistWallet()
 var tx = TransactionForm()
 var jsonSave = JsonFileSave()
-var pkSave = PKSave()
 var running = true
 val HASH_SIZE = 20
 val ADDRESS_SIZE = HASH_SIZE + 1
@@ -32,13 +33,6 @@ val HASH_NULL = ByteArray(HASH_SIZE)
 val api = API()
 
 fun main(args: Array<String>) {
-    /*try {
-        api.account = WalletAccount(Hex.decode("8003FFFFF6882320DEEE46AC97069EC8C56928643907230EA3A80BA656312A5351768E1525CDDC40D661C4E6646FB5C0A9D52DB66A74C86F1ADD764AC3CF7BD66D16E9D619EF4090E996C350B75BA5CE856285775792700AF58203B65198012953514B5B0F1F86D8DDC8D6BB9ADF0A9665B6CADA1C6D166B93E704BDB063ACEAF6A519D6A58F88836E6B4AD431A576B13DBE59D4A603D833DAAD7EAF4AC5B48015522E1C3163A751EEAF34D8EE692806C88ABE6CB151DA79BE48C13CA894AC1DD3D4361B7F5574D1BC28754916B04849A066A8659CEEE9C334CEA0C327B99D458CC64257EC37C9B4216C9CE3469FD5B23DBC964488780E282790198443EA7A1F1FC824C51FDB7D18B5A6C188A2907446224B6C6FDCD264095E0BE053D293B544E22875470B55D58F5707EFD58E8DC5DDB475F25C5A660E63B202669524F02D4F973B5D4C2D52AC2C62BFCD5B54614F92F22B4B94E51E43AD0BEED8"))
-    } catch (e: Exception) {
-        println(e.message)
-        exitProcess(-1)
-    }*/
-
     initListeners()
 
     thread {
@@ -57,7 +51,7 @@ fun initListeners() {
     authForm.loadWalletButton.addActionListener {
         authForm.dispose()
         val path = loadForm.loadFilePath()
-        if(path != null){
+        if (path != null) {
             loadForm.setFileExplorerText(path)
         }
         loadForm.isVisible = true
@@ -78,10 +72,17 @@ fun initListeners() {
                 api.account = acc
                 loadForm.saveFilePath(loadForm.path)
                 updateAddress()
-                //updateBalance()
+                updateBalance()
+                loadForm.showLoadPane()
+                loadForm.glassPane = loadForm.processPanel
+                loadForm.glassPane.isVisible = true
+                loadForm.repaintMainPanel()
+                for (i in 0..100) {
+                    loadForm.progressBar.value = i
+                    Thread.sleep(100)
+                }
                 loadForm.dispose()
                 walletForm.isVisible = true
-                walletForm.setSize(500, 670)
             }
         }
     }
@@ -89,21 +90,20 @@ fun initListeners() {
     loadForm.backButton.addActionListener {
         loadForm.dispose()
         authForm.isVisible = true
+        authForm.clear()
     }
 
     walletForm.createNewTransactionButton.addActionListener {
         updateAddress()
-        //updateBalance()
+        updateBalance()
         walletForm.contentPane = tx.contentPane
         tx.clear()
         walletForm.repaintMainPanel()
-        walletForm.pack()
     }
 
     tx.backToWalletPageButton.addActionListener {
         walletForm.contentPane = walletForm.panel
         walletForm.repaintMainPanel()
-        walletForm.setSize(500, 670)
     }
 
     jsonSave.backButton.addActionListener {
@@ -112,49 +112,69 @@ fun initListeners() {
     }
 
     jsonSave.nextButton.addActionListener {
-        if (jsonSave.checkBoxHandler()) {
+
+        if (jsonSave.checkBoxHandler() && jsonSave.filePathHandler()) {
             val password = authForm.password
             createBackup(password, jsonSave.filePath)
-            authForm.contentPane = pkSave.contentPane
-            authForm.repaintMainPanel()
-            pkSave.privateKeyTextField.text = String(Hex.encode(getPrivateKey()))
+            api.account = restoreFromBackup(authForm.password, jsonSave.filePath + ".json")
+            updateAddress()
+            updateBalance()
+            loadForm.saveFilePath(jsonSave.filePath + ".json")
+            authForm.dispose()
+            authForm.contentPane = authForm.panel
+            walletForm.isVisible = true
+
+        } else {
+            val message: String
+            if (!jsonSave.checkBoxHandler() && !jsonSave.filePathHandler()) {
+                message = "<html>Please, select a folder<br> and agree with the conditions"
+            } else {
+                if (!jsonSave.checkBoxHandler()) {
+                    message = "Please, agree with the conditions"
+                } else {
+                    if (!jsonSave.filePathHandler()) {
+                        message = "Please, select a folder"
+                    } else {
+                        message = ""
+                    }
+                }
+            }
+            jsonSave.showExceptionMessage(true, message)
         }
-    }
 
-    pkSave.backButton.addActionListener {
-        authForm.contentPane = jsonSave.contentPane
-        authForm.repaintMainPanel()
-    }
 
-    pkSave.finishButton.addActionListener {
-        api.account = restoreFromBackup(authForm.password, jsonSave.filePath + ".json")
-        updateAddress()
-        //updateBalance()
-        loadForm.saveFilePath(jsonSave.filePath + ".json")
-        authForm.dispose()
-        authForm.contentPane = authForm.panel
-        walletForm.isVisible = true
-        walletForm.setSize(500, 670)
     }
-
-    pkSave.copyButton.addActionListener {
-        if (pkSave.privateKeyTextField.text != null) {
-            pkSave.setClipboard(pkSave.privateKeyTextField.text)
-        }
-    }
-
     tx.sendButton.addActionListener {
-        if (tx.txHandler()) {
+        val bal: Int
+        val address = api.account?.address
+        if (address != null) {
+            val balance = api.getBalanceRequest(address)
+            if (balance != null) {
+                bal = balance.toInt()
+            } else {
+                bal = 0
+            }
+        } else {
+            bal = 0
+        }
+
+        if (tx.txHandler(bal)) {
+            walletForm.glassPane = walletForm.processPanel
+            walletForm.glassPane.isVisible = true
+            walletForm.repaintMainPanel()
+
             api.sendCoins(Address(tx.recipientAddress), tx.amount.toLong()) {
-                if(!it){
+                walletForm.glassPane.isVisible = false
+                walletForm.repaintMainPanel()
+                if (!it) {
                     tx.showExceptionMessage(!it, "Transaction error")
-                }else{
-                    tx.showExceptionMessage(Color(0, 100, 0), "Transaction sent")
+                } else {
+                    tx.showExceptionMessage(Color(0x45ba56), "Transaction sent")
                 }
             }
         }
     }
-    walletForm.logoutToolbarButton.addActionListener{
+    walletForm.logoutToolbarButton.addActionListener {
         walletForm.dispose()
         walletForm = WalletForm()
         loadForm = LoadExistWallet()
@@ -173,55 +193,89 @@ fun updateAddress() {
 fun updateBalance() {
     val address = api.account?.address
     if (address != null) {
+//        try {
         val balance = api.getBalanceRequest(address)
         if (balance != null) {
             walletForm.setBalance(balance.toInt())
             tx.setBalance(balance.toInt())
         }
+//        } catch (e: Exception) {
+//
+//        }
     }
 }
 
 fun updateThread() {
+    val txInfos: ArrayList<TransactionInfoInWalletForm> = ArrayList()
     while (running) {
         try {
+            txInfos.clear()
             val addr = api.account?.address
             if (addr != null) {
                 walletForm.setAddress(addr.toString())
                 val balance = api.getBalanceRequest(addr)
                 if (balance != null) {
                     walletForm.setBalance(balance.toInt())
-                    tx.setBalance(balance.toInt())
                 }
                 println("Current balance: $balance")
                 val txHashes = api.getAddressTransactionHashes(addr)
                 if (txHashes != null) {
-//                for (hash in txHashes) {
-//                    println("request hash=${String(Hex.encode(hash))}")
-//                }
                     val txs = api.getTransactions(txHashes)
                     if (txs != null) {
-                        walletForm.list.clear()
                         for (tx in txs) {
                             val from = addressFromPublicKey(tx.signature_pubkey)
                             val txInfo = TransactionInfoInWalletForm(String(Hex.encode(tx.hash)),
                                     from.toString(),
-                                    tx.address.toString(),
-                                    tx.value.toInt(),
+                                    if (tx.address.toString() == addr.toString()) {
+                                        "You"
+                                    } else {
+                                        tx.address.toString()
+                                    },
+                                    if (tx.address.toString() == addr.toString()) {
+                                        tx.value.toInt()
+                                    } else {
+                                        -tx.value.toInt()
+                                    },
                                     Date(tx.timestamp * 1000))
                             txInfo.isConfirmed = true
-                            walletForm.addToList(txInfo)
+                            txInfos.add(txInfo)
                         }
+                        sortTxInfo(txInfos)
+                        val mouseListener = object : MouseAdapter() {
+                            override fun mouseClicked(mouseEvent: MouseEvent) {
+                                val theList = mouseEvent.source as JList<*>
+                                if (mouseEvent.clickCount == 2) {
+                                    val index = theList.locationToIndex(mouseEvent.point)
+                                    if (index >= 0) {
+                                        if (index < txInfos.size) {
+                                            walletForm.showTxInfo(txInfos[index])
+                                        } else {
+                                            println("Index $index out-of-bounds")
+                                        }
+                                        walletForm.glassPane.isVisible = true
+                                        println("selected tx index $index")
+                                    }
+                                }
+                            }
+                        }
+                        walletForm.setList(txInfos)
                         walletForm.showExceptionMessage(false, "")
+                        walletForm.updateJListPanel(mouseListener)
                     }
+                } else {
+                    walletForm.initJListPanel()
                 }
-                walletForm.updateJListPanel()
             }
         } catch (e: Exception) {
-            println("Error: ${e.message}")
-            walletForm.showExceptionMessage(true, e.message)
+            println("Error: $e ${e.message}")
+            walletForm.showExceptionMessage(true, "$e ${e.message}")
         }
         Thread.sleep(10_000)
     }
+}
+
+fun sortTxInfo(list: ArrayList<TransactionInfoInWalletForm>) {
+    Collections.sort(list, TransactionInfoInWalletForm.COMPARE_BY_DATE.reversed())
 }
 
 fun buckupTest() {
@@ -279,7 +333,7 @@ fun restoreFromBackup(password: String, path: String): WalletAccount? {
     try {
         val bu = JsonParser().parse(String(Files.readAllBytes(Paths.get(path))))
         return restoreFromBackup(bu, password)
-    }catch (e:Exception){
+    } catch (e: Exception) {
         println("Error: ${e.message}")
         loadForm.showExceptionMessage(true, "Incorrect password or backup file")
     }

@@ -1,9 +1,6 @@
 package com.paymon.wallet;
 
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
@@ -37,7 +34,6 @@ public class TransactionForm extends JFrame {
     private JLabel addressException;
     private JLabel amountException;
     private JLabel hintLabel;
-
 
     private int backgroundColor = 0x323232;
     private int red = 0xe15754;
@@ -108,14 +104,19 @@ public class TransactionForm extends JFrame {
         addressButton.setOpaque(false);
         addressButton.setBorderPainted(false);
         addressButton.setOpaque(true);
+        addressButton.setBackground(new Color(194, 194, 194));
+        addressButton.setForeground(new Color(94, 94, 94));
 
         balanceButton.setOpaque(false);
         balanceButton.setBorderPainted(false);
         balanceButton.setOpaque(true);
+        balanceButton.setBackground(new Color(194, 194, 194));
+        balanceButton.setForeground(new Color(94, 94, 94));
 
         panel.setBackground(new Color(backgroundColor));
     }
-    private void setFonts(){
+
+    private void setFonts() {
         InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
         try {
@@ -140,7 +141,7 @@ public class TransactionForm extends JFrame {
             backToWalletPageButton.setFont(roboto);
             roboto = roboto.deriveFont(15f);
             hintLabel.setFont(roboto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Incorrect font");
         }
     }
@@ -179,7 +180,7 @@ public class TransactionForm extends JFrame {
                     if (Integer.parseInt(amount.getText()) > balance) {
                         showAmountExceptionMessage(true, "Insufficient balance");
                         amountIsOk = false;
-                    }else {
+                    } else {
                         amountIsOk = true;
                         showAmountExceptionMessage(false, " ");
                     }
@@ -248,6 +249,7 @@ public class TransactionForm extends JFrame {
             addressException.setForeground(new Color(backgroundColor));
         }
     }
+
     public void showExceptionMessage(Color color, String message) {
         if (message != null) {
             exceptionLabel.setText(message);
@@ -256,7 +258,8 @@ public class TransactionForm extends JFrame {
             exceptionLabel.setForeground(color);
         }
     }
-    public void clear(){
+
+    public void clear() {
         addressException.setForeground(new Color(backgroundColor));
         amountException.setForeground(new Color(backgroundColor));
         exceptionLabel.setForeground(new Color(backgroundColor));

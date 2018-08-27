@@ -32,7 +32,7 @@ public class NTRUMLSNative {
     static {
         System.loadLibrary(
                 System.getProperty("sun.arch.data.model").contentEquals("32") ?
-                "ntrumls" : "ntrumls64"
+                        "ntrumls" : "ntrumls64"
         );
     }
 }

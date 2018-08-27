@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class WalletForm extends JFrame {
-
     public JPanel panel;
     private JPanel toolbarPanel;
     private JPanel textPanel;
@@ -23,7 +22,6 @@ public class WalletForm extends JFrame {
     public JButton createNewTransactionButton;
     public JButton refreshTransactionListButton;
     public JButton logoutToolbarButton;
-
 
     private JLabel addrLabel;
     private JLabel balanceLabel;
@@ -44,18 +42,19 @@ public class WalletForm extends JFrame {
     public ArrayList<TransactionInfoInWalletForm> list = new ArrayList<>();
 
     public WalletForm() {
+        initComponents();
+        setResizable(false);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //SetBackgroundImage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         setDefaultLookAndFeelDecorated(false);
-
-        initComponents();
-        visibleSetter();
-        setResizable(false);
 
         refreshTransactionListButton.addActionListener(new ActionListener() {
             @Override
@@ -83,12 +82,11 @@ public class WalletForm extends JFrame {
 
     }
 
-    private void initGlassPanel(){
-        processPanel = new JPanel(new GridBagLayout()){
-            public void paintComponent(Graphics g)
-            {
-                g.setColor(new Color(50,50,50,200));
-                g.fillRect(0,0, getWidth(), getHeight());
+    private void initGlassPanel() {
+        processPanel = new JPanel(new GridBagLayout()) {
+            public void paintComponent(Graphics g) {
+                g.setColor(new Color(50, 50, 50, 200));
+                g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
 
@@ -99,15 +97,15 @@ public class WalletForm extends JFrame {
         processLabel.setBackground(new Color(0x4A4A4A));
 
         processPanel.add(processLabel);
-        processPanel.addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent me){
+        processPanel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent me) {
                 me.consume();
             }
         });
 
     }
 
-    public void showTxInfo(TransactionInfoInWalletForm tx){
+    public void showTxInfo(TransactionInfoInWalletForm tx) {
         TransactionInfoForm txInfo = new TransactionInfoForm(tx);
         txInfo.xButton.addActionListener(new ActionListener() {
             @Override
@@ -144,53 +142,48 @@ public class WalletForm extends JFrame {
     }
 
     private void initComponents() {
+        setContentPane(panel);
         setTitle("PaymonCoin Wallet");
         setSize(450, 650);
+        visibleSetter();
         initGlassPanel();
         setFonts();
-        setContentPane(panel);
         initJListPanel();
         repaintMainPanel();
-
     }
 
     public void visibleSetter() {
         JLPanel.setOpaque(true);
-
         formPanel.setOpaque(false);
-
         toolbarPanel.setOpaque(false);
-
         refreshPanel.setOpaque(false);
-
         newTxPanel.setOpaque(false);
-
         textPanel.setOpaque(false);
 
         addrLabel.setForeground(new Color(labelColor));
-
         balanceLabel.setForeground(new Color(labelColor));
 
         addressButton.setOpaque(false);
         addressButton.setBorderPainted(false);
         addressButton.setOpaque(true);
+        addressButton.setBackground(new Color(194, 194, 194));
+        addressButton.setForeground(new Color(94, 94, 94));
 
         balanceButton.setOpaque(false);
         balanceButton.setBorderPainted(false);
         balanceButton.setOpaque(true);
+        balanceButton.setBackground(new Color(194, 194, 194));
+        balanceButton.setForeground(new Color(94, 94, 94));
 
         panel.setBackground(new Color(backgroundColor));
-
         JLPanel.setBackground(new Color(backgroundColor));
-
         mainPanel.setBackground(new Color(backgroundColor));
 
         exceptionLabel.setVisible(true);
         exceptionLabel.setForeground(new Color(backgroundColor));
-
     }
 
-    private void setFonts(){
+    private void setFonts() {
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
         try {
             Font roboto = Font.createFont(Font.TRUETYPE_FONT, isRoboto);
@@ -207,22 +200,22 @@ public class WalletForm extends JFrame {
             id.setFont(roboto);
             quantity.setFont(roboto);
             address.setFont(roboto);
-            if(processLabel != null) {
+            if (processLabel != null) {
                 processLabel.setFont(roboto);
-            }else{
+            } else {
                 System.out.println("Nullable processLabel");
             }
             roboto = roboto.deriveFont(15f);
             hintLabel.setFont(roboto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Incorrect font");
         }
     }
 
-    public void setList(ArrayList<TransactionInfoInWalletForm> txList){
-        if(txList != null) {
+    public void setList(ArrayList<TransactionInfoInWalletForm> txList) {
+        if (txList != null) {
             list = txList;
-        }else{
+        } else {
             System.out.println("Nullable ArrayList object");
         }
     }
@@ -243,7 +236,7 @@ public class WalletForm extends JFrame {
         }
     }
 
-    public void clear(){
+    public void clear() {
         balanceButton.setText("");
         addressButton.setText("");
         JLPanel.removeAll();

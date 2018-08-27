@@ -15,6 +15,7 @@ public class JListPanel extends JPanel {
         this.txList = txList;
         this.mouseListener = mouseListener;
     }
+
     public JListPanel(List<TransactionInfoInWalletForm> txList) {
         this.txList = txList;
     }

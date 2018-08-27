@@ -34,7 +34,6 @@ public class CreateNewWallet extends JFrame {
     private int backgroundColor = 0x323232;
 
     public CreateNewWallet() {
-
         initComponents();
         visibleSetter();
         setResizable(false);
@@ -76,7 +75,8 @@ public class CreateNewWallet extends JFrame {
         panel.setBackground(new Color(backgroundColor));
         handler.oButtonHandler(oButtonIsClicked, oButton, password);
     }
-    private void setFonts(){
+
+    private void setFonts() {
         InputStream isArkhip = CreateNewWallet.class.getResourceAsStream("/fonts/Arkhip_font.ttf");
         InputStream isRoboto = CreateNewWallet.class.getResourceAsStream("/fonts/Roboto-Thin.ttf");
         try {
@@ -90,10 +90,11 @@ public class CreateNewWallet extends JFrame {
             loadWalletButton.setFont(roboto);
             enterPasswordLabel.setFont(roboto);
             incorrectPassMessage.setFont(roboto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Incorrect font");
         }
     }
+
     public void repaintMainPanel() {
         getContentPane().repaint();
         getContentPane().revalidate();
@@ -106,7 +107,8 @@ public class CreateNewWallet extends JFrame {
     public String getPassword() {
         return new String(password.getPassword());
     }
-    public void clear(){
+
+    public void clear() {
         password.setText("");
         incorrectPassMessage.setForeground(new Color(backgroundColor));
     }

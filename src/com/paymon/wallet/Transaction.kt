@@ -13,7 +13,7 @@ typealias PublicKey = ByteArray
 typealias PrivateKey = ByteArray
 typealias Hash = ByteArray
 
-fun calculateAddressChecksum(bytes: ByteArray) : Byte {
+fun calculateAddressChecksum(bytes: ByteArray): Byte {
     var checksumByte: Short = 0
     for ((i, b: Byte) in bytes.withIndex()) {
         checksumByte = if ((i and 1) == 0) {
@@ -32,7 +32,7 @@ fun addressFromPublicKey(pk: PublicKey): Address {
     val digest = sha.digest(pk)
     val offset = 32 - ADDRESS_SIZE + 1
 
-    val checksumByte = calculateAddressChecksum(digest.sliceArray(offset..(32-1)))
+    val checksumByte = calculateAddressChecksum(digest.sliceArray(offset..(32 - 1)))
     val addr = ADDRESS_NULL.clone()
     System.arraycopy(digest, offset, addr.inner, 0, ADDRESS_SIZE - 1)
     addr.inner[ADDRESS_SIZE - 1] = checksumByte
@@ -50,8 +50,8 @@ class Address {
         this.inner = Hex.decode(str.substring(1))
     }
 
-    fun verify() : Boolean {
-        return calculateAddressChecksum(inner.sliceArray(0..(ADDRESS_SIZE-2))) == inner[ADDRESS_SIZE-1]
+    fun verify(): Boolean {
+        return calculateAddressChecksum(inner.sliceArray(0..(ADDRESS_SIZE - 2))) == inner[ADDRESS_SIZE - 1]
     }
 
     override fun toString(): String {

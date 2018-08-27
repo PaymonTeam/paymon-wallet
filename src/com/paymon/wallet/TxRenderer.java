@@ -7,14 +7,13 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWalletForm> {
 
     private JButton lbHash = new JButton();
     private JLabel lbAmount = new JLabel();
     private JLabel lbRecipient = new JLabel();
+
     public TxRenderer() {
         setLayout(new GridBagLayout());
 
@@ -68,9 +67,9 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
             }
         });
 
-        if(!tx.getRecipientAddress().equals("You")) {
+        if (!tx.getRecipientAddress().equals("You")) {
             lbRecipient.setText(tx.getRecipientAddress().substring(0, 9) + "...");
-        }else{
+        } else {
             lbRecipient.setText(tx.getRecipientAddress() + "                ");
         }
 
@@ -81,7 +80,7 @@ class TxRenderer extends JPanel implements ListCellRenderer<TransactionInfoInWal
             lbHash.setFont(roboto);
             lbAmount.setFont(roboto);
             lbRecipient.setFont(roboto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println("Incorrect font");
         }
 

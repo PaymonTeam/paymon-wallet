@@ -10,7 +10,6 @@ import org.bouncycastle.crypto.params.KeyParameter
 import org.bouncycastle.crypto.params.ParametersWithIV
 import org.bouncycastle.util.encoders.Hex
 import javax.crypto.KeyGenerator
-import javax.swing.JOptionPane
 
 const val BACKUP_VERSION = 2
 
