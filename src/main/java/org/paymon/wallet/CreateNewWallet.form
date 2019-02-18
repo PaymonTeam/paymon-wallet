@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.paymon.wallet.CreateNewWallet">
+  <grid id="27dc6" binding="panel" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="36" y="102" width="481" height="469"/>
+    </constraints>
+    <properties>
+      <background color="-13487566"/>
+      <foreground color="-13487566"/>
+    </properties>
+    <border type="none">
+      <title-color color="-16777216"/>
+    </border>
+    <children>
+      <grid id="ea7dd" binding="firstPanel" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="40" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <foreground color="-14335133"/>
+          <inheritsPopupMenu value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="d3441" class="javax.swing.JLabel" binding="createNewWalletLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <font size="36"/>
+              <foreground color="-4013374"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <opaque value="false"/>
+              <text value="CREATE NEW WALLET"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="7bf44" binding="buttPanel" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="60" right="0" weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <foreground color="-13487566"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="581de" class="javax.swing.JButton" binding="loadWalletButton">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-4013374"/>
+              <font size="20"/>
+              <foreground color="-13487566"/>
+              <horizontalTextPosition value="0"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="265" height="40"/>
+              <minimumSize width="265" height="40"/>
+              <preferredSize width="265" height="40"/>
+              <text value="Load Existing Wallet"/>
+            </properties>
+          </component>
+          <component id="547d3" class="javax.swing.JButton" binding="createNewWalletButton">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="0" bottom="15" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-4013374"/>
+              <font size="20"/>
+              <foreground color="-13487566"/>
+              <horizontalTextPosition value="0"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <maximumSize width="265" height="40"/>
+              <minimumSize width="265" height="40"/>
+              <preferredSize width="265" height="40"/>
+              <text value="Create New Wallet"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="2e136" binding="passFieldPanel" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="55" left="0" bottom="0" right="0" weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <foreground color="-14335133"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="9c798" class="javax.swing.JPasswordField" binding="password">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+              <gridbag top="0" left="0" bottom="0" right="10" weightx="0.0" weighty="0.0" ipadx="265" ipady="7"/>
+            </constraints>
+            <properties>
+              <background color="-11908534"/>
+              <caretColor color="-4013374"/>
+              <disabledTextColor color="-4013374"/>
+              <foreground color="-4013374"/>
+              <margin top="0" left="0" bottom="0" right="0"/>
+            </properties>
+          </component>
+          <component id="fbeb8" class="javax.swing.JLabel" binding="enterPasswordLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag top="0" left="0" bottom="15" right="0" weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-4013374"/>
+              <enabled value="true"/>
+              <font size="14"/>
+              <foreground color="-4013374"/>
+              <horizontalAlignment value="0"/>
+              <text value="Enter a password"/>
+              <verifyInputWhenFocusTarget value="false"/>
+            </properties>
+          </component>
+          <component id="80c99" class="javax.swing.JButton" binding="oButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <background color="-4013374"/>
+              <borderPainted value="true"/>
+              <foreground color="-4013374"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="11"/>
+              <maximumSize width="105" height="40"/>
+              <minimumSize width="105" height="40"/>
+              <preferredSize width="105" height="40"/>
+              <text value=""/>
+            </properties>
+            <clientProperties>
+              <html.disable class="java.lang.Boolean" value="true"/>
+            </clientProperties>
+          </component>
+        </children>
+      </grid>
+      <component id="98eae" class="javax.swing.JLabel" binding="incorrectPassMessage">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag top="0" left="0" bottom="80" right="0" weightx="1.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="The password must contain 9 at least characters"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
