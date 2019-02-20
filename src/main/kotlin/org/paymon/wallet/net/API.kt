@@ -68,6 +68,9 @@ class API {
         gsonb.registerTypeAdapter(PrivateKey::class.java, PrivateKeySerializer())
         gsonb.registerTypeAdapter(PrivateKey::class.java, PrivateKeyDeserializer())
 
+        gsonb.registerTypeAdapter(Signature::class.java, SignatureSerializer())
+        gsonb.registerTypeAdapter(Signature::class.java, SignatureDeserializer())
+
 //        gsonb.registerTypeAdapter(Signature::class.java, SignatureSerializer())
 //        gsonb.registerTypeAdapter(Signature::class.java, SignatureDeserializer())
 
@@ -342,6 +345,19 @@ class API {
     private class PrivateKeyDeserializer : JsonDeserializer<PrivateKey> {
         override fun deserialize(p0: JsonElement?, p1: Type?, p2: JsonDeserializationContext?): PrivateKey? {
             return Secp256k1.generateSecretKeyFromBytes(Hex.decode(p0?.asJsonPrimitive?.asString))
+        }
+    }
+
+    private class SignatureSerializer : JsonSerializer<Signature> {
+        override fun serialize(p0: Signature?, p1: Type?, p2: JsonSerializationContext?): JsonElement {
+            return JsonPrimitive(p0!!.r.toString(16) + p0.s.toString(16))
+        }
+    }
+
+    private class SignatureDeserializer : JsonDeserializer<Signature> {
+        override fun deserialize(p0: JsonElement?, p1: Type?, p2: JsonDeserializationContext?): Signature? {
+            throw RuntimeException("unimplemented")
+//            return Secp256k1.generateSecretKeyFromBytes(Hex.decode(p0?.asJsonPrimitive?.asString))
         }
     }
 
